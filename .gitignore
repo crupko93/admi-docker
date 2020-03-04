@@ -1,0 +1,11 @@
+/.docker
+/.DS_Store
+/.idea
+/.docker-sync
+/.vscode
+
+*/*.DS_Store
+
+*.bak
+
+quickstart*.sh

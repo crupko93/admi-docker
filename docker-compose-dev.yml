@@ -1,0 +1,11 @@
+version: '3'
+services:
+
+  # App container
+  admin_app:
+    volumes:
+      - app-sync:/code/admin-app:nocopy
+
+volumes:
+  app-sync:
+    external: true
