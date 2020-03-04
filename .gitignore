@@ -1,0 +1,15 @@
+/.idea
+/log
+
+*.codekit
+*.sublime-*
+
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+/app/.phpstorm.meta.php
+/app/.php_cs.cache
+app/.env.testing
+app/_ide_helper_models.php
+/app/webStorm.config.js
