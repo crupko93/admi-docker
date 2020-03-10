@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\TablePaginate;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,7 +10,7 @@ use App\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
+    use Notifiable, TablePaginate;
 
     /**
      * The attributes that are mass assignable.

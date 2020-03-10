@@ -24,7 +24,8 @@ Route::group(['middleware' => ['guest:api']], function() {
 Route::group(['middleware' => ['jwt']], function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
-    Route::get('me', 'Auth\LoginController@me');
-    Route::put('profile', 'ProfileController@update');
+    AdvancedRoute::controllers([
+        'profile' => 'API\ProfileAPIController'
+    ]);
 });
 

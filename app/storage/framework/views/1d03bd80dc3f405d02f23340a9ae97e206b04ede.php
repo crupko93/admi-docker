@@ -7,15 +7,18 @@
         <meta name="description" content="">
 
         <title><?php echo e(config('app.name')); ?></title>
-
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Poppins:300,400,500,700|Material+Icons' rel='stylesheet'>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
         <link href="<?php echo e(mix('/css/app.css')); ?>" rel="stylesheet">
 
         <script>
             window.Laravel = <?php echo json_encode([
+                'tinymceKey'    => config('services.tinymce.key'),
                 'siteName' => config('app.name'),
                 'siteUrl' => config('app.url'),
-                'apiUrl' => config('app.url') . '/api'
+                'apiUrl' => config('app.url') . '/api',
+                'env' => config('env')
             ]); ?>;
         </script>
     </head>

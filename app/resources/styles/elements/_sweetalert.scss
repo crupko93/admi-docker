@@ -1,0 +1,457 @@
+/* =======================================================
+   4.0 SWEETALERT
+   ======================================================= */
+
+.swal-modal {
+    border-radius: 2px !important;
+    font-family: $font-family-sans-serif;
+    overflow: hidden;
+}
+
+.swal-modal,
+.swal-title {
+    text-align: left !important;
+    padding: 5px 15px;
+}
+
+.swal-button-container {
+    >.outlined {
+        box-shadow: none !important;
+        &:hover,
+        &:active {
+            box-shadow: none !important;
+        }
+    }
+    >.success {
+        &.outlined {
+            background-color: transparent !important;
+            border: 1px solid $success !important;
+            color: $success !important;
+            &:hover {
+                background: rgba($success, .1) !important;
+            }
+        }
+        &:hover {
+            background-color: lighten($success, 5%) !important;
+        }
+    }
+    >.warning {
+        &.outlined {
+            background-color: transparent !important;
+            border: 1px solid $warning !important;
+            color: $warning !important;
+            &:hover {
+                background: rgba($warning, .1) !important;
+            }
+        }
+        &:hover {
+            background-color: lighten($warning, 5%) !important;
+        }
+    }
+    >.info {
+        &.outlined {
+            background-color: transparent !important;
+            border: 1px solid $info !important;
+            color: $info !important;
+            &:hover {
+                background-color: rgba($info, .1) !important;
+            }
+        }
+        &:hover {
+            background-color: lighten($info, 5%) !important;
+        }
+    }
+    >.error {
+        &.outlined {
+            background-color: transparent !important;
+            border: 1px solid $error !important;
+            color: $error !important;
+            &:hover {
+                background: rgba($error, .1) !important;
+            }
+        }
+        &:hover {
+            background-color: lighten($error, 10%) !important;
+        }
+    }
+    >.primary {
+        &.outlined {
+            background-color: transparent !important;
+            border: 1px solid $primary !important;
+            color: $primary !important;
+            &:hover {
+                background: rgba($primary, .1) !important;
+            }
+        }
+        &:hover {
+            background-color: lighten($primary, 5%) !important;
+        }
+    }
+    >.secondary {
+        &.outlined {
+            background-color: transparent !important;
+            border: 1px solid $secondary !important;
+            color: $secondary !important;
+            &:hover {
+                background: rgba($secondary, .1) !important;
+            }
+        }
+        &:hover {
+            background-color: lighten($secondary, 5%) !important;
+        }
+    }
+    >.tertiary {
+        &.outlined {
+            background-color: transparent !important;
+            border: 1px solid $tertiary !important;
+            color: $tertiary !important;
+            &:hover {
+                background: rgba($tertiary, .1) !important;
+            }
+        }
+        &:hover {
+            background-color: lighten($tertiary, 5%) !important;
+        }
+    }
+    >.alternative {
+        &.outlined {
+            background-color: transparent !important;
+            border: 1px solid $alternative !important;
+            color: $alternative !important;
+            &:hover {
+                background: rgba($alternative, .1) !important;
+            }
+        }
+        &:hover {
+            background-color: lighten($alternative, 5%) !important;
+        }
+    }
+    >.blue-gray {
+        background-color: $blue-gray !important;
+        &.outlined {
+            background-color: transparent !important;
+            border: 1px solid $blue-gray !important;
+            color: $blue-gray !important;
+            &:hover {
+                background: rgba($blue-gray, .1) !important;
+            }
+        }
+        &:hover {
+            background-color: lighten($blue-gray, 5%) !important;
+        }
+    }
+}
+
+.swal-error,
+.swal-warning,
+.swal-info,
+.swal-success,
+.swal-primary,
+.swal-secondary,
+.swal-tertiary,
+.swal-blue-gray {
+    border-left: 8px solid transparent;
+    .swal-button-container {
+        >.outlined {
+            background: transparent;
+            box-shadow: none !important;
+            &:active {
+                box-shadow: none !important;
+            }
+        }
+    }
+}
+
+.swal-warning {
+    border-color: $warning;
+    .swal-title {
+        color: $warning !important;
+    }
+    .swal-button-container {
+        >.swal-button--confirm {
+            background-color: $warning;
+            color: $white;
+            &:hover {
+                background-color: lighten($warning, 5%);
+            }
+            &.outlined {
+                border: 1px solid $warning;
+                color: $warning;
+                &:hover {
+                    background-color: rgba($warning, .1);
+                }
+            }
+        }
+    }
+}
+
+.swal-success {
+    border-color: $success;
+    .swal-title {
+        color: $success !important;
+    }
+    .swal-button-container {
+        >.swal-button--confirm {
+            background-color: $success;
+            color: $white;
+            &:hover {
+                background-color: lighten($success, 5%);
+            }
+            &.outlined {
+                border: 1px solid $success;
+                color: $success;
+                &:hover {
+                    background-color: rgba($success, .1);
+                }
+            }
+        }
+    }
+}
+
+.swal-error {
+    border-color: $error;
+    .swal-title {
+        color: $error !important;
+    }
+    .swal-button-container {
+        >.swal-button--confirm {
+            background-color: $error;
+            color: $white;
+            &:hover {
+                background-color: lighten($error, 5%);
+            }
+            &.outlined {
+                border: 1px solid $error;
+                color: $error;
+                &:hover {
+                    background-color: rgba($error, .1);
+                }
+            }
+        }
+    }
+}
+
+.swal-info {
+    border-color: $info;
+    .swal-title {
+        color: $info !important;
+    }
+    .swal-button-container {
+        >.swal-button--confirm {
+            background-color: $info;
+            color: $white;
+            &:hover {
+                background-color: lighten($info, 5%);
+            }
+            &.outlined {
+                border: 1px solid $info;
+                color: $info;
+                &:hover {
+                    background-color: rgba($info, .1);
+                }
+            }
+        }
+    }
+}
+
+.swal-primary {
+    border-color: $primary;
+    .swal-title {
+        color: $primary !important;
+    }
+    .swal-button-container {
+        >.swal-button--confirm {
+            background-color: $primary;
+            color: $white;
+            &:hover {
+                background-color: lighten($primary, 5%);
+            }
+            &.outlined {
+                border: 1px solid $primary;
+                color: $primary;
+                &:hover {
+                    background-color: rgba($primary, .1);
+                }
+            }
+        }
+    }
+}
+
+.swal-secondary {
+    border-color: $secondary;
+    .swal-title {
+        color: $secondary !important;
+    }
+    .swal-button-container {
+        >.swal-button--confirm {
+            background-color: $secondary;
+            color: $white;
+            &:hover {
+                background-color: lighten($secondary, 5%);
+            }
+            &.outlined {
+                border: 1px solid $secondary;
+                color: $secondary;
+                &:hover {
+                    background-color: rgba($secondary, .1);
+                }
+            }
+        }
+    }
+}
+
+.swal-tertiary {
+    border-color: $tertiary;
+    .swal-title {
+        color: $tertiary !important;
+    }
+    .swal-button-container {
+        >.swal-button--confirm {
+            background-color: $tertiary;
+            color: $white;
+            &:hover {
+                background-color: lighten($tertiary, 5%);
+            }
+            &.outlined {
+                border: 1px solid $tertiary;
+                color: $tertiary;
+                &:hover {
+                    background-color: rgba($tertiary, .1);
+                }
+            }
+        }
+    }
+}
+
+.swal-blue-gray {
+    border-color: $blue-gray;
+    .swal-title {
+        color: $blue-gray !important;
+    }
+    .swal-button-container {
+        >.swal-button--confirm {
+            background-color: $blue-gray;
+            color: $white;
+            &:hover {
+                background-color: lighten($blue-gray, 5%);
+            }
+            &.outlined {
+                border: 1px solid $blue-gray;
+                color: $blue-gray;
+                &:hover {
+                    background-color: rgba($blue-gray, .1);
+                }
+            }
+        }
+    }
+}
+
+.swal-button {
+    background-color: $white;
+    color: $black;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-radius: 2px !important;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    height: 36px;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    margin: 6px 8px;
+    min-width: 88px;
+    outline: 0;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-transition: .3s cubic-bezier(.25, .8, .5, 1), color 1ms;
+    transition: .3s cubic-bezier(.25, .8, .5, 1), color 1ms;
+    position: relative;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    will-change: box-shadow;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    &:hover {
+        background-color: $gray-200;
+    }
+    &:focus,
+    &:active {
+        background-color: $gray-200;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23) !important;
+    }
+    &.success,
+    &.warning,
+    &.info,
+    &.error,
+    &.blue-gray {
+        color: $white;
+    }
+    &.swal-button--confirm {
+        &.outlined {
+            background-color: transparent;
+            border: 1px solid $primary;
+            color: $primary;
+            &:hover {
+                background-color: rgba($primary, .1);
+            }
+        }
+        background-color: $primary;
+        color: $white;
+        &:hover {
+            background-color: lighten($primary, 5%);
+        }
+    }
+    &.swal-button--cancel {
+        &.outlined {
+            background-color: lighten($gray-200, 5%);
+            &:hover {
+                background-color: $gray-200;
+            }
+        }
+    }
+}
+
+.swal-title:first-child {
+    margin-top: 10px;
+}
+
+.swal-text {
+    padding-left: 15px !important;
+}
+
+.swal-footer {
+    margin-top: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.swal-icon {
+    left: -30px;
+    position: absolute !important;
+    opacity: .2;
+    bottom: -20px;
+    margin: 0 !important;
+
+    &.swal-icon--success {
+        opacity: .4!important;
+    }
+
+    &.swal-icon--info,
+    &.swal-icon--warning {
+        opacity: .6!important;
+    }
+}
+
+.swal-icon--success__ring {
+    border-color: rgba($success, .6)!important
+}

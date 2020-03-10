@@ -1,0 +1,75 @@
+/* =======================================================
+   2.0 AUTH
+   ======================================================= */
+
+.login-page {
+    .press-particles {
+        background: linear-gradient(150deg, darken($primary, 5%) 10%, darken($secondary, 10%) 100%) !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    overflow: hidden;
+}
+
+.login-form {
+    @media (min-width: 468px) and (min-height: 321px) {
+        margin-top: 30px;
+    }
+    @media screen and (min-width: 768px) {
+        margin-top: 100px;
+    }
+}
+
+.login-card {
+    margin: 0 auto;
+    max-width: 380px !important;
+
+    .v-card__title--primary {
+        padding-top: 10px !important;
+    }
+    .links a {
+        text-decoration: none;
+    }
+}
+
+.login-logo {
+    margin: 15px;
+    text-align: center;
+
+    img {
+        height: auto;
+        max-width: 180px;
+        position: relative;
+        width: 100%;
+    }
+    h2 {
+        color: $alternative;
+        text-transform: uppercase;
+    }
+}
+
+.register-form {
+    .links a { text-decoration: none; }
+}
+
+.static-error-message {
+    // OLD VUETIFY: .input-group__details {
+    .v-text-field__details {
+        min-height: auto !important;
+        margin-bottom: 10px;
+    }
+}
+
+.invalid-static-input {
+    display: block;
+    margin-top: -10px !important;
+    margin-bottom: 10px;
+}
+
+.email-verification-notice {
+    .email-icon { font-size: 55px; }
+}

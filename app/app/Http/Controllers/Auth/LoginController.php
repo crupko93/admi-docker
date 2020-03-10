@@ -19,18 +19,6 @@ class LoginController extends Controller
     public function __construct() {
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        $user = auth()->user();
-
-        return response()->json(compact('user'));
-    }
-
      /**
      * Get a JWT via given credentials.
      *

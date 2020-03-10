@@ -1,93 +1,111 @@
 <template>
-  <v-form ref="form" @submit.prevent="submit" lazy-validation v-model="valid">
-    <v-text-field
-      :label="labels.email"
-      v-model="form.email"
-      type="email"
-      :error-messages="errors.email"
-      :rules="[rules.required('email')]"
-      :disabled="loading"
-      prepend-icon="person"
-      @input="clearErrors('email')"
-    ></v-text-field>
+    <div>
+        <v-text-field
+            v-model="form.email"
+            label="Email"
+            prepend-icon="person"
+            type="email"
+            @input="$v.form.email.$touch()"
+            @blur="$v.form.email.$touch()"
+            :disabled="isLoading"
+            :error-messages="emailErrors" required
+        ></v-text-field>
 
-    <v-text-field
-      :label="labels.password"
-      v-model="form.password"
-      :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
-      @click:append="() => (passwordHidden = !passwordHidden)"
-      :type="passwordHidden ? 'password' : 'text'"
-      :error-messages="errors.password"
-      :disabled="loading"
-      :rules="[rules.required('password')]"
-      prepend-icon="lock"
-      @input="clearErrors('password')"
-    ></v-text-field>
+        <v-text-field
+            v-model="form.password"
+            label="Password"
+            prepend-icon="lock"
+            @input="$v.form.password.$touch()"
+            @blur="$v.form.password.$touch()"
+            @click:append="() => (passwordHidden = !passwordHidden)"
+            :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
+            :type="passwordHidden ? 'password' : 'text'"
+            :disabled="isLoading"
+            :error-messages="passwordErrors" required
+        ></v-text-field>
 
-    <v-layout class="mt-4 mx-0">
-      <v-spacer></v-spacer>
+        <v-layout class="mt-4 mx-0">
+            <v-spacer></v-spacer>
 
-      <v-btn
-        text
-        :disabled="loading"
-        :to="{ name: 'forgot', query: {email: form.email} }"
-        color="grey darken-2"
-      >
-        Forgot password?
-      </v-btn>
+            <v-btn
+                color="grey darken-2"
+                :disabled="isLoading"
+                :to="{ name: 'forgot', query: {email: form.email} }"
+                text
+            >
+                Forgot password?
+            </v-btn>
 
-      <v-btn
-        type="submit"
-        :loading="loading"
-        :disabled="loading || !valid"
-        color="primary"
-        class="ml-4"
-      >
-        Login
-      </v-btn>
-    </v-layout>
-  </v-form>
+            <v-btn
+                color="primary"
+                class="ml-4"
+                @click="submit"
+                :loading="isLoading"
+                :disabled="isLoading || $v.$invalid"
+            >
+                Login
+            </v-btn>
+        </v-layout>
+    </div>
 </template>
 
 <script>
-import axios from 'axios'
-import { api } from '~/config'
-import Form from '~/mixins/form'
+import { required, email } from 'vuelidate/lib/validators';
 
 export default {
-  mixins: [Form],
+    data: () => ({
+        passwordHidden: true,
 
-  data: () => ({
-    passwordHidden: true,
+        form: {
+            email   : null,
+            password: null
+        },
 
-    form: {
-      email: null,
-      password: null
-    }
-  }),
+        isLoading: false
+    }),
 
-  created() {
-    this.form.email = this.$route.query.email || null
-  },
-
-  methods: {
-    submit() {
-      if (this.$refs.form.validate()) {
-        this.loading = true
-
-        axios.post(api.path('login'), this.form)
-          .then(res => {
-            this.$toast.success('Welcome back!')
-            this.$emit('success', res.data)
-          })
-          .catch(err => {
-            this.handleErrors(err.response.data.errors)
-          })
-          .then(() => {
-            this.loading = false
-          })
-      }
+    validations: {
+        form: {
+            email   : {required, email},
+            password: {required}
+        }
     },
-  }
-}
+
+    computed: {
+        emailErrors () {
+            if (!this.$v.form.email.$dirty) return [];
+            const errors = [];
+            !this.$v.form.email.email && errors.push('Email is not valid!');
+            !this.$v.form.email.required && errors.push('Email is required!');
+            return errors;
+        },
+        passwordErrors () {
+            if (!this.$v.form.password.$dirty) return [];
+            const errors = [];
+            !this.$v.form.password.required && errors.push('Password is required!');
+            return errors;
+        }
+    },
+
+    methods: {
+        submit () {
+            this.$v.$touch();
+            if (this.$v.$invalid) return;
+
+            this.isLoading = true;
+
+            return API.auth.login(this.form)
+                .then(response => {
+                    Snotify.success('Welcome back!');
+                    this.$emit('success', response.data);
+                })
+                .catch(Utils.standardErrorResponse)
+                .finally(() => this.isLoading = false);
+        }
+    },
+
+    created () {
+        this.form.email = this.$route.query.email || null;
+    }
+};
 </script>

@@ -1,89 +1,110 @@
 <template>
-  <v-form ref="form" @submit.prevent="submit" lazy-validation v-model="valid">
-    <v-text-field
-      :label="labels.password"
-      v-model="form.password"
-      :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
-      @click:append="() => (passwordHidden = !passwordHidden)"
-      :type="passwordHidden ? 'password' : 'text'"
-      :error-messages="errors.password"
-      :disabled="loading"
-      :rules="[rules.required('password')]"
-      hint="At least 6 characters"
-      @input="clearErrors('password')"
-    ></v-text-field>
+    <div>
+        <v-text-field
+            v-model="form.password"
+            hint="At least 6 characters"
+            @input="$v.form.password.$touch()"
+            @blur="$v.form.password.$touch()"
+            @click:append="() => (passwordHidden = !passwordHidden)"
+            :label="labels.password"
+            :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
+            :type="passwordHidden ? 'password' : 'text'"
+            :disabled="isLoading"
+            :error-messages="passwordErrors" required
+        ></v-text-field>
 
-    <v-text-field
-      :label="labels.password_confirmation"
-      v-model="form.password_confirmation"
-      :type="passwordHidden ? 'password' : 'text'"
-      :error-messages="errors.password_confirmation"
-      :disabled="loading"
-      :rules="[rules.required('password_confirmation')]"
-      @input="clearErrors('password')"
-    ></v-text-field>
+        <v-text-field
+            v-model="form.password_confirmation"
+            @input="$v.form.password_confirmation.$touch()"
+            @blur="$v.form.password_confirmation.$touch()"
+            :label="labels.password_confirmation"
+            :type="passwordHidden ? 'password' : 'text'"
+            :disabled="isLoading"
+            :error-messages="passwordConfirmationErrors" required
+        ></v-text-field>
 
-    <v-layout class="mt-4 mx-0">
-      <v-spacer></v-spacer>
+        <v-layout class="mt-4 mx-0">
+            <v-spacer></v-spacer>
 
-      <v-btn
-        type="submit"
-        :loading="loading"
-        :disabled="loading || !valid"
-        color="primary"
-      >
-        Set new password
-      </v-btn>
-    </v-layout>
-  </v-form>
+            <v-btn
+                @click="submit"
+                :loading="isLoading"
+                :disabled="isLoading || $v.$invalid"
+                color="primary"
+            >
+                Set new password
+            </v-btn>
+        </v-layout>
+    </div>
 </template>
 
 <script>
-import axios from 'axios'
-import { api } from '~/config'
-import Form from '~/mixins/form'
+import { required, sameAs } from 'vuelidate/lib/validators';
 
 export default {
-  mixins: [Form],
+    data: () => ({
+        passwordHidden: true,
+        isLoading     : false,
 
-  data: () => ({
-    passwordHidden: true,
+        labels: {
+            password             : 'New Password',
+            password_confirmation: 'Confirm New Password'
+        },
 
-    labels: {
-      password: 'New Password',
-      password_confirmation: 'Confirm New Password'
+        form: {
+            token                : null,
+            email                : null,
+            password             : null,
+            password_confirmation: null
+        }
+    }),
+
+    validations () {
+        return {
+            form: {
+                password             : {required},
+                password_confirmation: {
+                    required,
+                    sameAsPassword: sameAs('password')
+                }
+            }
+        };
     },
 
-    form: {
-      token: null,
-      email: null,
-      password: null,
-      password_confirmation: null
+    computed: {
+        passwordErrors () {
+            if (!this.$v.form.password.$dirty) return [];
+            const errors = [];
+            !this.$v.form.password.required && errors.push('Password is required!');
+            return errors;
+        },
+        passwordConfirmationErrors () {
+            if (!this.$v.form.password_confirmation.$dirty) return [];
+            const errors = [];
+            !this.$v.form.password_confirmation.required && errors.push('Password confirmation is required!');
+            !this.$v.form.password_confirmation.sameAsPassword && errors.push('Passwords must be identical!');
+            return errors;
+        }
+    },
+
+    methods: {
+        submit () {
+            this.$v.$touch();
+            if (this.$v.$invalid) return;
+            this.isLoading = true;
+            API.auth.resetPassword(this.form)
+                .then(() => {
+                    Snotify.success('Your password has been reset.');
+                    this.$emit('success', this.form);
+                })
+                .catch(Utils.standardErrorResponse)
+                .finally(() => {this.isLoading = false;});
+        }
+    },
+
+    created () {
+        this.form.email = this.$route.query.email;
+        this.form.token = this.$route.params.token;
     }
-  }),
-
-  created() {
-    this.form.email = this.$route.query.email
-    this.form.token = this.$route.params.token
-  },
-
-  methods: {
-    submit() {
-      if (this.$refs.form.validate()) {
-        this.loading = true
-        axios.post(api.path('password.reset'), this.form)
-          .then((res) => {
-            this.$toast.success('Your password has been reset.')
-            this.$emit('success', this.form)
-          })
-          .catch(err => {
-            this.handleErrors(err.response.data.errors)
-          })
-          .then(() => {
-            this.loading = false
-          })
-      }
-    },
-  }
-}
+};
 </script>
