@@ -9,7 +9,11 @@ use Illuminate\Auth\Events\Registered;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Vyuldashev\LaravelOpenApi\Annotations\{Operation, Parameters, PathItem, RequestBody, Response};
 
+/**
+ * @PathItem()
+ */
 class RegisterController extends Controller
 {
     /*
@@ -36,10 +40,15 @@ class RegisterController extends Controller
     }
 
     /**
+     * Register new user
+     *
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @Operation()
+     * @RequestBody(factory="PutUserRequestBody")
+     * @Response(factory="PutUserResponse")
+     * @Response(factory="ErrorResponse")
+     *
      */
     public function register(Request $request)
     {
@@ -52,8 +61,8 @@ class RegisterController extends Controller
     /**
      * The user has been registered.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $user
      * @return mixed
      */
     protected function registered(Request $request, $user)
@@ -65,30 +74,38 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'username'   => 'required|username|unique:users',
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'required|email|unique:users',
+            'phone'      => 'required',
+            'role'       => 'required',
+            'password'   => 'nullable|string|min:6|confirmed'
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'username'   => $data['username'],
+            'first_name' => $data['first_name'],
+            'last_name'  => $data['last_name'],
+            'email'      => $data['email'],
+            'phone'      => $data['phone'],
+            'role'       => 'user',
+            'password'   => bcrypt($data['password']),
         ]);
     }
 }

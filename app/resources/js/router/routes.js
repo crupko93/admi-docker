@@ -35,8 +35,9 @@ export default [
                                     component: require('$comp/profile/edit/ProfileEdit').default
                                 }
                             ]
-                    }
-                ]
+                    },
+                    {path: 'users', name:'users', component: require('$comp/user/UsersIndex').default}
+                ],
         }
     ]),
     {path: '*', redirect: {name: 'index'}}

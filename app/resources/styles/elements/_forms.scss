@@ -1,0 +1,298 @@
+/* =======================================================
+   Forms
+   ======================================================= */
+
+.small-input {
+    &.v-text-field--enclosed .v-input__slot {
+        min-height: 40px !important;
+        margin-bottom: 5px !important;
+
+        .v-input__append-inner {
+            margin-top: 6px !important;
+        }
+    }
+
+    input {
+        font-size: 14px !important;
+        margin-top: 3px !important;
+    }
+
+    .v-messages__message {
+        padding-bottom: 2px !important;
+    }
+}
+
+.token-input {
+    &.v-text-field--enclosed .v-input__slot {
+        min-height: 40px !important;
+        margin-bottom: 5px !important;
+    }
+
+    input {
+        font-size: 14px !important;
+        margin-top: 3px !important;
+    }
+
+    .v-messages__message {
+        padding-bottom: 2px !important;
+    }
+
+    &.v-input--is-focused {
+        .v-input__slot {
+            border-color: $success !important;
+        }
+    }
+}
+
+.gmap {
+    .flex {
+        position: relative;
+    }
+
+    .animated-label {
+        position: absolute;
+        top: 6px;
+        font-size: 16px;
+        left: 0;
+        bottom: 0;
+        z-index: 2;
+        width: 100%;
+        font-weight: 300;
+        opacity: 0.5;
+        cursor: text;
+        transition: 0.2s ease all;
+        margin: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 45%;
+            height: 2px;
+            width: 10px;
+            visibility: hidden;
+            background-color: $tertiary;
+            transition: 0.2s ease all;
+        }
+    }
+
+    .not-empty {
+        .animated-label {
+            top: 0;
+            font-size: 12px;
+        }
+    }
+
+    .gmap-input {
+        position: relative;
+        z-index: 1;
+        border-style: solid;
+        border-width: 0 0 1px;
+        border-bottom-color: $gray-400;
+        height: auto;
+        padding: 3px 0 5px;
+        width: 100%;
+
+        &:focus,
+        &:active {
+            box-shadow: none;
+            border-bottom-color: $tertiary;
+            outline: none;
+
+            ~.animated-label {
+                top: -14px;
+                opacity: 1;
+                color: $tertiary;
+                font-size: 12px;
+
+                &:after {
+                    visibility: visible;
+                    width: 100%;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
+
+.v-stepper__step {
+    padding: 10px 24px !important;
+}
+
+.v-stepper__header {
+    border-bottom: 1px solid $gray-200;
+}
+
+.v-radio {
+    &.primary--text {
+        .v-icon {
+            color: $secondary !important;
+        }
+    }
+
+    &:not(.primary--text) {
+        .v-icon {
+            color: $gray-500 !important;
+        }
+    }
+}
+
+.v-input {
+    .v-icon {
+        &:not(.accent--text) {
+            color: $gray-500 !important;
+        }
+
+        &.primary--text {
+            color: $secondary !important;
+        }
+    }
+}
+
+
+.theme--light {
+    &.v-input--selection-controls {
+        &.v-input--selection-controls {
+            &.v-input--is-disabled {
+                .v-icon {
+                    color: $gray-300 !important;
+                }
+            }
+        }
+    }
+
+    &.v-input--is-disabled {
+
+        .v-label,
+        input,
+        textarea {
+            color: $gray-300 !important;
+        }
+    }
+
+    &.v-text-field {
+        .v-input__slot {
+            &:before {
+                border-color: $gray-500 !important;
+            }
+        }
+
+        &.error--text {
+            .v-input__slot {
+                &:before {
+                    border-color: $error !important;
+                }
+            }
+        }
+    }
+
+    &.v-counter,
+    &.v-label {
+        &.error--text {
+            color: $error !important;
+        }
+
+        color: $gray-600 !important;
+    }
+}
+
+.theme--light {
+    &.v-text-field--solo-inverted {
+        &.v-text-field--solo {
+            &.v-input--is-focused {
+                .v-input__slot {
+                    background: $gray-300 !important;
+                }
+            }
+
+            .v-input__slot {
+                background: $gray-200 !important;
+            }
+        }
+    }
+
+    .datatable-search {
+        &.v-input {
+            &.v-input--is-focused {
+                &.v-text-field--solo-inverted {
+                    label {
+                        color: $gray-700 !important;
+                    }
+
+                    input {
+                        color: $gray-700 !important;
+                    }
+
+                    .v-input__icon--append {
+                        .v-icon {
+                            color: $gray-700 !important;
+                        }
+                    }
+                    .v-input__icon--clear {
+                        .v-icon {
+                            color: $gray-700 !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.v-text-field--box {
+        .v-input__slot {
+            background-color: $gray-200 !important;
+        }
+
+        &.v-input--is-focused {
+            .v-input__slot {
+                background: $gray-300 !important;
+            }
+        }
+    }
+
+    &.v-stepper {
+        .v-stepper__step:not(.v-stepper__step--active):not(.v-stepper__step--complete):not(.v-stepper__step--error) {
+            .v-stepper__step__step {
+                background: $gray-500!important;
+            }
+        }
+    }
+
+    &.v-stepper--non-linear {
+        .v-stepper__step:not(.v-stepper__step--complete):not(.v-stepper__step--error) {
+            .v-stepper__label {
+                color: $gray-600!important;
+            }
+        }
+    }
+
+    &.v-stepper {
+        .v-stepper__header {
+            .v-divider {
+                border-color: $gray-300 !important;
+            }
+        }
+    }
+
+    &.v-stepper {
+        .v-stepper__step--editable {
+            &:hover {
+                background: $gray-200!important;
+            }
+        }
+    }
+
+    &.v-text-field--outline {
+        &.error--text {
+            .v-input__slot {
+                border-color: $error!important;
+            }
+        }
+        .v-input__slot {
+            border-color: $gray-600!important;
+        }
+    }
+}

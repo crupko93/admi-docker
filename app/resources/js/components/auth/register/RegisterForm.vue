@@ -1,12 +1,30 @@
 <template>
     <div>
         <v-text-field
-            v-model="form.name"
-            @input="$v.form.name.$touch()"
-            @blur="$v.form.name.$touch()"
-            :label="labels.name"
+            v-model="form.username"
+            @input="$v.form.username.$touch()"
+            @blur="$v.form.username.$touch()"
+            :label="labels.username"
             :disabled="isLoading"
-            :error-messages="nameErrors" required
+            :error-messages="usernameErrors" required
+        ></v-text-field>
+
+        <v-text-field
+            v-model="form.first_name"
+            @input="$v.form.first_name.$touch()"
+            @blur="$v.form.first_name.$touch()"
+            :label="labels.first_name"
+            :disabled="isLoading"
+            :error-messages="firstNameErrors" required
+        ></v-text-field>
+
+        <v-text-field
+            v-model="form.last_name"
+            @input="$v.form.last_name.$touch()"
+            @blur="$v.form.last_name.$touch()"
+            :label="labels.last_name"
+            :disabled="isLoading"
+            :error-messages="lastNameErrors" required
         ></v-text-field>
 
         <v-text-field
@@ -17,6 +35,15 @@
             :label="labels.email"
             :disabled="isLoading"
             :error-messages="emailErrors" required
+        ></v-text-field>
+
+        <v-text-field
+            v-model="form.phone"
+            type="email"
+            @input="$v.form.phone.$touch()"
+            @blur="$v.form.phone.$touch()"
+            :label="labels.phone"
+            :disabled="isLoading"
         ></v-text-field>
 
         <v-text-field
@@ -74,18 +101,24 @@ import { email, required, sameAs } from 'vuelidate/lib/validators';
 export default {
     data: () => ({
         passwordHidden: true,
-        isLoading       : false,
+        isLoading     : false,
 
         labels: {
-            name                 : 'Name',
+            username             : 'Username',
+            first_name           : 'First Name',
+            last_name            : 'Last Name',
             email                : 'Email',
-            password             : 'New Password',
-            password_confirmation: 'Confirm New Password'
+            phone                : 'Phone',
+            password             : 'Password',
+            password_confirmation: 'Confirm Password'
         },
 
         form: {
-            name                 : null,
+            username             : null,
+            first_name           : null,
+            last_name            : null,
             email                : null,
+            phone                : null,
             password             : null,
             password_confirmation: null
         }
@@ -94,7 +127,9 @@ export default {
     validations () {
         return {
             form: {
-                name                 : {required},
+                username             : {required},
+                first_name           : {required},
+                last_name            : {required},
                 email                : {required, email},
                 password             : {required},
                 password_confirmation: {
@@ -106,10 +141,22 @@ export default {
     },
 
     computed: {
-        nameErrors () {
-            if (!this.$v.form.name.$dirty) return [];
+        usernameErrors () {
+            if (!this.$v.form.username.$dirty) return [];
             const errors = [];
-            !this.$v.form.name.required && errors.push('Name is required!');
+            !this.$v.form.username.required && errors.push('Name is required!');
+            return errors;
+        },
+        firstNameErrors () {
+            if (!this.$v.form.first_name.$dirty) return [];
+            const errors = [];
+            !this.$v.form.first_name.required && errors.push('First name is required!');
+            return errors;
+        },
+        lastNameErrors () {
+            if (!this.$v.form.last_name.$dirty) return [];
+            const errors = [];
+            !this.$v.form.last_name.required && errors.push('Last name is required!');
             return errors;
         },
         emailErrors () {
@@ -137,19 +184,19 @@ export default {
     methods: {
         submit () {
             this.$v.$touch();
-            if (this.$v.$invalid) return;                
+            if (this.$v.$invalid) return;
             this.isLoading = true;
             return API.auth.register(this.form)
-                .then(() => {
-                    Snotify.success('You have been successfully registered!');
-                    this.$emit('success');
-                })
-                .catch(Utils.standardErrorResponse)
-                .finally(() => {
-                    this.isLoading = false;
-                });
+                      .then(() => {
+                          Snotify.success('You have been successfully registered!');
+                          this.$emit('success');
+                      })
+                      .catch(Utils.standardErrorResponse)
+                      .finally(() => {
+                          this.isLoading = false;
+                      });
         }
-        
+
     }
 };
 </script>

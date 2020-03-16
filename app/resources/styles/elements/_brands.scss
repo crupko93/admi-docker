@@ -1,0 +1,99 @@
+/* =======================================================
+   5.0 BRANDS
+   ======================================================= */
+.theme {
+    background: linear-gradient(150deg, darken($primary, 5%) 10%, darken($secondary, 10%) 100%) !important;
+}
+
+.primary {
+    background-color: $primary !important;
+}
+
+.secondary {
+    background-color: $secondary !important;
+}
+.tertiary {
+    background-color: $tertiary !important;
+}
+.alternative {
+    background-color: $alternative !important;
+
+    &.dark {
+        color: $black!important;
+    }
+}
+.blue-gray {
+    background-color: $blue-gray !important;
+}
+.white-gray {
+    background-color: $gray-100 !important;
+}
+
+.tertiary--text {
+    color: $tertiary !important;
+}
+.alternative--text {
+    color: $alternative !important;
+}
+.blue-gray--text {
+    color: $blue-gray !important;
+}
+.secondary--text {
+    color: $secondary !important;
+}
+
+.text-white {
+    color: $white;
+}
+.text-black {
+    color: $black !important;
+}
+
+.gray-200 {
+    background: $gray-200!important;
+}
+
+
+.ticket {
+    font-weight: 600;
+
+    &.on-hold {
+        color: #24ccee;
+    }
+
+    &.waiting {
+        color: #f5c848;
+    }
+
+    &.active {
+        color: #44d335;
+    }
+
+    &.closed {
+        color: #b9bfce;
+    }
+
+    &.solved {
+        color: #4268e2;
+    }
+
+    &.spam {
+        color: #eb6456;
+    }
+}
+
+.ticket-priority {
+    font-weight: 600;
+
+    &.medium {
+        color: #eabda4;
+    }
+
+    &.low {
+        color: #b3d6b4;
+    }
+
+    &.high {
+        color: #e2888d;
+    }
+}

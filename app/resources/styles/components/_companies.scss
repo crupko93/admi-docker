@@ -1,0 +1,19 @@
+.company-manager {
+    .field-chip {
+        > .v-chip__content {
+            padding-left: 0;
+        }
+    }
+
+    .edit-link {
+        .v-icon {
+            position: relative;
+            top: -1px;
+        }
+    }
+}
+
+.company-icon-placeholder {
+    font-size: 40px !important;
+    height: 100%;
+}

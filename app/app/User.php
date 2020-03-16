@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Jobs\SendNotification;
+use App\Notifications\UserAccountCreated;
+use App\Notifications\UserPasswordChanged;
 use App\Traits\TablePaginate;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +21,13 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username',
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+        'role',
+        'password'
     ];
 
     /**
@@ -28,6 +37,13 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password',
+    ];
+
+    protected $searchable = [
+        'username',
+        'first_name',
+        'last_name',
+        'email'
     ];
 
     /**

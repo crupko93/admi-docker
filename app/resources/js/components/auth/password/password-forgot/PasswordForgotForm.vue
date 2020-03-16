@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import { email, required } from 'vuelidate/lib/validators';
+
 export default {
     data: () => ({
         isLoading: false,
@@ -49,6 +51,14 @@ export default {
         }
     }),
 
+    validations () {
+        return {
+            form: {
+                email: {required, email}
+            }
+        };
+    },
+
     computed: {
         emailErrors () {
             if (!this.$v.form.email.$dirty) return [];
@@ -61,19 +71,20 @@ export default {
 
     methods: {
         submit () {
-            if (this.$refs.form.validate()) {
-                this.isLoading = true;
-                return API.auth.resetPassword(this.form)
-                    .then(() => {
-                        Snotify.success(
-                            'An email with password reset instructions has been sent to your email address.');
-                        this.$emit('success');
-                    })
-                    .catch(Utils.standardErrorResponse)
-                    .finally(() => {
-                        this.isLoading = false;
-                    });
-            }
+            this.$v.$touch();
+            if (this.$v.$invalid) return;
+            this.isLoading = true;
+            return API.auth.resetPassword(this.form)
+                .then(() => {
+                    Snotify.success(
+                        'An email with password reset instructions has been sent to your email address.');
+                    this.$emit('success');
+                })
+                .catch(Utils.standardErrorResponse)
+                .finally(() => {
+                    this.isLoading = false;
+                });
+
         }
     },
 

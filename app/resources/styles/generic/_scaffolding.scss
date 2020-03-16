@@ -1,0 +1,237 @@
+/* =======================================================
+   1.0 SCAFFOLDING
+   ======================================================= */
+
+html {
+    overflow-y: auto !important;
+}
+
+body {
+    background: $body-bg;
+    font-family: $font-family-sans-serif;
+}
+
+hr {
+    border-top: 1px dashed $gray-300;
+    border-bottom: 0;
+    margin: 10px 0;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+.application {
+    font-family: $font-family-sans-serif !important;
+
+    &.theme--light {
+        background: $gray-200 !important;
+    }
+}
+
+.theme--light.v-table,
+.v-datatable__actions {
+    border-bottom-left-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
+    color: $gray-700!important;
+}
+
+table.v-table {
+    border-radius: 5px !important;
+
+    thead {
+        th {
+            color: $gray-700!important;
+            letter-spacing: .5px;
+            text-transform: uppercase!important;
+
+            &:hover {
+                color: $gray-800!important;
+            }
+        }
+    }
+}
+
+.application--wrap {
+    overflow: hidden;
+}
+
+.main-content {
+    max-width: 1320px !important;
+    margin: 0 auto;
+}
+
+.input-tooltip {
+    margin-top: -30px !important;
+    max-width: 500px;
+}
+
+form {
+    width: 100%;
+}
+
+@keyframes spark-app-fade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.page-header {
+    background: url('/img/particle.png') top center no-repeat fixed, linear-gradient(150deg, darken($primary, 5%) 10%, darken($secondary, 10%) 100%) !important;
+    padding: 80px 0 30px 0;
+    margin: -70px 0 20px 0;
+    position: relative;
+
+    @media(max-width: 768px) {
+        padding: 60px 0 20px 0 !important;
+
+        .main-content {
+            padding: 10px !important;
+        }
+    }
+
+    h1 {
+        color: $white;
+        font-size: 32px;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+
+    h2 {
+        color: $white;
+        font-size: 26px;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+
+    h4 {
+        color: $white;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+    }
+
+    .no-caps {
+
+        h1,
+        h2,
+        h4 {
+            text-transform: unset !important;
+        }
+    }
+}
+
+#app-footer {
+    background: url('/img/particle-dark.png') top center no-repeat !important;
+    padding: 40px 0 !important;
+    margin-top: 15px;
+
+    .main-content {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+
+        p {
+            color: $gray-700;
+            font-size: 12px;
+            margin: 0;
+        }
+
+        .footer-link {
+            cursor: pointer;
+            margin: 0 10px;
+
+            a {
+                color: $gray-700;
+                cursor: pointer;
+                display: inline-block;
+                font-size: 12px;
+                text-decoration: none;
+
+                &:hover,
+                &:active {
+                    color: $gray-900;
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        @media(min-width: 768px) {
+            .footer-link:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+// Transitions
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+// Floaters
+.float-left {
+    float: left !important;
+}
+
+.float-right {
+    float: right !important;
+}
+
+.theme--light {
+    &.v-navigation-drawer {
+        .v-divider {
+            border-color: $gray-300 !important;
+        }
+    }
+
+    &.v-table {
+        thead {
+            tr {
+                &:first-child {
+                    border-color: $gray-300 !important;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                &:hover:not(.v-datatable__expand-row) {
+                    background: $gray-100 !important;
+                }
+            }
+
+            &:not(:last-child) {
+                border-color: $gray-300 !important;
+            }
+        }
+    }
+}
+
+.card-text-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    .v-card__text {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        height: calc(100% - 80px);
+        width: 100%;
+    }
+}

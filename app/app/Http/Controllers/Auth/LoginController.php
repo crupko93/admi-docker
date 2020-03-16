@@ -7,6 +7,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\User;
 
+use Vyuldashev\LaravelOpenApi\Annotations\{Operation, Parameters, PathItem, RequestBody, Response};
+
+/**
+ * @PathItem()
+ */
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
@@ -16,21 +21,32 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct() {
-    }
+    public function __construct() {}
 
-     /**
+    /**
+     * Authenticate user
+     *
      * Get a JWT via given credentials.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @Operation()
+     * @RequestBody(factory="LoginRequestBody")
+     * @Response(factory="PutUserResponse")
+     * @Response(factory="ErrorResponse")
+     *
      */
     public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
+        $this->validateLogin($request);
+
+        $field = filter_var($request->email, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $credentials = [
+            $field     => $request->email,
+            'password' => $request->password
+        ];
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['message' => 'Invalid login credential.'], 401);
+            return response()->json(['message' => 'Invalid login credentials.'], 401);
         }
 
         $user = $request->user();

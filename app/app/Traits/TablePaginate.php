@@ -26,9 +26,9 @@ trait TablePaginate
     )
     {
         $rowsPerPage = $request->has('rowsPerPage') ? $request->rowsPerPage : $defaultRowsPerPage;
-        $sortBy      = $request->has('sortBy') ? $request->sortBy : $defaultSortColumn;
-        $sortOrder   = $request->has(['sortBy', 'descending'])
-            ? ($request->descending === 'false' ? 'ASC' : 'DESC')
+        $sortBy      = $request->has('sortBy') ? $request->sortBy[0] : $defaultSortColumn;
+        $sortOrder   = $request->has(['sortBy', 'sortDesc'])
+            ? ($request->sortDesc[0] === 'false' ? 'ASC' : 'DESC')
             : $defaultSortOrder;
 
         // Filters
@@ -69,7 +69,6 @@ trait TablePaginate
                 return $q;
             });
         }
-
         // Sorting
         $query = $query->orderBy($sortBy, $sortOrder);
 

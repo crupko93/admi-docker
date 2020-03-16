@@ -1,0 +1,25 @@
+/* =======================================================
+   3.0 REGISTER
+   ======================================================= */
+.register-form {
+    .register-info {
+        .v-card__title { padding: 10px 0 !important; }
+
+        @media(max-width: 599px) {
+            .pr-1,
+            .pl-1 {
+                padding: 0 !important;
+            }
+        }
+    }
+}
+
+.pass {
+    // OLD VUETIFY: .input-group__prepend-icon.input-group__icon-cb {
+    .v-input__icon--prepend v-icon {
+        color: $primary !important;
+
+        &:hover { color: $alternative !important; }
+        &:active { color: $error !important; }
+    }
+}

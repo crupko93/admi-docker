@@ -1,66 +1,126 @@
 <template>
     <div>
-        <h2 class="mb-4 primary--text headline">Edit Profile</h2>
-        <div class="text-center">
-            <v-avatar class="mb-4" color="primary" size="126">
-                <v-icon dark size="126">mdi-account-circle</v-icon>
-            </v-avatar>
-        </div>
-        <div>
             <v-card>
-                <v-card-text>
-                    <v-text-field
-                        v-model="form.name"
-                        @input="$v.form.name.$touch()"
-                        @blur="$v.form.name.$touch()"
-                        :label="labels.name"
-                        :disabled="isLoading"
-                        :error-messages="nameErrors" required
-                    ></v-text-field>
+                <v-card-title><h3>Edit Profile</h3></v-card-title>
+                <v-card-text class="profile">
+                    <v-layout flex wrap justify-center align-center>
 
-                    <v-text-field
-                        v-model="form.email"
-                        type="email"
-                        @input="$v.form.email.$touch()"
-                        @blur="$v.form.email.$touch()"
-                        :label="labels.email"
-                        :disabled="isLoading"
-                        :error-messages="emailErrors" required
-                    ></v-text-field>
+                    <v-flex xs12 md3 class="text-center">
+                        <div class="image-placeholder">
+                                <span role="img" class="profile-photo-preview" :style="previewStyle">
+                                    <v-icon v-if="!form.image" class="company-icon-placeholder">fas fa-user</v-icon>
+                                </span>
+                        </div>
+                        <div class="profile-uploader">
+                            <!-- :client-id="company.id" -->
+                        </div>
+                    </v-flex>
+                    <v-flex xs12 md9>
+                        <h3>Profile Information</h3>
+
+                        <v-layout row wrap>
+                            <v-flex xs12 sm6>
+                                <div class="profile-info">
+                                    <v-text-field
+                                        v-model="form.username"
+                                        @input="$v.form.username.$touch()"
+                                        @blur="$v.form.username.$touch()"
+                                        :label="labels.username"
+                                        :disabled="isLoading"
+                                        :error-messages="usernameErrors" required
+                                    ></v-text-field>
+                                </div>
+
+                                <div class="profile-info">
+                                    <v-text-field
+                                        v-model="form.first_name"
+                                        @input="$v.form.first_name.$touch()"
+                                        @blur="$v.form.first_name.$touch()"
+                                        :label="labels.first_name"
+                                        :disabled="isLoading"
+                                        :error-messages="firstNameErrors" required
+                                    ></v-text-field>
+                                </div>
+
+                                <div class="profile-info">
+                                    <v-text-field
+                                        v-model="form.phone"
+                                        type="email"
+                                        @input="$v.form.phone.$touch()"
+                                        @blur="$v.form.phone.$touch()"
+                                        :label="labels.phone"
+                                        :disabled="isLoading"
+                                    ></v-text-field>
+                                </div>
+                            </v-flex>
+
+                            <v-flex xs12 sm6>
+                                <div class="profile-info">
+                                    <v-text-field
+                                        v-model="form.email"
+                                        type="email"
+                                        @input="$v.form.email.$touch()"
+                                        @blur="$v.form.email.$touch()"
+                                        :label="labels.email"
+                                        :disabled="isLoading"
+                                        :error-messages="emailErrors" required
+                                    ></v-text-field>
+                                </div>
+
+                                <div class="profile-info">
+                                    <v-text-field
+                                        v-model="form.last_name"
+                                        @input="$v.form.last_name.$touch()"
+                                        @blur="$v.form.last_name.$touch()"
+                                        :label="labels.last_name"
+                                        :disabled="isLoading"
+                                        :error-messages="lastNameErrors" required
+                                    ></v-text-field>
+                                </div>
+                            </v-flex>
+                        </v-layout>
+                    </v-flex>
+                    <v-flex xs12>
+                            <h3>Security</h3>
+
+                            <v-layout row wrap>
+                                <v-flex xs12 sm6>
+                                    <div class="profile-info">
+                                        <v-text-field
+                                            v-model="form.password"
+                                            hint="At least 6 characters"
+                                            autocomplete="new-password"
+                                            @input="$v.form.password.$touch()"
+                                            @blur="$v.form.password.$touch()"
+                                            @click:append="() => (passwordHidden = !passwordHidden)"
+                                            :label="labels.password"
+                                            :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
+                                            :type="passwordHidden ? 'password' : 'text'"
+                                            :disabled="isLoading"
+                                            :error-messages="passwordErrors" required
+                                        ></v-text-field>
+                                    </div>
+                                </v-flex>
+
+                                <v-flex xs12 sm6>
+                                    <div class="profile-info">
+                                        <v-text-field
+                                            v-model="form.password_confirmation"
+                                            autocomplete="new-password"
+                                            @input="$v.form.password_confirmation.$touch()"
+                                            @blur="$v.form.password_confirmation.$touch()"
+                                            :label="labels.password_confirmation"
+                                            :type="passwordHidden ? 'password' : 'text'"
+                                            :disabled="isLoading"
+                                            :error-messages="passwordConfirmationErrors"
+                                        ></v-text-field>
+                                    </div>
+                                </v-flex>
+                            </v-layout>
+                        </v-flex>
+                    </v-layout>
                 </v-card-text>
             </v-card>
-
-            <h3 class="headline mb-4 mt-12">Password</h3>
-
-            <v-card>
-                <v-card-text>
-                    <v-text-field
-                        v-model="form.password"
-                        hint="At least 6 characters"
-                        autocomplete="new-password"
-                        @input="$v.form.password.$touch()"
-                        @blur="$v.form.password.$touch()"
-                        @click:append="() => (passwordHidden = !passwordHidden)"
-                        :label="labels.password"
-                        :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
-                        :type="passwordHidden ? 'password' : 'text'"
-                        :disabled="isLoading"
-                        :error-messages="passwordErrors" required
-                    ></v-text-field>
-
-                    <v-text-field
-                        v-model="form.password_confirmation"
-                        autocomplete="new-password"
-                        @input="$v.form.password_confirmation.$touch()"
-                        @blur="$v.form.password_confirmation.$touch()"
-                        :label="labels.password_confirmation"
-                        :type="passwordHidden ? 'password' : 'text'"
-                        :disabled="isLoading"
-                        :error-messages="passwordConfirmationErrors" required
-                    ></v-text-field>
-                </v-card-text>
-            </v-card>
-
             <v-layout mt-12 mx-0>
                 <v-spacer></v-spacer>
 
@@ -84,7 +144,6 @@
                 </v-btn>
             </v-layout>
         </div>
-    </div>
 </template>
 
 <script>
@@ -97,15 +156,21 @@ export default {
         isLoading     : false,
 
         labels: {
-            name                 : 'Name',
+            username             : 'Username',
+            first_name           : 'First Name',
+            last_name            : 'Last Name',
             email                : 'Email',
+            phone                : 'Phone',
             password             : 'New Password',
             password_confirmation: 'Confirm New Password'
         },
 
         form: {
-            name                 : null,
+            username             : null,
+            first_name           : null,
+            last_name            : null,
             email                : null,
+            phone                : null,
             password             : null,
             password_confirmation: null
         }
@@ -114,7 +179,9 @@ export default {
     validations () {
         return {
             form: {
-                name                 : {required},
+                username             : {required},
+                first_name           : {required},
+                last_name            : {required},
                 email                : {required, email},
                 password             : {
                     required: requiredIf(function () {
@@ -132,10 +199,22 @@ export default {
         ...mapGetters({
             auth: 'auth/user'
         }),
-        nameErrors () {
-            if (!this.$v.form.name.$dirty) return [];
+        usernameErrors () {
+            if (!this.$v.form.username.$dirty) return [];
             const errors = [];
-            !this.$v.form.name.required && errors.push('Name is required!');
+            !this.$v.form.username.required && errors.push('Name is required!');
+            return errors;
+        },
+        firstNameErrors () {
+            if (!this.$v.form.first_name.$dirty) return [];
+            const errors = [];
+            !this.$v.form.first_name.required && errors.push('First name is required!');
+            return errors;
+        },
+        lastNameErrors () {
+            if (!this.$v.form.last_name.$dirty) return [];
+            const errors = [];
+            !this.$v.form.last_name.required && errors.push('Last name is required!');
             return errors;
         },
         emailErrors () {
@@ -154,9 +233,14 @@ export default {
         passwordConfirmationErrors () {
             if (!this.$v.form.password_confirmation.$dirty) return [];
             const errors = [];
-            !this.$v.form.password_confirmation.required && errors.push('Password confirmation is required!');
             !this.$v.form.password_confirmation.sameAsPassword && errors.push('Passwords must be identical!');
             return errors;
+        },
+        // Evaluate style attribute for photo preview
+        previewStyle () {
+            return _.has(this.user, 'image.path')
+                ? `background-image: url(${this.user.image.path})`
+                : '';
         }
     },
 

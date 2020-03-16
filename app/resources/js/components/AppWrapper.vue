@@ -3,7 +3,7 @@
         <app-nav :mini="mini" @nav-toggle="navToggle"></app-nav>
         <top-menu @nav-toggle="navToggle"></top-menu>
 
-        <v-content>
+        <v-content class="main-content">
             <v-container fluid>
                 <transition name="fade" mode="out-in">
                     <router-view></router-view>
@@ -22,7 +22,7 @@ import AppFooter from './common/AppFooter';
 
 export default {
     data: () => ({
-        mini: false
+        mini: true
     }),
 
     components: {

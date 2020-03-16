@@ -1,16 +1,20 @@
 <template>
     <div class="sidemenu" v-scroll="onScroll" :style="styles">
         <v-card>
-            <v-list class="py-0" dense>
+            <v-list class="py-0" flat>
                 <template v-for="(item, index) in items">
                     <v-divider v-if="index" :key="index"></v-divider>
-                    <v-list-item :key="item.title" @click="item.action ? item.action(item) : null" :to="item.to" ripple
-                        exact>
+                    <v-list-item
+                        :color="item.color ? item.color : 'primary'"
+                        :key="item.title"
+                        @click="item.action ? item.action(item) : null"
+                        :to="item.to"
+                        ripple exact>
                         <v-list-item-content>
                             <v-list-item-title>{{ item.title }}</v-list-item-title>
                         </v-list-item-content>
                         <v-list-item-icon>
-                            <v-icon small :color="item.color" v-show="!item.progress">{{ item.icon }}</v-icon>
+                            <v-icon small v-show="!item.progress">{{ item.icon }}</v-icon>
                             <v-progress-circular indeterminate color="primary" v-if="item.action"
                                 v-show="item.progress"></v-progress-circular>
                         </v-list-item-icon>
@@ -18,6 +22,7 @@
                 </template>
             </v-list>
         </v-card>
+
     </div>
 </template>
 

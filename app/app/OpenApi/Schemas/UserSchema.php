@@ -21,9 +21,13 @@ class UserSchema extends SchemaFactory implements Reusable
         return Schema::object('User')
             ->properties(
                 Schema::integer('id')->default(0),
-                Schema::string('name')->default(null),
+                Schema::string('username')->default(null),
+                Schema::string('first_name')->default(null),
+                Schema::string('last_name')->default(null),
                 Schema::string('email')->default(null),
-                Schema::string('password')->default(null)
+                Schema::string('phone')->default(null),
+                Schema::string('password')->default(null),
+                Schema::string('role')->default(null)
             );
     }
 }

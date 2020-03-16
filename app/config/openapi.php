@@ -8,7 +8,7 @@ return [
 
             'info' => [
                 'title' => config('app.name'),
-                'description' => null,
+                'description' => 'This is the FlyGo new internal administration API',
                 'version' => '1.0.0',
             ],
 

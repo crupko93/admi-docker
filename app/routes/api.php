@@ -25,7 +25,8 @@ Route::group(['middleware' => ['jwt']], function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
     AdvancedRoute::controllers([
-        'profile' => 'API\ProfileAPIController'
+        'profile' => 'API\ProfileAPIController',
+        'users'   => 'API\UserAPIController'
     ]);
 });
 

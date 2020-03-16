@@ -6,11 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\User;
-use Vyuldashev\LaravelOpenApi\Annotations\Operation;
-use Vyuldashev\LaravelOpenApi\Annotations\Parameters;
-use Vyuldashev\LaravelOpenApi\Annotations\PathItem;
-use Vyuldashev\LaravelOpenApi\Annotations\RequestBody;
-use Vyuldashev\LaravelOpenApi\Annotations\Response;
+use Vyuldashev\LaravelOpenApi\Annotations\{Operation, Parameters, PathItem, RequestBody, Response};
 
 
 /**
@@ -18,8 +14,26 @@ use Vyuldashev\LaravelOpenApi\Annotations\Response;
  */
 class ProfileAPIController extends Controller
 {
+
     /**
-     * Update user
+     * Get user
+     *
+     * Get the authenticated user's profile
+     *
+     * @Operation()
+     * @Response(factory="PutUserResponse")
+     * @Response(factory="ErrorResponse")
+     *
+     */
+    public function getIndex()
+    {
+        $user = auth()->user();
+
+        return success(['user' => $user]);
+    }
+
+    /**
+     * Update authenticated user
      *
      * Update authenticated user's profile and return the full user object
      *
@@ -33,13 +47,19 @@ class ProfileAPIController extends Controller
     {
         $user = $request->user();
         $user->fill([
-            'name' => $request->input('name'),
-            'email' => $request->input('email')
+            'username'   => $request->input('username'),
+            'first_name' => $request->input('first_name'),
+            'last_name'  => $request->input('last_name'),
+            'email'      => $request->input('email'),
+            'phone'      => $request->input('phone'),
+            'role'       => $request->input('role')
+
         ]);
 
         if ($request->input('password')) {
             $user->password = bcrypt($request->input('password'));
         }
+
 
         $user->save();
 
@@ -47,14 +67,24 @@ class ProfileAPIController extends Controller
     }
 
     /**
-     * Get the authenticated User.
+     * Delete own user account
      *
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function getIndex()
+    // TODO check if working
+    public function deleteOwnAccount()
     {
-        $user = auth()->user();
+        return DB::try(function () {
+            $user = Auth::user();
 
-        return response()->json(compact('user'));
+            if (empty($user)) {
+                return error('Invalid user!');
+            }
+
+            if (!$user->delete()) {
+                return error('Could not delete user...');
+            }
+
+            return success();
+        });
     }
 }

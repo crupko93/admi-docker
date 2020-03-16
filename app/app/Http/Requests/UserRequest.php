@@ -26,16 +26,22 @@ class UserRequest extends FormRequest
         $user_id = $this->input('id');
         if ($user_id) {
             return [
-                'name' => 'required',
+                'username'   => sprintf('required|unique:users,username,%d,id', $user_id),
+                'first_name' => 'required',
+                'last_name'  => 'required',
                 'email'      => sprintf('required|email|unique:users,email,%d,id', $user_id),
-                'password' => 'nullable|string|min:6|confirmed'
+                'role'       => 'required',
+                'password'   => 'nullable|string|min:6|confirmed'
             ];
         }
 
         return [
-            'name' => 'required',
+            'username'   => 'required|unique:users',
+            'first_name' => 'required',
+            'last_name'  => 'required',
             'email'      => 'required|email|unique:users',
-            'password' => 'nullable|string|min:6|confirmed'
+            'role'       => 'required',
+            'password'   => 'required|string|min:6|confirmed'
         ];
     }
 }

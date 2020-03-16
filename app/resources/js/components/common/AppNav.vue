@@ -11,12 +11,14 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <div class="text-center">
-                        <v-avatar color="primary" size="68">
-                            <v-icon dark size="68">mdi-account-circle</v-icon>
-                        </v-avatar>
-                    </div>
-                    <v-list-item-title class="text-center">{{ name }}</v-list-item-title>
+                    <v-flex xs12 class="text-center">
+                        <div class="image-placeholder">
+                            <span role="img" class="profile-photo-preview" :style="previewStyle">
+                                <v-icon v-if="!user.image" class="company-icon-placeholder">fas fa-user</v-icon>
+                            </span>
+                        </div>
+                    </v-flex>
+                    <v-list-item-title class="text-center">{{ user.first_name + ' ' + user.last_name }}</v-list-item-title>
                 </v-list-item-content>
 
                 <v-list-item-icon>
@@ -91,13 +93,25 @@ export default {
 
     data: () => ({
         items: [],
-        name : null
+        user : {
+            username             : null,
+            first_name           : null,
+            last_name            : null,
+            image                : null
+        }
     }),
 
-
-    computed: mapGetters({
-        auth: 'auth/user'
-    }),
+    computed: {
+        ...mapGetters({
+            auth: 'auth/user'
+        }),
+        // Evaluate style attribute for photo preview
+        previewStyle () {
+            return _.has(this.user, 'image.path')
+                ? `background-image: url(${this.user.image.path})`
+                : '';
+        }
+    },
 
     methods: {
         navToggle () {
@@ -117,6 +131,9 @@ export default {
                     {title: 'Profile', icon: 'person', to: {name: 'profile'}, exact: false}
                 ],
                 [
+                    {title: 'Users', icon: 'fas fa-users', to: {name: 'users'}, exact: false}
+                ],
+                [
                     {title: 'Logout', icon: 'power_settings_new', action: this.logout}
                 ]
             ];
@@ -124,14 +141,14 @@ export default {
     },
 
     mounted () {
-        this.name = this.auth.name;
+        this.user = this.auth;
         this.navigation();
     },
 
     watch: {
         auth: {
             handler () {
-                this.name = this.auth.name;
+                this.user = this.auth;
             },
             deep: true
         }

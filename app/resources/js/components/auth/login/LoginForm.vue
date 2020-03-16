@@ -66,7 +66,7 @@ export default {
 
     validations: {
         form: {
-            email   : {required, email},
+            email   : {required},
             password: {required}
         }
     },
@@ -75,8 +75,7 @@ export default {
         emailErrors () {
             if (!this.$v.form.email.$dirty) return [];
             const errors = [];
-            !this.$v.form.email.email && errors.push('Email is not valid!');
-            !this.$v.form.email.required && errors.push('Email is required!');
+            !this.$v.form.email.required && errors.push('Email/ Username is required!');
             return errors;
         },
         passwordErrors () {

@@ -20,7 +20,8 @@ import '~/plugins/index';
 // Global declarations
 window.API   = API;
 window.Utils = require('./utils.js');
-window._     = require('lodash');
+window._      = require('lodash');
+window.swal   = require('sweetalert');
 
 if (Laravel.env === 'production') {
     Vue.config.devtools = false;
