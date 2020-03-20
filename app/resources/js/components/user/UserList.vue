@@ -38,7 +38,7 @@
                                 <template v-slot:activator="{ on }">
                                     <v-btn text icon color="primary" class="mx-0"
                                         @click="impersonate(props.item)"
-                                        :disabled="user.id === props.item.id"
+                                        :disabled="props.item && user.id === props.item.id"
                                         v-on="on"
                                     >
                                         <v-icon small>fal fa-user-secret</v-icon>

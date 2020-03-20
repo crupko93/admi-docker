@@ -128,6 +128,9 @@ export default {
         navigation () {
             this.items = [
                 [
+                    {title: 'Dashboard', icon: 'far fa-chart-line', to: {name: 'dashboard'}, exact: false}
+                ],
+                [
                     {title: 'Profile', icon: 'person', to: {name: 'profile'}, exact: false}
                 ],
                 [

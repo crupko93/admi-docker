@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Auth, DB, Hash, Mail, Role;
 
-use App\{Http\Requests\UserRequest, Notifications\UserPasswordChanged, User};
+use App\{Http\Requests\UserGetRequest, Http\Requests\UserRequest, Notifications\UserPasswordChanged, User};
 use App\Http\Controllers\Controller;
 use App\Http\Resources\{
     User as UserResource,
@@ -13,7 +13,10 @@ use App\Http\Resources\{
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Vyuldashev\LaravelOpenApi\Annotations\{Collection, Operation, Parameters, PathItem, RequestBody, Response};
+/**
+ * @PathItem()
+ */
 class UserAPIController extends Controller
 {
     public function __construct()
@@ -32,10 +35,14 @@ class UserAPIController extends Controller
     }
 
     /**
+     * Update user's password
+     *
      * Update given user's password (if ID present, admin only) or current user's password (if ID missing)
      *
-     * @param Request $request
-     * @return Response
+     * @Operation()
+     * @RequestBody(factory="PutPasswordRequestBody")
+     * @Response(factory="SuccessResponse")
+     *
      */
     public function putPassword(Request $request)
     {
@@ -104,12 +111,19 @@ class UserAPIController extends Controller
     // ADMIN ONLY //
     ////////////////
     /**
+     * Get user
+     *
      * Return a single user or a collection of all users
-     * @param Request $request
-     * @param integer $user_id (optional) user ID to retrieve (else fallback to all)
-     * @return Response
+     *
+     * @Operation()
+     * @param UserGetRequest $request
+     * @param int $user_id User ID
+     * @Response(factory="PutUserResponse")
+     * @Collection(factory="ListUsersResponse")
+     * @Response(factory="ErrorResponse")
+     *
      */
-    public function getIndex(Request $request, $user_id = null)
+    public function getIndex(UserGetRequest $request, int $user_id = null)
     {
         $user_id = (int)$user_id;
 
@@ -146,10 +160,15 @@ class UserAPIController extends Controller
     }
 
     /**
+     * Create user
+     *
      * Create a new user
      *
-     * @param Request $request
-     * @return Response
+     * @Operation()
+     * @RequestBody(factory="PutUserRequestBody")
+     * @Response(factory="PutUserResponse")
+     * @Response(factory="ErrorResponse")
+     *
      */
     public function postIndex(UserRequest $request)
     {
@@ -175,10 +194,15 @@ class UserAPIController extends Controller
     }
 
     /**
-     * Update an existing user
+     * Update user
      *
-     * @param Request $request
-     * @param int $user_id
+     * Update a user based on ID
+     *
+     * @Operation()
+     * @RequestBody(factory="PutUserRequestBody")
+     * @Response(factory="PutUserResponse")
+     * @Response(factory="ErrorResponse")
+     *
      */
     public function putIndex(UserRequest $request)
     {
@@ -217,10 +241,15 @@ class UserAPIController extends Controller
     /**
      * Delete user
      *
-     * @param int $userId
-     * @return Response
+     * Delete a user based on ID
+     *
+     * @Operation()
+     * @param int $user_id User ID
+     * @Response(factory="SuccessResponse")
+     * @Response(factory="ErrorResponse")
+     *
      */
-    public function deleteIndex($user_id)
+    public function deleteIndex(int $user_id)
     {
         return DB::try(function () use ($user_id) {
             $user_id = (int)$user_id;
@@ -246,8 +275,13 @@ class UserAPIController extends Controller
     /**
      * Update user role
      *
-     * @param Request $request
-     * @return Response
+     * Update user role based on user ID
+     *
+     * @Operation()
+     * @RequestBody(factory="UpdateUserRoleRequestBody")
+     * @Response(factory="SuccessResponse")
+     * @Response(factory="ErrorResponse")
+     *
      */
     public function putRole(Request $request)
     {

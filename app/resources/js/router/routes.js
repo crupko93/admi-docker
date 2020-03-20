@@ -25,7 +25,8 @@ export default [
         {
             path: '', component: require('$comp/AppWrapper').default, children:
                 [
-                    {path: '', name: 'index', redirect: {name: 'profile'}},
+                    {path: '', name: 'index', redirect: {name: 'dashboard'}},
+                    {path: 'dashboard', name: 'dashboard', component: require('$comp/dashboard/Dashboard').default},
                     {
                         path: 'profile', component: require('$comp/profile/ProfileWrapper').default, children:
                             [
