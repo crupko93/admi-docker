@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use Auth, DB, Hash, Mail, Role;
+use Auth, DB, Hash, Mail;
 
-use App\{Http\Requests\UserGetRequest, Http\Requests\UserRequest, Notifications\UserPasswordChanged, User};
+use App\{Http\Requests\UserGetRequest, Http\Requests\UserRequest, Notifications\UserPasswordChanged, Role, User};
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use App\Http\Resources\{
     User as UserResource,
     UserCollection
@@ -21,16 +22,15 @@ class UserAPIController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('role:admin')->only([
-            'getIndex',
+        $this->middleware('permission:write_administration_section')->only([
             'postIndex',
             'putIndex',
             'deleteIndex',
             'putRole'
         ]);
 
-        $this->middleware('role:user')->only([
-            'deleteOwnAccount'
+        $this->middleware('permission:read_administration_section')->only([
+            'getIndex'
         ]);
     }
 
@@ -123,7 +123,7 @@ class UserAPIController extends Controller
      * @Response(factory="ErrorResponse")
      *
      */
-    public function getIndex(UserGetRequest $request, int $user_id = null)
+    public function getIndex(UserGetRequest $request, $user_id = null)
     {
         $user_id = (int)$user_id;
 
@@ -137,14 +137,14 @@ class UserAPIController extends Controller
                     case 'admin':
                     case 'moderator':
                     case 'user':
-                        $users = $users->where('role', $request->role);
+                        $users = $users->role($request->role);
                         break;
                     case 'system':
-                        $users = $users->whereIn('role', ['admin', 'moderator']);
+                        $users = $users->role(\Illuminate\Support\Collection::make(['admin', 'moderator']));
                         break;
                 }
             }
-            $users = $users->tablePaginate($request);
+            $users = $users->with('roles')->tablePaginate($request);
 
             return UserCollection::make($users);
         }
@@ -155,6 +155,8 @@ class UserAPIController extends Controller
         if (empty($user)) {
             return error('Invalid user!');
         }
+
+        $user->load('roles');
 
         return success(['user' => UserResource::make($user)]);
     }
@@ -179,13 +181,14 @@ class UserAPIController extends Controller
                 'last_name'  => $request['last_name'],
                 'email'      => $request['email'],
                 'phone'      => $request['phone'],
-                'role'       => $request['role'],
                 'password'   => Hash::make($request['password']),
             ]);
 
             if (!$user->save()) {
                 return error('Could not create user...');
             }
+
+            $user->assignRole($request['role']);
 
             return success([
                 'user' => UserResource::make($user)
@@ -217,13 +220,14 @@ class UserAPIController extends Controller
                 return error('Invalid user!');
             }
 
+            $user->syncRoles($request->role);
+
             $data = [
                 'username'   => $request->username,
                 'first_name' => $request->first_name,
                 'last_name'  => $request->last_name,
                 'email'      => $request->email,
                 'phone'      => $request->phone,
-                'role'       => $request->role,
                 'password'   => Hash::make($request->password),
 
             ];
@@ -286,15 +290,20 @@ class UserAPIController extends Controller
     public function putRole(Request $request)
     {
         return DB::try(function () use ($request) {
+            if (!$request->filled('id')) {
+                return error('Invalid data! Please recheck and try again...');
+            }
+
             $user = User::find($request->id);
 
             if (empty($user)) {
                 return error('Invalid user!');
             }
+            if (!$request->filled('role')) {
+                return error('No role provided...');
+            }
 
-            $user->role = $request->role;
-
-            if (!$user->save()) {
+            if (!$user->syncRoles($request->role)) {
                 return error('Could not update role...');
             }
 

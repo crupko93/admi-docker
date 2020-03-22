@@ -14,6 +14,8 @@ class User extends JsonResource
      */
     public function toArray($request)
     {
+        $this->roleWithPermissions();
+
         return parent::toArray($request);
     }
 }

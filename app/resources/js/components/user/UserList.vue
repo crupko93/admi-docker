@@ -32,7 +32,7 @@
                         <td>{{ props.item.username }}</td>
                         <td>{{ props.item.first_name }} {{ props.item.last_name }}</td>
                         <td>{{ props.item.email }}</td>
-                        <td>{{ props.item.role }}</td>
+                        <td>{{ props.item.role[0] }}</td>
                         <td class="text-center px-0">
                             <v-tooltip bottom color="alternative dark">
                                 <template v-slot:activator="{ on }">

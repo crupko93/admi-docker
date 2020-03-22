@@ -129,8 +129,6 @@ export default {
     watch: {
         user: {
             handler (values) {
-                console.log(values);
-                console.log(this.user);
                 this.userData = values;
             },
             deep: true

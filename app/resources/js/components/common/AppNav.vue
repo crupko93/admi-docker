@@ -126,7 +126,8 @@ export default {
         },
 
         navigation () {
-            this.items = [
+            this.items = [];
+            let temporaryItems = [
                 [
                     {title: 'Dashboard', icon: 'far fa-chart-line', to: {name: 'dashboard'}, exact: false}
                 ],
@@ -134,12 +135,23 @@ export default {
                     {title: 'Profile', icon: 'person', to: {name: 'profile'}, exact: false}
                 ],
                 [
-                    {title: 'Users', icon: 'fas fa-users', to: {name: 'users'}, exact: false}
+                    {title: 'Users', icon: 'fas fa-users', to: {name: 'users'}, exact: false, permission: 'read_administration_section'}
+                ],
+                [
+                    {title: 'Roles and Permissions', icon: 'fas fa-user-tag', to: {name: 'roles'}, exact: false, permission: 'read_administration_section'}
                 ],
                 [
                     {title: 'Logout', icon: 'power_settings_new', action: this.logout}
                 ]
             ];
+
+
+            // Filter navbar items based on authenticated user's permissions
+            temporaryItems.forEach((navItem) => {
+                if (!navItem[0].permission || (navItem[0].permission && Utils.hasPermissionTo(navItem[0].permission))) {
+                    this.items.push(navItem);
+                }
+            });
         }
     },
 
@@ -152,6 +164,7 @@ export default {
         auth: {
             handler () {
                 this.user = this.auth;
+                this.navigation();
             },
             deep: true
         }

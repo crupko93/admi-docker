@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Role;
 use App\User;
 use App\Dealer;
 use Illuminate\Http\Request;
@@ -55,6 +56,8 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
         event(new Registered($user = $this->create($request->all())));
 
+        $user->assignRole(Role::firstOrCreate(['name' => 'user']));
+
         return $this->registered($request, $user);
     }
 
@@ -85,7 +88,6 @@ class RegisterController extends Controller
             'last_name'  => 'required',
             'email'      => 'required|email|unique:users',
             'phone'      => 'required',
-            'role'       => 'required',
             'password'   => 'nullable|string|min:6|confirmed'
         ]);
     }

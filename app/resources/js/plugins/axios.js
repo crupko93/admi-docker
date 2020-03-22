@@ -25,20 +25,19 @@ instance.interceptors.response.use(response => {
 }, async error => {
     if (store.getters['auth/token']) {
     // TODO: Find more reliable way to determine when Token state
+        console.log(error.response);
         if (error.response.status === 401 && error.response.data.message === 'Token has expired') {
-            API.auth.refresh()
-                .then(response => {
-                    store.dispatch('auth/saveToken', response);
-                })
-                .catch(Utils.standardErrorResponse);
+            const { data } =  await API.auth.refresh();
+            store.dispatch('auth/saveToken', data);
+
             return axios.request(error.config);
         }
 
-        if (error.response.status === 401 ||
-      (error.response.status === 500 && (
-          error.response.data.message === 'Token has expired and can no longer be refreshed' ||
-        error.response.data.message === 'The token has been blacklisted'
-      ))
+        if (
+            error.response.status === 500 && (
+                error.response.data.message === 'Token has expired and can no longer be refreshed' ||
+                error.response.data.message === 'The token has been blacklisted'
+            )
         ) {
             store.dispatch('auth/destroy');
             router.push({ name: 'login' });

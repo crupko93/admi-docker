@@ -6,22 +6,23 @@ require('./components/bootstrap');
 
 // Imports (JS)
 import { API }                      from './api/api';
-import swal                         from 'sweetalert';
-import Vuetify                      from 'vuetify';
-import Vuelidate                    from 'vuelidate';
-import Snotify, { SnotifyPosition } from 'vue-snotify';
+import App                          from '$comp/App';
 import 'babel-polyfill';
+import '~/plugins/index';
 import router                       from '~/router/index';
 import store                        from '~/store/index';
-import App                          from '$comp/App';
+import swal                         from 'sweetalert';
+import Snotify, { SnotifyPosition } from 'vue-snotify';
+import { Utils }                    from './utils';
+import Vuetify                      from 'vuetify';
+import Vuelidate                    from 'vuelidate';
 import vuetify                      from '~/plugins/vuetify';
-import '~/plugins/index';
 
 // Global declarations
 window.API   = API;
-window.Utils = require('./utils.js');
-window._      = require('lodash');
-window.swal   = require('sweetalert');
+window.Utils = Utils;
+window._     = require('lodash');
+window.swal  = require('sweetalert');
 
 if (Laravel.env === 'production') {
     Vue.config.devtools = false;
