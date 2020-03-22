@@ -11,12 +11,13 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+    console.log(store.getters['auth/token']);
+    console.log(!store.getters['auth/check']);
     if (store.getters['auth/token'] && !store.getters['auth/check']) {
         try {
             await store.dispatch('auth/fetchUser');
         } catch (e) {}
     }
-    await store.dispatch('auth/fetchUser');
     let route = reroute(to);
     if (route) {
         next(route);
