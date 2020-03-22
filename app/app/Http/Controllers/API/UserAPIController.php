@@ -34,79 +34,6 @@ class UserAPIController extends Controller
         ]);
     }
 
-    /**
-     * Update user's password
-     *
-     * Update given user's password (if ID present, admin only) or current user's password (if ID missing)
-     *
-     * @Operation()
-     * @RequestBody(factory="PutPasswordRequestBody")
-     * @Response(factory="SuccessResponse")
-     *
-     */
-    public function putPassword(Request $request)
-    {
-        return DB::try(function () use ($request) {
-            if ($request->has('id')) {
-                ///////////////////////////////////
-                // ADMIN: Change user's password //
-                ///////////////////////////////////
-                if (!Role::admin()) {
-                    return error('Forbidden!');
-                }
-
-                // Ensure password field is sent in form data
-                $this->validate($request, ['password' => 'required']);
-
-                $user = User::find($request->id);
-
-                if (empty($user)) {
-                    return error('Invalid user!');
-                }
-
-                // Encrypt password before saving
-                $user->password = Hash::make($request->password);
-
-                if (!$user->save()) {
-                    return error('Could not update password...');
-                }
-
-                // Send user password via email if desired
-                if ($request->has('send_password')) {
-                    $user->notify(
-                        new UserPasswordChanged($user, $request->password)
-                    );
-                }
-            } else {
-                ///////////////////////////////
-                // USER: Change own password //
-                ///////////////////////////////
-                $user = Auth::user();
-
-                $this->validate($request, [
-                    'current_password' => 'required',
-                    'password'         => sprintf('required|confirmed|min:5')
-                ]);
-
-                if (!Hash::check($request->current_password, $user->password)) {
-                    return error('The current password is invalid!');
-                }
-
-                // Encrypt password before saving
-                $user->password = Hash::make($request->password);
-
-                if (!$user->save()) {
-                    return error('Could not update password...');
-                }
-
-                // Send user password via email
-                $user->notifyPasswordChanged($request->password);
-            }
-
-            return success();
-        });
-    }
-
     ////////////////
     // ADMIN ONLY //
     ////////////////
@@ -253,7 +180,7 @@ class UserAPIController extends Controller
      * @Response(factory="ErrorResponse")
      *
      */
-    public function deleteIndex(int $user_id)
+    public function deleteIndex($user_id)
     {
         return DB::try(function () use ($user_id) {
             $user_id = (int)$user_id;
@@ -305,6 +232,76 @@ class UserAPIController extends Controller
 
             if (!$user->syncRoles($request->role)) {
                 return error('Could not update role...');
+            }
+
+            return success();
+        });
+    }
+
+    /**
+     * Update user's password
+     *
+     * Update given user's password (if ID present, admin only) or current user's password (if ID missing)
+     *
+     * @Operation()
+     * @RequestBody(factory="PutPasswordRequestBody")
+     * @Response(factory="SuccessResponse")
+     *
+     */
+    public function putPassword(Request $request)
+    {
+        return DB::try(function () use ($request) {
+            if ($request->has('id')) {
+                ///////////////////////////////////
+                // ADMIN: Change user's password //
+                ///////////////////////////////////
+
+                // Ensure password field is sent in form data
+                $this->validate($request, ['password' => 'required']);
+
+                $user = User::find($request->id);
+
+                if (empty($user)) {
+                    return error('Invalid user!');
+                }
+
+                // Encrypt password before saving
+                $user->password = Hash::make($request->password);
+
+                if (!$user->save()) {
+                    return error('Could not update password...');
+                }
+
+                // Send user password via email if desired
+                if ($request->has('send_password')) {
+                    $user->notify(
+                        new UserPasswordChanged($user, $request->password)
+                    );
+                }
+            } else {
+                ///////////////////////////////
+                // USER: Change own password //
+                ///////////////////////////////
+                $user = Auth::user();
+
+                $this->validate($request, [
+                    'current_password' => 'required',
+                    'password'         => sprintf('required|confirmed|min:5')
+                ]);
+
+                if (!Hash::check($request->current_password, $user->password)) {
+                    return error('The current password is invalid!');
+                }
+
+                // Encrypt password before saving
+                $user->password = Hash::make($request->password);
+
+                if (!$user->save()) {
+                    return error('Could not update password...');
+                }
+
+                // Send user password via email
+                $user->notifyPasswordChanged($request->password);
             }
 
             return success();

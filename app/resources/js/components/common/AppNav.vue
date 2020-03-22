@@ -14,7 +14,7 @@
                     <v-flex xs12 class="text-center">
                         <div class="image-placeholder">
                             <span role="img" class="profile-photo-preview" :style="previewStyle">
-                                <v-icon v-if="!user.image" class="company-icon-placeholder">fas fa-user</v-icon>
+                                <v-icon v-if="user && !user.image" class="company-icon-placeholder">fas fa-user</v-icon>
                             </span>
                         </div>
                     </v-flex>
@@ -114,6 +114,16 @@ export default {
     },
 
     methods: {
+        initialize () {
+            this.items = [];
+            this.user = {
+                username  : null,
+                first_name: null,
+                last_name : null,
+                image     : null
+            };
+        },
+        
         navToggle () {
             this.$emit('nav-toggle');
         },
@@ -163,8 +173,12 @@ export default {
     watch: {
         auth: {
             handler () {
-                this.user = this.auth;
-                this.navigation();
+                if (this.auth) {
+                    this.user = this.auth;
+                    this.navigation();
+                } else {
+                    this.initialize();
+                }
             },
             deep: true
         }

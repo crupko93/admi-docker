@@ -29,14 +29,15 @@
                         <v-layout row wrap>
                             <v-flex xs12>
                                 <!-- Permissions -->
-                                <v-autocomplete multiple chips color="primary lighten-2" required
+                                <v-autocomplete multiple chips required color="primary lighten-2"
                                     @input="$v.form.permissions.$touch()" @blur="$v.form.permissions.$touch()"
                                     :items="permissions"
                                     :error-messages="permissionsErrors"
                                     item-text="name"
-                                    item-value="id"
+                                    item-value="name"
                                     label="Permissions*"
                                     v-model="form.permissions"
+                                    return-object
                                 >
                                     <template slot="selection" slot-scope="data">
                                         <v-chip close class="chip--select-multi"
@@ -154,7 +155,7 @@ export default {
          * Remove permission on chip 'close' click
          * */
         removeSelectedPermissions (item) {
-            const index = this.form.permissions.findIndex(permission => permission.id === item.id);
+            const index = this.form.permissions.findIndex(permission => permission.name === item.name);
             if (index >= 0) this.form.permissions.splice(index, 1);
         },
 
@@ -212,19 +213,17 @@ export default {
         createRole () {
             this.$v.form.$touch();
 
-            this.$v.passwordForm.$touch();
-
-            if (this.$v.form.$invalid || this.$v.passwordForm.$invalid) {
+            if (this.$v.form.$invalid) {
                 this.isLoading = false;
                 return;
             }
 
-            return API.roles.create(Object.assign({}, this.form, this.passwordForm, this.credentials))
+            return API.roles.create(this.form)
                 .then(this.successCallback)
                 .catch(e => {
                     Utils.standardErrorResponse(e);
-                    this.isLoading = false;
-                });
+                })
+                .finally(() => this.isLoading = false);
         },
 
         updateRole () {
@@ -234,7 +233,7 @@ export default {
                 this.isLoading = false;
                 return;
             }
-            console.log(this.form);
+
             return API.roles.update(this.form)
                 .then(() => {
                     store.dispatch('auth/fetchUser');

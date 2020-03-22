@@ -1,5 +1,5 @@
-import helpers from 'vuelidate/lib/validators';
-import store   from '~/store/index';
+import { helpers } from 'vuelidate/lib/validators';
+import store       from '~/store/index';
 
 export let Utils = {
     /**

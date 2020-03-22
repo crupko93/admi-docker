@@ -1,51 +1,55 @@
 <template>
-    <div>
-        <v-text-field
-            v-model="form.email"
-            label="Email"
-            prepend-icon="person"
-            type="email"
-            @input="$v.form.email.$touch()"
-            @blur="$v.form.email.$touch()"
-            :disabled="isLoading"
-            :error-messages="emailErrors" required
-        ></v-text-field>
-
-        <v-text-field
-            v-model="form.password"
-            label="Password"
-            prepend-icon="lock"
-            @input="$v.form.password.$touch()"
-            @blur="$v.form.password.$touch()"
-            @click:append="() => (passwordHidden = !passwordHidden)"
-            :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
-            :type="passwordHidden ? 'password' : 'text'"
-            :disabled="isLoading"
-            :error-messages="passwordErrors" required
-        ></v-text-field>
-
-        <v-layout class="mt-4 mx-0">
-            <v-spacer></v-spacer>
-
-            <v-btn
-                color="grey darken-2"
+    <div class="text-center">
+        <content-loader :loading="isLoading"></content-loader>
+        <v-form v-if="!isLoading">
+            <v-text-field
+                v-model="form.email"
+                label="Username/Email"
+                prepend-icon="person"
+                type="email"
+                @input="$v.form.email.$touch()"
+                @blur="$v.form.email.$touch()"
                 :disabled="isLoading"
-                :to="{ name: 'forgot', query: {email: form.email} }"
-                text
-            >
-                Forgot password?
-            </v-btn>
+                :error-messages="emailErrors" required
+            ></v-text-field>
 
-            <v-btn
-                color="primary"
-                class="ml-4"
-                @click="submit"
-                :loading="isLoading"
-                :disabled="isLoading || $v.$invalid"
-            >
-                Login
-            </v-btn>
-        </v-layout>
+            <v-text-field
+                v-model="form.password"
+                label="Password"
+                prepend-icon="lock"
+                @input="$v.form.password.$touch()"
+                @blur="$v.form.password.$touch()"
+                @click:append="() => (passwordHidden = !passwordHidden)"
+                :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
+                :type="passwordHidden ? 'password' : 'text'"
+                :disabled="isLoading"
+                :error-messages="passwordErrors" required
+            ></v-text-field>
+
+            <v-layout class="mt-4 mx-0">
+                <v-spacer></v-spacer>
+
+                <v-btn
+                    color="grey darken-2"
+                    :disabled="isLoading"
+                    :to="{ name: 'forgot', query: {email: form.email} }"
+                    text
+                >
+                    Forgot password?
+                </v-btn>
+
+                <v-btn
+                    color="primary"
+                    class="ml-4"
+                    type="submit"
+                    :loading="isLoading"
+                    :disabled="isLoading || $v.$invalid"
+                    @click.prevent="submit"
+                >
+                    Login
+                </v-btn>
+            </v-layout>
+        </v-form>
     </div>
 </template>
 

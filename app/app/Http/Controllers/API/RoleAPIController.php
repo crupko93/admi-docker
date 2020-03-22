@@ -46,7 +46,12 @@ class RoleAPIController extends Controller
                 return error('Could not save Role!');
             }
 
-            $role->givePermissionTo($request->permissions);
+            $permissionsNames = [];
+            foreach ($request->permissions as $key => $permission) {
+                $permissionsNames[] = $request->permissions[$key]['name'];
+            }
+
+            $role->givePermissionTo($permissionsNames);
 
             return success();
         });
@@ -62,6 +67,7 @@ class RoleAPIController extends Controller
             foreach ($request->permissions as $key => $permission) {
                 $permissionsNames[] = $request->permissions[$key]['name'];
             }
+
             $role->syncPermissions($permissionsNames);
 
             if (!$role->save()) {
