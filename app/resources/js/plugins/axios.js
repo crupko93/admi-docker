@@ -15,6 +15,11 @@ instance.interceptors.request.use(config => {
         config.headers['Authorization'] = 'Bearer ' + token;
     }
 
+    const locale = store.getters['lang/locale'];
+    if (locale) {
+        config.headers['Accept-Language'] = locale;
+    }
+
     return config;
 }, error => {
     return Promise.reject(error);

@@ -1,3 +1,14 @@
+@php
+    $config = [
+        'tinymceKey'    => config('services.tinymce.key'),
+        'siteName'      => config('app.name'),
+        'siteUrl'       => config('app.url'),
+        'apiUrl'        => config('app.url') . '/api',
+        'env'           => config('env'),
+        'locale'        => $locale = app()->getLocale(),
+        'locales'       => config('app.locales')
+    ];
+@endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -13,13 +24,7 @@
         <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 
         <script>
-            window.Laravel = {!! json_encode([
-                'tinymceKey'    => config('services.tinymce.key'),
-                'siteName' => config('app.name'),
-                'siteUrl' => config('app.url'),
-                'apiUrl' => config('app.url') . '/api',
-                'env' => config('env')
-            ]) !!};
+            window.Laravel = @json($config);
         </script>
     </head>
     <body>

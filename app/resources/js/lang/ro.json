@@ -1,0 +1,12 @@
+{
+  "ok": "Ok",
+  "cancel": "Anuleaza",
+  "error_alert_title": "Oops...",
+  "error_alert_text": "Ceva nu a mers bine! Te rugam reincearca.",
+  "login": "Autentificare",
+  "register": "Inregistrare",
+  "email": "Email",
+  "password": "Parola",
+  "forgot_password": "Ai uitat parola?",
+  "no_account": "Nu ai cont?"
+}

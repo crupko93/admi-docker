@@ -8,6 +8,7 @@ require('./components/bootstrap');
 import { API }                      from './api/api';
 import App                          from '$comp/App';
 import 'babel-polyfill';
+import i18n                         from '~/plugins/i18n';
 import '~/plugins/index';
 import router                       from '~/router/index';
 import store                        from '~/store/index';
@@ -45,6 +46,7 @@ Vue.use(Snotify, {
 Vue.prototype.$utils = window.Utils;
 
 window.Bus = new Vue({
+    i18n,
     router,
     store,
     vuetify,

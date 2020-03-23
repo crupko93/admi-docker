@@ -1,0 +1,13 @@
+{
+  "ok": "Ok",
+  "cancel": "Annulla",
+  "error_alert_title": "Oops...",
+  "error_alert_text": "Qualcosa è andato storto! Per favore riprova.",
+  "login": "Accesso",
+  "register": "Registrati",
+  "email": "Email",
+  "password": "Password",
+  "forgot_password": "Ha dimenticato la password?",
+  "no_account": "Non hai un account?"
+
+}

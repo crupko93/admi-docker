@@ -29,7 +29,6 @@ module.exports = exports = {
         jQuery : true,
         Utils  : true,
         swal   : true,
-        Spark  : true,
         console: true,
         app    : true,
         axios  : true,

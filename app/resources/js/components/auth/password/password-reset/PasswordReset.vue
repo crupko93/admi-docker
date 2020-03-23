@@ -1,7 +1,12 @@
 <template>
     <v-card>
         <v-toolbar dark color="primary" flat>
-            <v-toolbar-title>Password reset</v-toolbar-title>
+            <v-flex xs10>
+                <v-toolbar-title>Password reset</v-toolbar-title>
+            </v-flex>
+            <v-flex xs2 class="text-right">
+                <locale-dropdown></locale-dropdown>
+            </v-flex>
         </v-toolbar>
         <v-card-text>
             <p>Choose a new password below</p>
@@ -13,10 +18,12 @@
 
 <script>
 import PasswordResetForm from './PasswordResetForm';
+import LocaleDropdown    from '../../../common/LocaleDropdown';
 
 export default {
     components: {
-        PasswordResetForm
+        PasswordResetForm,
+        LocaleDropdown
     },
 
     methods: {

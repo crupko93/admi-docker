@@ -1,0 +1,12 @@
+{
+  "ok": "Ok",
+  "cancel": "Cancel",
+  "error_alert_title": "Oops...",
+  "error_alert_text": "Something went wrong! Please try again.",
+  "login": "Log In",
+  "register": "Register",
+  "email": "Email",
+  "password": "Password",
+  "forgot_password": "Forgot Password?",
+  "no_account": "Don't have an account?"
+}

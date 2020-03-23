@@ -1,7 +1,8 @@
-import Vue       from 'vue';
-import VueRouter from 'vue-router';
-import store     from '~/store/index';
-import routes    from './routes';
+import { loadMessages } from '~/plugins/i18n';
+import Vue              from 'vue';
+import VueRouter        from 'vue-router';
+import store            from '~/store/index';
+import routes           from './routes';
 
 Vue.use(VueRouter);
 
@@ -11,13 +12,13 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-    console.log(store.getters['auth/token']);
-    console.log(!store.getters['auth/check']);
     if (store.getters['auth/token'] && !store.getters['auth/check']) {
         try {
             await store.dispatch('auth/fetchUser');
         } catch (e) {}
     }
+    await loadMessages(store.getters['lang/locale']);
+
     let route = reroute(to);
     if (route) {
         next(route);

@@ -5,12 +5,17 @@
         </div>
         <v-card>
             <v-toolbar dark color="primary" flat>
-                <v-toolbar-title>Login</v-toolbar-title>
+                   <v-flex xs10>
+                       <v-toolbar-title>{{ $t('login') }}</v-toolbar-title>
+                   </v-flex>
+                   <v-flex xs2 class="text-right">
+                       <locale-dropdown></locale-dropdown>
+                   </v-flex>
             </v-toolbar>
             <v-card-text>
                 <login-form @success="success"></login-form>
-                <div class="text-center mt-4">Don't have an account?
-                    <router-link :to="{ name: 'register' }">Register</router-link>
+                <div class="text-center mt-4">{{ $t('no_account') }}
+                    <router-link :to="{ name: 'register' }">{{ $t('register') }}</router-link>
                 </div>
             </v-card-text>
         </v-card>
@@ -18,11 +23,13 @@
 </template>
 
 <script>
-import LoginForm from './LoginForm';
+import LoginForm      from './LoginForm';
+import LocaleDropdown from '../../common/LocaleDropdown';
 
 export default {
     components: {
-        LoginForm
+        LoginForm,
+        LocaleDropdown
     },
 
     methods: {
