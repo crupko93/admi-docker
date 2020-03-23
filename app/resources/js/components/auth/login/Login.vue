@@ -27,9 +27,14 @@ export default {
 
     methods: {
         success (data) {
-            this.$store.dispatch('auth/saveToken', data);
-            this.$store.dispatch('auth/setUser', data);
-            this.$router.push({name: 'index'});
+            Promise.all([
+                this.$store.dispatch('auth/saveToken', data),
+            ])
+                .then(() => {
+                    this.$router.push({name: 'index'});
+                });
+           
+            
         }
     }
 };

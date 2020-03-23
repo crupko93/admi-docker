@@ -14,7 +14,7 @@
                     <v-flex xs12 class="text-center">
                         <div class="image-placeholder">
                             <span role="img" class="profile-photo-preview" :style="previewStyle">
-                                <v-icon v-if="!user.image" class="company-icon-placeholder">fas fa-user</v-icon>
+                                <v-icon v-if="user && !user.image" class="company-icon-placeholder">fas fa-user</v-icon>
                             </span>
                         </div>
                     </v-flex>
@@ -114,6 +114,16 @@ export default {
     },
 
     methods: {
+        initialize () {
+            this.items = [];
+            this.user = {
+                username  : null,
+                first_name: null,
+                last_name : null,
+                image     : null
+            };
+        },
+        
         navToggle () {
             this.$emit('nav-toggle');
         },
@@ -126,7 +136,8 @@ export default {
         },
 
         navigation () {
-            this.items = [
+            this.items = [];
+            let temporaryItems = [
                 [
                     {title: 'Dashboard', icon: 'far fa-chart-line', to: {name: 'dashboard'}, exact: false}
                 ],
@@ -134,12 +145,23 @@ export default {
                     {title: 'Profile', icon: 'person', to: {name: 'profile'}, exact: false}
                 ],
                 [
-                    {title: 'Users', icon: 'fas fa-users', to: {name: 'users'}, exact: false}
+                    {title: 'Users', icon: 'fas fa-users', to: {name: 'users'}, exact: false, permission: 'read_administration_section'}
+                ],
+                [
+                    {title: 'Roles and Permissions', icon: 'fas fa-user-tag', to: {name: 'roles'}, exact: false, permission: 'read_administration_section'}
                 ],
                 [
                     {title: 'Logout', icon: 'power_settings_new', action: this.logout}
                 ]
             ];
+
+
+            // Filter navbar items based on authenticated user's permissions
+            temporaryItems.forEach((navItem) => {
+                if (!navItem[0].permission || (navItem[0].permission && Utils.hasPermissionTo(navItem[0].permission))) {
+                    this.items.push(navItem);
+                }
+            });
         }
     },
 
@@ -151,7 +173,12 @@ export default {
     watch: {
         auth: {
             handler () {
-                this.user = this.auth;
+                if (this.auth) {
+                    this.user = this.auth;
+                    this.navigation();
+                } else {
+                    this.initialize();
+                }
             },
             deep: true
         }

@@ -16,64 +16,64 @@ class UsersTableSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        User::create([
+        $user = User::create([
             'username'   => 'admin',
             'first_name' => 'Admin',
             'last_name'  => 'Test',
             'email'      => 'cristian.serban@flygogroup.com',
-            'password'   => bcrypt('admin'),
-            'role'       => 'admin'
+            'password'   => bcrypt('admin')
         ]);
+        $user->assignRole('admin');
 
-        User::create([
+        $user = User::create([
             'username'   => 'moderator',
             'first_name' => 'Moderator',
             'last_name'  => 'Test',
             'email'      => 'test@email.com',
-            'password'   => bcrypt('moderator'),
-            'role'       => 'moderator'
+            'password'   => bcrypt('moderator')
         ]);
+        $user->assignRole('moderator');
 
-        User::create([
+        $user = User::create([
             'username'   => 'user',
             'first_name' => 'User',
             'last_name'  => 'Test',
             'email'      => 'test@email.com',
-            'password'   => bcrypt('user'),
-            'role'       => 'user'
+            'password'   => bcrypt('user')
         ]);
+        $user->assignRole('user');
 
         for ($i = 0; $i < 7; $i++) {
-            User::create([
+            $user = User::create([
                 'username'   => $faker->userName,
                 'first_name' => $faker->firstName,
                 'last_name'  => $faker->lastName,
                 'email'      => $faker->email,
-                'password'   => Hash::make($faker->randomNumber()),
-                'role'       => 'admin'
+                'password'   => Hash::make($faker->randomNumber())
             ]);
+            $user->assignRole('admin');
         }
 
         for ($x = 0; $x < 14; $x++) {
-            User::create([
+            $user = User::create([
                 'username'   => $faker->userName,
                 'first_name' => $faker->firstName,
                 'last_name'  => $faker->lastName,
                 'email'      => $faker->email,
-                'password'   => Hash::make($faker->randomNumber()),
-                'role'       => 'moderator'
+                'password'   => Hash::make($faker->randomNumber())
             ]);
+            $user->assignRole('moderator');
         }
 
         for ($z = 0; $z < 30; $z++) {
-            User::create([
+            $user = User::create([
                 'username'   => $faker->userName,
                 'first_name' => $faker->firstName,
                 'last_name'  => $faker->lastName,
                 'email'      => $faker->email,
-                'password'   => Hash::make($faker->randomNumber()),
-                'role'       => 'user'
+                'password'   => Hash::make($faker->randomNumber())
             ]);
+            $user->assignRole('user');
         }
     }
 }

@@ -32,21 +32,8 @@
                         <td>{{ props.item.username }}</td>
                         <td>{{ props.item.first_name }} {{ props.item.last_name }}</td>
                         <td>{{ props.item.email }}</td>
-                        <td>{{ props.item.role }}</td>
+                        <td>{{ props.item.role[0] }}</td>
                         <td class="text-center px-0">
-                            <v-tooltip bottom color="alternative dark">
-                                <template v-slot:activator="{ on }">
-                                    <v-btn text icon color="primary" class="mx-0"
-                                        @click="impersonate(props.item)"
-                                        :disabled="props.item && user.id === props.item.id"
-                                        v-on="on"
-                                    >
-                                        <v-icon small>fal fa-user-secret</v-icon>
-                                    </v-btn>
-                                </template>
-                                <span>Impersonate</span>
-                            </v-tooltip>
-
                             <v-menu offset-y>
                                 <template v-slot:activator="{ on }">
                                     <v-btn
@@ -154,16 +141,17 @@ export default {
                 align   : 'left'
             }, {
                 text    : 'Name',
-                align   : 'left',
-                sortable: false
+                value   : 'first_name',
+                align   : 'left'
             }, {
                 text    : 'Email',
                 value   : 'email',
                 align   : 'left'
             }, {
                 text    : 'Role',
-                value   : 'role',
-                align   : 'left'
+                value   : 'roles',
+                align   : 'left',
+                sortable: false
             }, {
                 text    : 'Actions',
                 value   : '',

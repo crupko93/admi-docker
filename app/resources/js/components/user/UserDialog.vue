@@ -69,7 +69,7 @@
 
                 <v-flex xs12 sm12 md4>
                     <!-- Role -->
-                    <v-select required :items="['admin', 'moderator', 'user']" label="Role*"
+                    <v-select required :items="roles" label="Role*"
                         @change="$v.form.role.$touch()"
                         @blur="$v.form.role.$touch()"
                         :error-messages="roleErrors"
@@ -157,6 +157,7 @@ export default {
         userDialog              : false,
         showPassword            : false,
         showPasswordConfirmation: false,
+        formBusy                : false,
 
         form        : {},
         passwordForm: {},
@@ -164,7 +165,7 @@ export default {
             send: false
         },
 
-        formBusy: false
+        roles: []
     }),
 
     validations () {
@@ -250,6 +251,8 @@ export default {
                 password_confirmation: ''
             };
 
+            this.roles = [];
+
             this.$v.$reset();
         },
 
@@ -324,11 +327,9 @@ export default {
         edit (id) {
             this.userId     = id;
             this.userDialog = true;
-            // this.form.id    = id;
 
             return API.users.get(id).then(response => {
                 response = response.data.user;
-
                 this.form.billing_state = null;
 
                 this.form = {
@@ -338,8 +339,16 @@ export default {
                     last_name             : response.last_name,
                     email                 : response.email,
                     phone                 : response.phone,
-                    role                  : response.role
+                    role                  : response.role[0]
                 };
+            }).catch(Utils.standardErrorResponse);
+        },
+
+        getRoles () {
+            return API.roles.all().then(response => {
+                this.roles = response.data.roles;
+                this.roles = response.data.roles.map(role => role.name);
+
             }).catch(Utils.standardErrorResponse);
         },
 
@@ -350,8 +359,16 @@ export default {
         }
     },
 
-    created () {
-        this.initialize();
+    watch: {
+        userDialog: {
+            handler (value) {
+                if (value) {
+                    this.initialize();
+                    this.getRoles();
+                }
+            },
+            deep: true
+        }
     }
 };
 </script>

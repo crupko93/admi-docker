@@ -2,7 +2,6 @@ import Vue       from 'vue';
 import VueRouter from 'vue-router';
 import store     from '~/store/index';
 import routes    from './routes';
-import { api }   from '~/config';
 
 Vue.use(VueRouter);
 
@@ -12,12 +11,13 @@ const router = new VueRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+    console.log(store.getters['auth/token']);
+    console.log(!store.getters['auth/check']);
     if (store.getters['auth/token'] && !store.getters['auth/check']) {
         try {
             await store.dispatch('auth/fetchUser');
         } catch (e) {}
     }
-
     let route = reroute(to);
     if (route) {
         next(route);
@@ -35,6 +35,9 @@ function reroute (to) {
     let failRoute   = false,
         checkResult = false;
 
+    let user = store.getters['auth/user'];
+
+    // Check rules
     to.meta.rules && to.meta.rules.forEach(rule => {
         let check = false;
         if (Array.isArray(rule)) {
@@ -54,6 +57,15 @@ function reroute (to) {
         }
 
         checkResult = checkResult && check;
+    });
+
+    // Check permissions
+    (user && user.permissions && to.meta.permissions) && to.meta.permissions.forEach(permission => {
+        let check = Utils.hasPermissionTo(permission);
+
+        if (!check && !failRoute) {
+            failRoute = 'index';
+        }
     });
 
     if (!checkResult && failRoute) {

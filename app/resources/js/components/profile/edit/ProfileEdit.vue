@@ -46,8 +46,6 @@
                                     <v-text-field
                                         v-model="form.phone"
                                         type="email"
-                                        @input="$v.form.phone.$touch()"
-                                        @blur="$v.form.phone.$touch()"
                                         :label="labels.phone"
                                         :disabled="isLoading"
                                     ></v-text-field>
@@ -251,7 +249,7 @@ export default {
             this.isLoading = true;
             return API.users.updateProfile(this.form)
                 .then(response => {
-                    Snotify.success('Your profile successfully updated.');
+                    Snotify.success('Your profile has been successfully updated.');
                     this.$store.dispatch('auth/setUser', response.data);
                     this.$emit('userUpdated');
                     this.$router.push({name: 'profile'});

@@ -1,6 +1,7 @@
-const { helpers } = require('vuelidate/lib/validators');
+import { helpers } from 'vuelidate/lib/validators';
+import store       from '~/store/index';
 
-let Utils = {
+export let Utils = {
     /**
      * Resolve a route placeholder with given parameter list
      * @param  {String} placeholder route placeholder to resolve
@@ -210,6 +211,26 @@ let Utils = {
 
         return valid;
     },
-};
 
-module.exports = Utils;
+    /**
+     * Check if the user has the appropriate permission
+     * @return {Boolean}
+     */
+    hasPermissionTo (permission) {
+        let user = store.getters['auth/user'];
+        let check = false;
+        if (user && user.permissions) {
+            if (Array.isArray(permission)) {
+                let checks = [];
+                for (let i in permission) {
+                    checks[i] = user.permissions.includes(permission);
+                    check     = check || checks[i];
+                }
+            } else {
+                check = user.permissions.includes(permission);
+            }
+        }
+
+        return check;
+    }
+};

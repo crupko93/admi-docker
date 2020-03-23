@@ -51,6 +51,8 @@ class LoginController extends Controller
 
         $user = $request->user();
 
+        $user->load('roles');
+
         return response()->json(compact('token', 'user'));
     }
 
