@@ -94,7 +94,7 @@ export default {
             this.isLoading = true;
             API.auth.resetPassword(this.form)
                 .then(() => {
-                    Snotify.success($t('succes_reset_password'));
+                    Snotify.success(this.$t('success_reset_password'));
                     this.$emit('success', this.form);
                 })
                 .catch(Utils.standardErrorResponse)

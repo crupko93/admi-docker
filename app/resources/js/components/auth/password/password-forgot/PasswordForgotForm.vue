@@ -63,8 +63,8 @@ export default {
         emailErrors () {
             if (!this.$v.form.email.$dirty) return [];
             const errors = [];
-            !this.$v.form.email.email && errors.push($t('email_is_not_valid'));
-            !this.$v.form.email.required && errors.push($t('email_is_required'));
+            !this.$v.form.email.email && errors.push(this.$t('email_is_not_valid'));
+            !this.$v.form.email.required && errors.push(this.$t('email_is_required'));
             return errors;
         }
     },
@@ -76,7 +76,8 @@ export default {
             this.isLoading = true;
             return API.auth.resetPassword(this.form)
                 .then(() => {
-                    Snotify.success($t('reset_password_email_sent'));
+
+                    Snotify.success(this.$t('reset_password_email_sent'));
                     this.$emit('success');
                 })
                 .catch(Utils.standardErrorResponse)

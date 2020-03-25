@@ -299,7 +299,7 @@ export default {
         },
 
         successCallback () {
-            Snotify.success('User saved!', 'Success!');
+            Snotify.success(this.$t('user_saved') + '!', this.$t('success') + '!');
             this.$emit('user-save');
             this.closeDialog();
         },

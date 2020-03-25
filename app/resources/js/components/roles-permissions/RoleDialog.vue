@@ -250,7 +250,7 @@ export default {
          * Emit success and close dialog
          */
         successCallback () {
-            Snotify.success('Role saved!', 'Success!');
+            Snotify.success(this.$t('role_saved') + '!', this.$t('success') + '!');
             this.$emit('role-save');
             this.closeDialog();
         },

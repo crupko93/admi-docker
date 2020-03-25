@@ -69,6 +69,7 @@
 
 import RoleDialog     from './RoleDialog';
 import lodash         from 'lodash';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'RoleList',
@@ -82,7 +83,7 @@ export default {
         role: {type: String}
     },
 
-    data: () => ({
+    data: vm => ({
         lodash,
         /////////////////
         // Remote data //
@@ -101,15 +102,15 @@ export default {
         // Data table headers
         headers: [
             {
-                text    : 'Name',
+                text    : vm.$t('name'),
+                value   : 'name',
+                align   : 'left'
+            }, {
+                text    : vm.$t('permissions'),
                 align   : 'left',
                 sortable: true
             }, {
-                text    : 'Permissions',
-                align   : 'left',
-                sortable: true
-            }, {
-                text    : 'Actions',
+                text    : vm.$t('actions'),
                 value   : '',
                 align   : 'center',
                 sortable: false
@@ -124,6 +125,10 @@ export default {
 
         // Role data table pagination object
         pagination: {}
+    }),
+
+    computed: mapGetters({
+        locale: 'lang/locale'
     }),
 
     methods: {
@@ -146,7 +151,7 @@ export default {
             return API.roles.updateRole({id: role.id, role})
                 .then(() => {
                     this.retrieveRoles();
-                    Snotify.success('Role updated!');
+                    Snotify.success(this.$t('role_updated') + '!');
                 })
                 .catch(Utils.standardErrorResponse);
         },
@@ -177,7 +182,7 @@ export default {
 
                     API.roles.delete(role.id)
                         .then(() => {
-                            Snotify.success('Role successfully deleted!');
+                            Snotify.success(this.$t('role_successfully_deleted') + '!');
                             this.retrieveRoles();
                         })
                         .catch(e => {
@@ -203,6 +208,28 @@ export default {
                     this.retrieveRoles();
                 }, 500)
 
+        },
+
+        locale: {
+            handler () {
+                this.headers = [
+                    {
+                        text    : this.$t('name'),
+                        value   : 'name',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('permissions'),
+                        align   : 'left',
+                        sortable: true
+                    }, {
+                        text    : this.$t('actions'),
+                        value   : '',
+                        align   : 'center',
+                        sortable: false
+                    }
+                ];
+            },
+            deep: true
         }
     }
 };

@@ -141,7 +141,7 @@ export default {
                 password_confirmation: this.form.password_confirmation,
                 send_password        : this.form.send_password
             }).then(() => {
-                Snotify.success('Password updated!');
+                Snotify.success(this.$t('password_updated') + '!');
 
                 this.isUpdating     = false;
                 this.passwordDialog = false;

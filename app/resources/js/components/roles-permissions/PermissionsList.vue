@@ -34,11 +34,12 @@
 <script>
 
 import lodash         from 'lodash';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'PermissionsList',
 
-    data: () => ({
+    data: vm => ({
         /////////////////
         // Remote data //
         /////////////////
@@ -56,11 +57,11 @@ export default {
         // Data table headers
         headers: [
             {
-                text    : 'Label',
+                text    : vm.$t('label'),
                 value   : 'label',
                 align   : 'left'
             }, {
-                text    : 'Name',
+                text    : vm.$t('name'),
                 value   : 'name',
                 align   : 'left'
             }
@@ -74,6 +75,10 @@ export default {
 
         // Permission data table pagination object
         pagination: {}
+    }),
+
+    computed: mapGetters({
+        locale: 'lang/locale'
     }),
 
     methods: {
@@ -118,7 +123,7 @@ export default {
 
                     API.permissions.delete(permission.id)
                         .then(() => {
-                            Snotify.success('Permission successfully deleted!');
+                            Snotify.success(this.$t('permission_successfully_deleted'));
                             this.retrievePermissions();
                         })
                         .catch(e => {
@@ -146,6 +151,23 @@ export default {
                     this.retrievePermissions();
                 }, 500)
 
+        },
+
+        locale: {
+            handler () {
+                this.headers = [
+                    {
+                        text    : this.$t('label'),
+                        value   : 'label',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('name'),
+                        value   : 'name',
+                        align   : 'left'
+                    }
+                ];
+            },
+            deep: true
         }
     }
 };

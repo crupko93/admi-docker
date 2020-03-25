@@ -249,7 +249,7 @@ export default {
             this.isLoading = true;
             return API.users.updateProfile(this.form)
                 .then(response => {
-                    Snotify.success('Your profile has been successfully updated.');
+                    Snotify.success(this.$t('profile_successfully_updated'));
                     this.$store.dispatch('auth/setUser', response.data);
                     this.$emit('userUpdated');
                     this.$router.push({name: 'profile'});

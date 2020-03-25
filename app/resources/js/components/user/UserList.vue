@@ -118,7 +118,7 @@ export default {
         role: {type: String}
     },
 
-    data: () => ({
+    data: vm => ({
         /////////////////
         // Remote data //
         /////////////////
@@ -136,24 +136,24 @@ export default {
         // Data table headers
         headers: [
             {
-                text    : 'Username',
+                text    : vm.$t('username'),
                 value   : 'username',
                 align   : 'left'
             }, {
-                text    : 'Name',
+                text    : vm.$t('name'),
                 value   : 'first_name',
                 align   : 'left'
             }, {
-                text    : 'Email',
+                text    : vm.$t('email'),
                 value   : 'email',
                 align   : 'left'
             }, {
-                text    : 'Role',
+                text    : vm.$t('role'),
                 value   : 'roles',
                 align   : 'left',
                 sortable: false
             }, {
-                text    : 'Actions',
+                text    : vm.$t('actions'),
                 value   : '',
                 align   : 'center',
                 sortable: false
@@ -172,7 +172,8 @@ export default {
 
     computed: {
         ...mapGetters({
-            user: 'auth/user'
+            user  : 'auth/user',
+            locale: 'lang/locale'
         })
     },
 
@@ -197,7 +198,7 @@ export default {
             return API.users.updateRole({id: user.id, role})
                 .then(() => {
                     this.retrieveUsers();
-                    Snotify.success('User role updated!');
+                    Snotify.success(this.$t('user_role_updated') + '!');
                 })
                 .catch(Utils.standardErrorResponse);
         },
@@ -229,7 +230,7 @@ export default {
 
                     API.users.delete(user.id)
                         .then(() => {
-                            Snotify.success('User successfully deleted!');
+                            Snotify.success(this.$t('user_successfully_deleted') + '!');
                             this.retrieveUsers();
                         })
                         .catch(e => {
@@ -238,11 +239,6 @@ export default {
                         })
                         .finally(swal.close);
                 });
-        },
-
-        // TODO
-        impersonate (user) {
-
         }
     },
 
@@ -260,6 +256,37 @@ export default {
                     this.retrieveUsers();
                 }, 500)
 
+        },
+
+        locale: {
+            handler () {
+                this.headers = [
+                    {
+                        text    : this.$t('username'),
+                        value   : 'username',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('name'),
+                        value   : 'first_name',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('email'),
+                        value   : 'email',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('role'),
+                        value   : 'roles',
+                        align   : 'left',
+                        sortable: false
+                    }, {
+                        text    : this.$t('actions'),
+                        value   : '',
+                        align   : 'center',
+                        sortable: false
+                    }
+                ];
+            },
+            deep: true
         }
     }
 };

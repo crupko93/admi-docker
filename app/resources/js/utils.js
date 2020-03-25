@@ -182,7 +182,7 @@ export let Utils = {
 
         temp.remove();
 
-        Snotify.success('Registration URL copied to clipboard!');
+        Snotify.success($t('copied_to_clipboard'));
 
     },
 
