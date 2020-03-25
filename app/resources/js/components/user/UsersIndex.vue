@@ -1,12 +1,12 @@
 <template>
     <v-card>
         <v-card-title>
-            <h3 class="title">User Management</h3>
+            <h3 class="title">{{$t('user_management')}}</h3>
         </v-card-title>
 
         <v-tabs>
-            <v-tab :key="0">System Users</v-tab>
-            <v-tab class="pb-0" :key="1">Users</v-tab>
+            <v-tab :key="0">{{$t('system_users')}}</v-tab>
+            <v-tab class="pb-0" :key="1">{{$t('users')}}</v-tab>
 
             <v-tab-item :key="0">
                 <user-list role="system" ref="userListSystem"></user-list>

@@ -4,7 +4,7 @@
         <v-form v-if="!isLoading">
             <v-text-field
                 v-model="form.email"
-                label="Username/Email"
+                :label="$t('username/email')"
                 prepend-icon="person"
                 type="email"
                 @input="$v.form.email.$touch()"
@@ -15,7 +15,7 @@
 
             <v-text-field
                 v-model="form.password"
-                label="Password"
+                :label="$t('password')"
                 prepend-icon="lock"
                 @input="$v.form.password.$touch()"
                 @blur="$v.form.password.$touch()"
@@ -35,7 +35,7 @@
                     :to="{ name: 'forgot', query: {email: form.email} }"
                     text
                 >
-                    Forgot password?
+                    {{$t('forgot_password')}}
                 </v-btn>
 
                 <v-btn
@@ -46,7 +46,7 @@
                     :disabled="isLoading || $v.$invalid"
                     @click.prevent="submit"
                 >
-                    Login
+                    {{$t('login')}}
                 </v-btn>
             </v-layout>
         </v-form>

@@ -13,11 +13,11 @@
                         </div>
 
                         <h3 v-else class="white--text font-weight-regular">
-                            No data available
+                            {{$t('no_data_available')}}
                         </h3>
 
                         <h4 class="mt-2 mb-2 teal--text text--lighten-4 font-weight-regular text-uppercase">
-                            Total Customers
+                            {{$t('total_customers')}}
                         </h4>
                     </div>
                 </v-card>
@@ -28,7 +28,7 @@
                     <content-loader slot="default" :loading="loading"></content-loader>
                     <v-card-title>
                         <h3 class="mt-2 mb-2 primary--text text--darken-3 font-weight-regular">
-                            Total Customers by Spending
+                            {{$t('total_customers_by_spending')}}
                         </h3>
                     </v-card-title>
 
@@ -40,7 +40,7 @@
                         ></GraphCustomersBySpending>
 
                         <h3 v-else class="grey--text font-weight-regular text-xs-center pt-5 pb-5">
-                            No data available
+                            {{$t('no_data_available')}}
                         </h3>
                     </v-card-text>
                 </v-card>
@@ -52,7 +52,7 @@
                 <v-card>
                     <v-card-title>
                         <h3 class="mt-2 mb-2 primary--text text--darken-3 font-weight-regular">
-                            Top 10 Customers By Spending
+                            {{$t('top_ten_customers_by_spending')}}
                         </h3>
                     </v-card-title>
 

@@ -12,7 +12,7 @@
             <v-card-text>
                 <v-text-field flat solo-inverted single-line hide-details clearable
                     class="datatable-search"
-                    append-icon="search" label="Search"
+                    append-icon="search" :label="$t('search')"
                     v-model="searchTerm"
                 ></v-text-field>
             </v-card-text>
@@ -44,12 +44,12 @@
                                 <v-list>
                                     <!-- [ALL] Edit -->
                                     <v-list-item @click="$refs.roleDialog.edit(props.item.id)">
-                                        <v-list-item-title>Edit</v-list-item-title>
+                                        <v-list-item-title>{{$t('edit')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [ALL] Delete -->
                                     <v-list-item @click="deleteRole(props.item)">
-                                        <v-list-item-title>Delete</v-list-item-title>
+                                        <v-list-item-title>{{$t('delete')}}</v-list-item-title>
                                     </v-list-item>
                                 </v-list>
                             </v-menu>

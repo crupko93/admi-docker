@@ -7,8 +7,8 @@
             <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title>
-            <span class="headline" v-if="userId">Edit User</span>
-            <span class="headline" v-else>Add User</span>
+            <span class="headline" v-if="userId">{{$t('edit_user')}}</span>
+            <span class="headline" v-else>{{$t('add_user')}}</span>
         </v-toolbar-title>
     </v-toolbar>
 
@@ -17,7 +17,7 @@
             <v-layout row wrap>
                 <v-flex xs12 sm6 md4>
                     <!-- First Name -->
-                    <v-text-field required name="username" label="Username*"
+                    <v-text-field required name="username" :label="$t('username')+'*'"
                         @input="$v.form.username.$touch()"
                         @blur="$v.form.username.$touch()"
                         :error-messages="usernameErrors"
@@ -26,7 +26,7 @@
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                     <!-- First Name -->
-                    <v-text-field required name="first_name" label="First Name*"
+                    <v-text-field required name="first_name" :label="$t('first_name')+'*'"
                         @input="$v.form.first_name.$touch()"
                         @blur="$v.form.first_name.$touch()"
                         :error-messages="firstNameErrors"
@@ -35,7 +35,7 @@
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                     <!-- Last Name -->
-                    <v-text-field required name="last_name" label="Last Name*"
+                    <v-text-field required name="last_name" :label="$t('last_name')+'*'"
                         @input="$v.form.first_name.$touch()"
                         @blur="$v.form.last_name.$touch()"
                         :error-messages="lastNameErrors"
@@ -47,7 +47,7 @@
             <v-layout row wrap>
                 <v-flex xs12 sm6 md4>
                     <!-- Email Address -->
-                    <v-text-field required name="email" label="E-mail*"
+                    <v-text-field required name="email" :label="$t('email')+'*'"
                         @input="$v.form.email.$touch()"
                         @blur="$v.form.email.$touch()"
                         :error-messages="emailErrors"
@@ -61,7 +61,7 @@
                         color="primary" ref="userPhone"
                         @input="$v.form.phone.$touch()"
                         @blur="$v.form.phone.$touch()"
-                        name="user_phone" label="Phone*"
+                        name="user_phone" :label="$t('phone')+'*'"
                         :rerender="userDialog"
                         v-model="form.phone">
                     </PhoneInput>
@@ -69,7 +69,7 @@
 
                 <v-flex xs12 sm12 md4>
                     <!-- Role -->
-                    <v-select required :items="roles" label="Role*"
+                    <v-select required :items="roles" :label="$t('role')+'*'"
                         @change="$v.form.role.$touch()"
                         @blur="$v.form.role.$touch()"
                         :error-messages="roleErrors"
@@ -81,7 +81,7 @@
             <v-layout row wrap v-if="!userId" align-center>
                 <v-flex xs12 sm6 md4>
                     <!-- Password -->
-                    <v-text-field required class="pass" name="password" label="Password*"
+                    <v-text-field required class="pass" name="password" :label="$t('password')+'*'"
                         @click:prepend="generatePassword"
                         @click:append="showPassword = !showPassword"
                         @input="$v.passwordForm.password.$touch()"
@@ -96,7 +96,7 @@
 
                 <v-flex xs12 sm6 md4>
                     <!-- Password Confirmation -->
-                    <v-text-field required name="password_confirmation" label="Confirm Password*"
+                    <v-text-field required name="password_confirmation" :label="$t('confirm_password')+'*'"
                         @click:append="showPasswordConfirmation = !showPasswordConfirmation"
                         @input="$v.passwordForm.password_confirmation.$touch()"
                         @blur="$v.passwordForm.password_confirmation.$touch()"
@@ -108,7 +108,7 @@
                 </v-flex>
 
                 <v-flex xs12 sm12 md4>
-                    <v-checkbox class="pt-3" label="Send credentials by email?"
+                    <v-checkbox class="pt-3" :label="$t('send_credentials_by_email?')"
                         :disabled="form.role !== 'user'"
                         v-model="credentials.send"
                     ></v-checkbox>
@@ -122,16 +122,17 @@
 
         <v-btn color="primary" outlined
             @click="closeDialog"
-            :disabled="formBusy">Cancel
+            :disabled="formBusy">
+            {{$t('cancel')}}
         </v-btn>
 
         <v-btn color="primary" :disabled="formBusy"
             @click="submit"
         >
             <span v-if="formBusy">
-                <v-icon>fa fa-spinner fa-spin</v-icon> Saving
+                <v-icon>fa fa-spinner fa-spin</v-icon> {{$t('saving')}}
             </span>
-            <span v-else>Save</span>
+            <span v-else>{{$t('save')}}</span>
         </v-btn>
     </v-card-actions>
 </v-card>

@@ -123,7 +123,7 @@ export default {
                 image     : null
             };
         },
-        
+
         navToggle () {
             this.$emit('nav-toggle');
         },

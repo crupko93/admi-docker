@@ -2,14 +2,14 @@
     <v-card>
         <v-toolbar dark color="primary" flat>
             <v-flex xs10>
-                <v-toolbar-title>Password reset</v-toolbar-title>
+                <v-toolbar-title>{{$t('reset_password')}}</v-toolbar-title>
             </v-flex>
             <v-flex xs2 class="text-right">
                 <locale-dropdown></locale-dropdown>
             </v-flex>
         </v-toolbar>
         <v-card-text>
-            <p>Please enter your email address. You will receive a link to create a new password via email.</p>
+            <p>{{$t('enter_email_will_receive_password')}}</p>
 
             <password-forgot-form @success="success"></password-forgot-form>
         </v-card-text>

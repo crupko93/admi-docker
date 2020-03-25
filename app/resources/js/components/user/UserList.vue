@@ -12,7 +12,7 @@
             <v-card-text>
                 <v-text-field flat solo-inverted single-line hide-details clearable
                     class="datatable-search"
-                    append-icon="search" label="Search"
+                    append-icon="search" :label="$t('search')"
                     v-model="searchTerm"
                 ></v-text-field>
             </v-card-text>
@@ -47,37 +47,37 @@
                                     <!-- [ALL] View Profile -->
                                     <!-- <v-list-tile @click="showUserProfile(props.item)"> -->
                                     <v-list-item @click="selectedUser = props.item; isShowProfile = !isShowProfile">
-                                        <v-list-item-title>View Profile</v-list-item-title>
+                                        <v-list-item-title>{{$t('view_profile')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [Moderator] Make Admin -->
                                     <v-list-item @click="updateRole(props.item, 'admin')"
                                         v-if="props.item.role === 'moderator'"
                                     >
-                                        <v-list-item-title>Make Admin</v-list-item-title>
+                                        <v-list-item-title>{{$t('make_admin')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [Admin] Make Moderator -->
                                     <v-list-item @click="updateRole(props.item, 'moderator')"
                                         v-if="props.item.role === 'admin'"
                                     >
-                                        <v-list-item-title>Make Moderator</v-list-item-title>
+                                        <v-list-item-title>{{$t('make_moderator')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [ALL] Change Password -->
                                     <v-list-item @click="$refs.changePassword.open(props.item)">
-                                        <v-list-item-title>Change Password</v-list-item-title>
+                                        <v-list-item-title>{{$t('change_password')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [ALL] Edit -->
                                     <!-- <v-list-item @click="$refs.userDialog.edit(props.item.id)" -->
                                     <v-list-item @click="$refs.userDialog.edit(props.item.id)">
-                                        <v-list-item-title>Edit</v-list-item-title>
+                                        <v-list-item-title>{{$t('edit')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [ALL] Delete -->
                                     <v-list-item @click="deleteUser(props.item)">
-                                        <v-list-item-title>Delete</v-list-item-title>
+                                        <v-list-item-title>{{$t('delete')}}</v-list-item-title>
                                     </v-list-item>
                                 </v-list>
                             </v-menu>

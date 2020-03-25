@@ -6,7 +6,7 @@
             @input="$v.form.password.$touch()"
             @blur="$v.form.password.$touch()"
             @click:append="() => (passwordHidden = !passwordHidden)"
-            :label="labels.password"
+            :label="$t('password')"
             :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
             :type="passwordHidden ? 'password' : 'text'"
             :disabled="isLoading"
@@ -17,7 +17,7 @@
             v-model="form.password_confirmation"
             @input="$v.form.password_confirmation.$touch()"
             @blur="$v.form.password_confirmation.$touch()"
-            :label="labels.password_confirmation"
+            :label="$t('confirm_password')"
             :type="passwordHidden ? 'password' : 'text'"
             :disabled="isLoading"
             :error-messages="passwordConfirmationErrors" required
@@ -32,7 +32,7 @@
                 :disabled="isLoading || $v.$invalid"
                 color="primary"
             >
-                Set new password
+                {{$t('set_new_password')}}
             </v-btn>
         </v-layout>
     </div>
@@ -94,7 +94,7 @@ export default {
             this.isLoading = true;
             API.auth.resetPassword(this.form)
                 .then(() => {
-                    Snotify.success('Your password has been reset.');
+                    Snotify.success($t('succes_reset_password'));
                     this.$emit('success', this.form);
                 })
                 .catch(Utils.standardErrorResponse)

@@ -4,7 +4,7 @@
             <v-card-text>
                 <v-text-field flat solo-inverted single-line hide-details clearable
                     class="datatable-search"
-                    append-icon="search" label="Search"
+                    append-icon="search" :label="$t('search')"
                     v-model="searchTerm"
                 ></v-text-field>
             </v-card-text>

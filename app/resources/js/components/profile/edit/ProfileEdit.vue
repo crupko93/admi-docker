@@ -1,7 +1,7 @@
 <template>
     <div>
             <v-card>
-                <v-card-title><h3>Edit Profile</h3></v-card-title>
+                <v-card-title><h3>{{$t('edit_profile')}}</h3></v-card-title>
                 <v-card-text class="profile">
                     <v-layout flex wrap justify-center align-center>
 
@@ -16,7 +16,7 @@
                         </div>
                     </v-flex>
                     <v-flex xs12 md9>
-                        <h3>Profile Information</h3>
+                        <h3>{{$t('profile_info')}}</h3>
 
                         <v-layout row wrap>
                             <v-flex xs12 sm6>
@@ -25,7 +25,7 @@
                                         v-model="form.username"
                                         @input="$v.form.username.$touch()"
                                         @blur="$v.form.username.$touch()"
-                                        :label="labels.username"
+                                        :label="$t('username')"
                                         :disabled="isLoading"
                                         :error-messages="usernameErrors" required
                                     ></v-text-field>
@@ -36,7 +36,7 @@
                                         v-model="form.first_name"
                                         @input="$v.form.first_name.$touch()"
                                         @blur="$v.form.first_name.$touch()"
-                                        :label="labels.first_name"
+                                        :label="$t('first_name')"
                                         :disabled="isLoading"
                                         :error-messages="firstNameErrors" required
                                     ></v-text-field>
@@ -46,7 +46,7 @@
                                     <v-text-field
                                         v-model="form.phone"
                                         type="email"
-                                        :label="labels.phone"
+                                        :label="$t('phone')"
                                         :disabled="isLoading"
                                     ></v-text-field>
                                 </div>
@@ -59,7 +59,7 @@
                                         type="email"
                                         @input="$v.form.email.$touch()"
                                         @blur="$v.form.email.$touch()"
-                                        :label="labels.email"
+                                        :label="$t('email')"
                                         :disabled="isLoading"
                                         :error-messages="emailErrors" required
                                     ></v-text-field>
@@ -70,7 +70,7 @@
                                         v-model="form.last_name"
                                         @input="$v.form.last_name.$touch()"
                                         @blur="$v.form.last_name.$touch()"
-                                        :label="labels.last_name"
+                                        :label="$t('last_name')"
                                         :disabled="isLoading"
                                         :error-messages="lastNameErrors" required
                                     ></v-text-field>
@@ -79,7 +79,7 @@
                         </v-layout>
                     </v-flex>
                     <v-flex xs12>
-                            <h3>Security</h3>
+                            <h3>{{$t('security')}}</h3>
 
                             <v-layout row wrap>
                                 <v-flex xs12 sm6>
@@ -91,7 +91,7 @@
                                             @input="$v.form.password.$touch()"
                                             @blur="$v.form.password.$touch()"
                                             @click:append="() => (passwordHidden = !passwordHidden)"
-                                            :label="labels.password"
+                                            :label="$t('password')"
                                             :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
                                             :type="passwordHidden ? 'password' : 'text'"
                                             :disabled="isLoading"
@@ -107,7 +107,7 @@
                                             autocomplete="new-password"
                                             @input="$v.form.password_confirmation.$touch()"
                                             @blur="$v.form.password_confirmation.$touch()"
-                                            :label="labels.password_confirmation"
+                                            :label="$t('confirm_password')"
                                             :type="passwordHidden ? 'password' : 'text'"
                                             :disabled="isLoading"
                                             :error-messages="passwordConfirmationErrors"
@@ -128,7 +128,7 @@
                     :to="{ name: 'profile' }"
                     text exact
                 >
-                    Cancel
+                    {{$t('cancel')}}
                 </v-btn>
 
                 <v-btn
@@ -138,7 +138,7 @@
                     :loading="isLoading"
                     :disabled="isLoading"
                 >
-                    Save
+                    {{$t('save')}}
                 </v-btn>
             </v-layout>
         </div>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-card>
-            <v-card-title><h3>Profile</h3></v-card-title>
+            <v-card-title><h3>{{$t('profile')}}</h3></v-card-title>
             <v-card-text class="profile">
                 <v-toolbar class="shadow-0 py-0" color="white" v-if="!displayEditProfile">
                     <v-btn icon @click="goBack">
@@ -29,39 +29,39 @@
                         </div>
                         <div class="profile-uploader" v-if="displayEditProfile">
                             <!-- :client-id="company.id" -->
-                            <router-link :to="{ name: 'profile-edit' }">Edit profile</router-link>
+                            <router-link :to="{ name: 'profile-edit' }">{{$t('edit_profile')}}</router-link>
                         </div>
                     </v-flex>
 
                     <v-flex xs12 sm9>
-                        <h3>Profile Information</h3>
+                        <h3>{{$t('profile_info')}}</h3>
 
                         <v-layout wrap>
                             <v-flex xs12 sm6>
                                 <div class="profile-info">
-                                    <span>Username</span>
+                                    <span>{{$t('username')}}</span>
                                     {{ userData.username || '-' }}
                                 </div>
 
                                 <div class="profile-info">
-                                    <span>First Name</span>
+                                    <span>{{$t('first_name')}}</span>
                                     {{ userData.first_name || '-' }}
                                 </div>
 
                                 <div class="profile-info">
-                                    <span>Phone</span>
+                                    <span>{{$t('phone')}}</span>
                                     {{ userData.phone || '-' }}
                                 </div>
                             </v-flex>
 
                             <v-flex xs12 sm6>
                                 <div class="profile-info">
-                                    <span>Email</span>
+                                    <span>{{$t('email')}}</span>
                                     {{ userData.email || '-' }}
                                 </div>
 
                                 <div class="profile-info">
-                                    <span>Last Name</span>
+                                    <span>{{$t('last_name')}}</span>
                                     {{ userData.last_name || '-' }}
                                 </div>
                             </v-flex>

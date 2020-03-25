@@ -4,7 +4,7 @@
             v-model="form.username"
             @input="$v.form.username.$touch()"
             @blur="$v.form.username.$touch()"
-            :label="labels.username"
+            :label="$t('username')"
             :disabled="isLoading"
             :error-messages="usernameErrors" required
         ></v-text-field>
@@ -13,7 +13,7 @@
             v-model="form.first_name"
             @input="$v.form.first_name.$touch()"
             @blur="$v.form.first_name.$touch()"
-            :label="labels.first_name"
+            :label="$t('first_name')"
             :disabled="isLoading"
             :error-messages="firstNameErrors" required
         ></v-text-field>
@@ -22,7 +22,7 @@
             v-model="form.last_name"
             @input="$v.form.last_name.$touch()"
             @blur="$v.form.last_name.$touch()"
-            :label="labels.last_name"
+            :label="$t('last_name')"
             :disabled="isLoading"
             :error-messages="lastNameErrors" required
         ></v-text-field>
@@ -32,7 +32,7 @@
             type="email"
             @input="$v.form.email.$touch()"
             @blur="$v.form.email.$touch()"
-            :label="labels.email"
+            :label="$t('email')"
             :disabled="isLoading"
             :error-messages="emailErrors" required
         ></v-text-field>
@@ -42,7 +42,7 @@
             type="email"
             @input="$v.form.phone.$touch()"
             @blur="$v.form.phone.$touch()"
-            :label="labels.phone"
+            :label="$t('phone')"
             :disabled="isLoading"
         ></v-text-field>
 
@@ -52,7 +52,7 @@
             @input="$v.form.password.$touch()"
             @blur="$v.form.password.$touch()"
             @click:append="() => (passwordHidden = !passwordHidden)"
-            :label="labels.password"
+            :label="$t('password')"
             :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
             :type="passwordHidden ? 'password' : 'text'"
             :disabled="isLoading"
@@ -63,7 +63,7 @@
             v-model="form.password_confirmation"
             @input="$v.form.password_confirmation.$touch()"
             @blur="$v.form.password_confirmation.$touch()"
-            :label="labels.password_confirmation"
+            :label="$t('confirm_password')"
             :type="passwordHidden ? 'password' : 'text'"
             :disabled="isLoading"
             :error-messages="passwordConfirmationErrors" required
@@ -78,7 +78,7 @@
                 :to="{ name: 'login' }"
                 text exact
             >
-                Back to login
+                {{$t('back_to_login')}}
             </v-btn>
 
             <v-btn
@@ -89,7 +89,7 @@
                 :loading="isLoading"
                 :disabled="isLoading || $v.$invalid"
             >
-                Register
+                {{$t('register')}}
             </v-btn>
         </v-layout>
     </div>
@@ -102,17 +102,6 @@ export default {
     data: () => ({
         passwordHidden: true,
         isLoading     : false,
-
-        labels: {
-            username             : 'Username',
-            first_name           : 'First Name',
-            last_name            : 'Last Name',
-            email                : 'Email',
-            phone                : 'Phone',
-            password             : 'Password',
-            password_confirmation: 'Confirm Password'
-        },
-
         form: {
             username             : null,
             first_name           : null,

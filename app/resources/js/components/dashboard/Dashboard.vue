@@ -6,8 +6,8 @@
             background-color="transparent"
             color="basil"
         >
-            <v-tab>Flights</v-tab>
-            <v-tab>Customers</v-tab>
+            <v-tab>{{$t('flights')}}</v-tab>
+            <v-tab>{{$t('customers')}}</v-tab>
         </v-tabs>
         <v-tabs-items v-model="tab">
             <v-tab-item transition="fade">

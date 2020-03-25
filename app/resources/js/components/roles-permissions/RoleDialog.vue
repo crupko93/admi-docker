@@ -7,8 +7,8 @@
                         <v-icon>close</v-icon>
                     </v-btn>
                     <v-toolbar-title>
-                        <span class="headline" v-if="roleId">Edit Role</span>
-                        <span class="headline" v-else>Add Role</span>
+                        <span class="headline" v-if="roleId">{{$t('edit_role')}}</span>
+                        <span class="headline" v-else>{{$t('add_role')}}</span>
                     </v-toolbar-title>
                 </v-toolbar>
 
@@ -17,7 +17,7 @@
                         <v-layout row wrap>
                             <v-flex xs12>
                                 <!-- Name -->
-                                <v-text-field required name="name" label="Name*"
+                                <v-text-field required name="name" :label="$t('name')+'*'"
                                     @input="$v.form.name.$touch()"
                                     @blur="$v.form.name.$touch()"
                                     :error-messages="nameErrors"
@@ -35,7 +35,7 @@
                                     :error-messages="permissionsErrors"
                                     item-text="name"
                                     item-value="name"
-                                    label="Permissions*"
+                                    :label="$t('permissions')+'*'"
                                     v-model="form.permissions"
                                     return-object
                                 >
@@ -71,7 +71,8 @@
 
                     <v-btn color="primary" outlined
                         @click="closeDialog"
-                        :disabled="isLoading">Cancel
+                        :disabled="isLoading">
+                        {{$t('cancel')}}
                     </v-btn>
 
                     <v-btn color="primary" :disabled="isLoading"
@@ -80,7 +81,7 @@
             <span v-if="isLoading">
                 <v-icon>fa fa-spinner fa-spin</v-icon> Saving
             </span>
-                        <span v-else>Save</span>
+                        <span v-else>{{$t('save')}}</span>
                     </v-btn>
                 </v-card-actions>
             </v-card>
