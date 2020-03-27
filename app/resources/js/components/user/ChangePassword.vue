@@ -82,14 +82,14 @@ export default {
         passwordErrors () {
             if (!this.$v.form.password.$dirty) return [];
             const errors = [];
-            !this.$v.form.password.required && errors.push('Password is required!');
+            !this.$v.form.password.required && errors.push(this.$t('password')+' '+this.$t('is_required'));
             return errors;
         },
         passwordConfirmationErrors () {
             if (!this.$v.form.password_confirmation.$dirty) return [];
             const errors = [];
-            !this.$v.form.password_confirmation.required && errors.push('Password confirmation is required!');
-            !this.$v.form.password_confirmation.sameAsPassword && errors.push('Passwords must be identical!');
+            !this.$v.form.password_confirmation.required && errors.push(this.$t('confirm_password')+' '+this.$t('is_required'));
+            !this.$v.form.password_confirmation.sameAsPassword && errors.push(this.$t('password')+' '+this.$t('must_be_identical'));
             return errors;
         }
     },

@@ -128,13 +128,13 @@ export default {
         nameErrors () {
             if (!this.$v.form.name.$dirty) return [];
             const errors = [];
-            !this.$v.form.name.required && errors.push('Name is required!');
+            !this.$v.form.name.required && errors.push(this.$t('name')+' '+this.$t('is_required'));
             return errors;
         },
         permissionsErrors () {
             if (!this.$v.form.permissions.$dirty) return [];
             const errors = [];
-            !this.$v.form.permissions.required && errors.push('At least one permissions is required!');
+            !this.$v.form.permissions.required && errors.push(this.$t('one_permission_required'));
             return errors;
         }
     },

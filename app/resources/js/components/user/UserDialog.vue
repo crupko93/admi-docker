@@ -191,45 +191,45 @@ export default {
         usernameErrors () {
             if (!this.$v.form.username.$dirty) return [];
             const errors = [];
-            !this.$v.form.username.required && errors.push('Username is required!');
+            !this.$v.form.username.required && errors.push(this.$t('username')+' '+this.$t('is_required'));
             return errors;
         },
         firstNameErrors () {
             if (!this.$v.form.first_name.$dirty) return [];
             const errors = [];
-            !this.$v.form.first_name.required && errors.push('First name is required!');
+            !this.$v.form.first_name.required && errors.push(this.$t('first_name')+' '+this.$t('is_required'));
             return errors;
         },
         lastNameErrors () {
             if (!this.$v.form.last_name.$dirty) return [];
             const errors = [];
-            !this.$v.form.last_name.required && errors.push('Last name is required!');
+            !this.$v.form.last_name.required && errors.push(this.$t('last_name')+' '+this.$t('is_required'));
             return errors;
         },
         emailErrors () {
             if (!this.$v.form.email.$dirty) return [];
             const errors = [];
-            !this.$v.form.email.email && errors.push('Email is not valid!');
-            !this.$v.form.email.required && errors.push('Email is required!');
+            !this.$v.form.email.email && errors.push(this.$t('email')+' '+this.$t('is_not_valid'));
+            !this.$v.form.email.required && errors.push(this.$t('email')+' '+this.$t('is_required'));
             return errors;
         },
         roleErrors () {
             if (!this.$v.form.role.$dirty) return [];
             const errors = [];
-            !this.$v.form.role.required && errors.push('Role is required!');
+            !this.$v.form.role.required && errors.push(this.$t('role')+' '+this.$t('is_required'));
             return errors;
         },
         passwordErrors () {
             if (!this.$v.passwordForm.password.$dirty) return [];
             const errors = [];
-            !this.$v.passwordForm.password.required && errors.push('Password is required!');
+            !this.$v.passwordForm.password.required && errors.push(this.$t('password')+' '+this.$t('is_required'));
             return errors;
         },
         passwordConfirmationErrors () {
             if (!this.$v.passwordForm.password_confirmation.$dirty) return [];
             const errors = [];
-            !this.$v.passwordForm.password_confirmation.required && errors.push('Password confirmation is required!');
-            !this.$v.passwordForm.password_confirmation.sameAsPassword && errors.push('Passwords must be identical!');
+            !this.$v.passwordForm.password_confirmation.required && errors.push(this.$t('confirm_password')+' '+this.$t('is_required'));
+            !this.$v.passwordForm.password_confirmation.sameAsPassword && errors.push(this.$t('confirm_password')+' '+this.$t('must_be_identical'));
             return errors;
         }
     },

@@ -205,20 +205,19 @@ export default {
 
         deleteUser (user) {
             swal({
-                text: `User (${user.first_name} ${user.last_name}) and all related data will be permanently \
-                    deleted!`,
+                text: this.$t('user_will_be_deleted').replace('*name*', user.first_name+' '+user.last_name),
 
-                title    : 'Are you sure?',
+                title    : this.$t('are_you_sure'),
                 icon     : 'info',
                 className: 'swal-info',
                 buttons  : {
                     cancel : {
-                        text      : 'Cancel',
+                        text      : this.$t('cancel'),
                         visible   : true,
                         closeModal: true
                     },
                     confirm: {
-                        text      : 'Ok',
+                        text      : this.$t('ok'),
                         closeModal: false
                     }
                 }

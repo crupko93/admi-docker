@@ -98,20 +98,19 @@ export default {
 
         deletePermission (permission) {
             swal({
-                text: `Permission (${permission.name}) and all related data will be permanently \
-                    deleted!`,
+                text: this.$t('permission_will_be_deleted').replace('*name*', permission.name),
 
-                title    : 'Are you sure?',
+                title    : this.$t('are_you_sure'),
                 icon     : 'info',
                 className: 'swal-info',
                 buttons  : {
                     cancel : {
-                        text      : 'Cancel',
+                        text      : this.$t('cancel'),
                         visible   : true,
                         closeModal: true
                     },
                     confirm: {
-                        text      : 'Ok',
+                        text      : this.$t('ok'),
                         closeModal: false
                     }
                 }
