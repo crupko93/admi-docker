@@ -4,6 +4,7 @@
             <img src="/img/logo-sign.png" alt="">
         </div>
         <v-card>
+            <content-loader :loading="isLoading"></content-loader>
             <v-toolbar dark color="primary" flat>
                    <v-flex xs10>
                        <v-toolbar-title>{{ $t('login') }}</v-toolbar-title>
@@ -13,7 +14,7 @@
                    </v-flex>
             </v-toolbar>
             <v-card-text>
-                <login-form @success="success"></login-form>
+                <login-form @success="success" @isLoading="setLoading"></login-form>
                 <div class="text-center mt-4">{{ $t('no_account') }}
                     <router-link :to="{ name: 'register' }">{{ $t('register') }}</router-link>
                 </div>
@@ -32,7 +33,15 @@ export default {
         LocaleDropdown
     },
 
+    data: () => ({
+        isLoading: false
+    }),
+
     methods: {
+        setLoading (loading) {
+            this.isLoading = loading;
+        },
+
         success (data) {
             Promise.all([
                 this.$store.dispatch('auth/saveToken', data),

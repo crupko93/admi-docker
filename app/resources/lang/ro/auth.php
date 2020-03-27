@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'failed'   => 'Estas credenciales no coinciden con nuestros registros.',
-    'throttle' => 'Demasiados intentos de acceso. Por favor intente nuevamente en :seconds segundos.',
+    'failed'   => 'Credențiale de autentificare nevalide',
+    'throttle' => 'Prea multe încercări de conectare. Încercați din nou în :seconds secunde.',
+    'log_out'  => 'Deconectat cu succes'
 
 ];
