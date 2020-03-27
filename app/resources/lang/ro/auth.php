@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'failed'   => '',
-    'throttle' => '',
+    'failed'   => 'Credențiale de autentificare nevalide',
+    'throttle' => 'Prea multe încercări de conectare. Încercați din nou în :seconds secunde.',
+    'log_out'  => 'Deconectat cu succes'
 
 ];

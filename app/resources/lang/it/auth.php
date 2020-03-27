@@ -11,6 +11,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'failed' => '',
-    'throttle' => '',
+    'failed'   => 'Credenziali di accesso non valide',
+    'throttle' => 'Troppi tentativi di accesso. Riprova tra :seconds secondi.',
+    'log_out'  => 'Disconnesso correttamente'
 ];

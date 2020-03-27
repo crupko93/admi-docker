@@ -103,6 +103,7 @@ export default {
                 })
                 .catch(error => {
                     Utils.standardErrorResponse(error);
+                    this.$emit('isLoading', false);
                 });
         }
     },
