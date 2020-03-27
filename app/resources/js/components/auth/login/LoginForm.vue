@@ -1,6 +1,5 @@
 <template>
     <div class="text-center">
-        <content-loader :loading="isLoading"></content-loader>
         <v-form v-if="!isLoading">
             <v-text-field
                 v-model="form.email"
@@ -95,15 +94,16 @@ export default {
             this.$v.$touch();
             if (this.$v.$invalid) return;
 
-            this.isLoading = true;
+            this.$emit('isLoading', true);
 
             return API.auth.login(this.form)
                 .then(response => {
                     Snotify.success('Welcome back!');
                     this.$emit('success', response.data);
                 })
-                .catch(Utils.standardErrorResponse)
-                .finally(() => this.isLoading = false);
+                .catch(error => {
+                    Utils.standardErrorResponse(error);
+                });
         }
     },
 
