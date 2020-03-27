@@ -13,101 +13,122 @@ return [
     |
     */
 
-    'accepted'             => ':attribute debe ser aceptado.',
-    'active_url'           => ':attribute no ro una URL válida.',
-    'after'                => ':attribute debe ser una fecha posterior a :date.',
-    'after_or_equal'       => ':attribute debe ser una fecha posterior o igual a :date.',
-    'alpha'                => ':attribute sólo debe contener letras.',
-    'alpha_dash'           => ':attribute sólo debe contener letras, números y guiones.',
-    'alpha_num'            => ':attribute sólo debe contener letras y números.',
-    'array'                => ':attribute debe ser un conjunto.',
-    'before'               => ':attribute debe ser una fecha anterior a :date.',
-    'before_or_equal'      => ':attribute debe ser una fecha anterior o igual a :date.',
-    'between'              => [
-        'numeric' => ':attribute tiene que estar entre :min - :max.',
-        'file'    => ':attribute debe pesar entre :min - :max kilobytes.',
-        'string'  => ':attribute tiene que tener entre :min - :max caracteres.',
-        'array'   => ':attribute tiene que tener entre :min - :max ítems.',
+    'accepted'        => 'Câmpul :attribute trebuie să fie acceptat.',
+    'active_url'      => 'Câmpul :attribute nu este un URL valid.',
+    'after'           => 'Câmpul :attribute trebuie să fie o dată după :date.',
+    'after_or_equal'  => 'Câmpul :attribute trebuie să fie o dată ulterioară sau egală cu :date.',
+    'alpha'           => 'Câmpul :attribute poate conține doar litere.',
+    'alpha_dash'      => 'Câmpul :attribute poate conține doar litere, numere și cratime.',
+    'alpha_num'       => 'Câmpul :attribute poate conține doar litere și numere.',
+    'array'           => 'Câmpul :attribute trebuie să fie un array.',
+    'before'          => 'Câmpul :attribute trebuie să fie o dată înainte de :date.',
+    'before_or_equal' => 'Câmpul :attribute trebuie să fie o dată înainte sau egală cu :date.',
+    'between'         => [
+        'numeric' => 'Câmpul :attribute trebuie să fie între :min și :max.',
+        'file'    => 'Câmpul :attribute trebuie să fie între :min și :max kiloocteți.',
+        'string'  => 'Câmpul :attribute trebuie să fie între :min și :max caractere.',
+        'array'   => 'Câmpul :attribute trebuie să aibă între :min și :max elemente.',
     ],
-    'boolean'              => 'El campo :attribute debe tener un valor verdadero o falso.',
-    'confirmed'            => 'La confirmación de :attribute no coincide.',
-    'date'                 => ':attribute no ro una fecha válida.',
-    'date_format'          => ':attribute no corresponde al formato :format.',
-    'different'            => ':attribute y :other deben ser diferentes.',
-    'digits'               => ':attribute debe tener :digits dígitos.',
-    'digits_between'       => ':attribute debe tener entre :min y :max dígitos.',
-    'dimensions'           => 'Las dimensiones de la imagen :attribute no son válidas.',
-    'distinct'             => 'El campo :attribute contiene un valor duplicado.',
-    'email'                => ':attribute no ro un correo válido',
-    'exists'               => ':attribute ro inválido.',
-    'file'                 => 'El campo :attribute debe ser un archivo.',
-    'filled'               => 'El campo :attribute ro obligatorio.',
-    'image'                => ':attribute debe ser una imagen.',
-    'in'                   => ':attribute ro inválido.',
-    'in_array'             => 'El campo :attribute no existe en :other.',
-    'integer'              => ':attribute debe ser un número entero.',
-    'ip'                   => ':attribute debe ser una dirección IP válida.',
-    'ipv4'                 => ':attribute debe ser un dirección IPv4 válida',
-    'ipv6'                 => ':attribute debe ser un dirección IPv6 válida.',
-    'json'                 => 'El campo :attribute debe tener una cadena JSON válida.',
-    'max'                  => [
-        'numeric' => ':attribute no debe ser mayor a :max.',
-        'file'    => ':attribute no debe ser mayor que :max kilobytes.',
-        'string'  => ':attribute no debe ser mayor que :max caracteres.',
-        'array'   => ':attribute no debe tener más de :max elementos.',
+    'boolean'        => 'Câmpul :attribute trebuie să fie adevărat sau fals.',
+    'confirmed'      => 'Confirmarea :attribute nu se potrivește.',
+    'date'           => 'Câmpul :attribute nu este o dată validă.',
+    'date_equals'    => 'Aceasta :attribute trebuie să fie o dată egală cu :date.',
+    'date_format'    => 'Câmpul :attribute trebuie să fie în formatul :format.',
+    'different'      => 'Câmpurile :attribute și :other trebuie să fie diferite.',
+    'digits'         => 'Câmpul :attribute trebuie să aibă :digits cifre.',
+    'digits_between' => 'Câmpul :attribute trebuie să aibă între :min și :max cifre.',
+    'dimensions'     => 'Câmpul :attribute are dimensiuni de imagine nevalide.',
+    'distinct'       => 'Câmpul :attribute are o valoare duplicat.',
+    'email'          => 'Câmpul :attribute trebuie să fie o adresă de e-mail validă.',
+    'ends_with'      => 'Câmpul :attribute trebuie să se încheie cu una din următoarele valori: :values',
+    'exists'         => 'Câmpul :attribute selectat nu este valid.',
+    'file'           => 'Câmpul :attribute trebuie să fie un fișier.',
+    'filled'         => 'Câmpul :attribute trebuie completat.',
+    'gt'             => [
+        'numeric' => 'Câmpul :attribute trebuie să fie mai mare de :value.',
+        'file'    => 'Câmpul :attribute trebuie să fie mai mare de :value kilobyți.',
+        'string'  => 'Câmpul :attribute trebuie să fie mai mare de :value caractere.',
+        'array'   => 'Câmpul :attribute trebuie să aibă mai multe de :value elemente.',
     ],
-    'mimes'                => ':attribute debe ser un archivo con formato: :values.',
-    'mimetypes'            => ':attribute debe ser un archivo con formato: :values.',
-    'min'                  => [
-        'numeric' => 'El tamaño de :attribute debe ser de al menos :min.',
-        'file'    => 'El tamaño de :attribute debe ser de al menos :min kilobytes.',
-        'string'  => ':attribute debe contener al menos :min caracteres.',
-        'array'   => ':attribute debe tener al menos :min elementos.',
+    'gte' => [
+        'numeric' => 'Câmpul :attribute trebuie să fie mai mare sau egal cu :value.',
+        'file'    => 'Câmpul :attribute trebuie să fie mai mare sau egal cu :value kilobyți.',
+        'string'  => 'Câmpul :attribute trebuie să fie mai mare sau egal cu :value caractere.',
+        'array'   => 'Câmpul :attribute trebuie să aibă :value elemente sau mai multe.',
     ],
-    'not_in'               => ':attribute ro inválido.',
-    'numeric'              => ':attribute debe ser numérico.',
-    'present'              => 'El campo :attribute debe estar presente.',
-    'regex'                => 'El formato de :attribute ro inválido.',
-    'required'             => 'El campo :attribute ro obligatorio.',
-    'required_if'          => 'El campo :attribute ro obligatorio cuando :other ro :value.',
-    'required_unless'      => 'El campo :attribute ro obligatorio a menos que :other esté en :values.',
-    'required_with'        => 'El campo :attribute ro obligatorio cuando :values está presente.',
-    'required_with_all'    => 'El campo :attribute ro obligatorio cuando :values está presente.',
-    'required_without'     => 'El campo :attribute ro obligatorio cuando :values no está presente.',
-    'required_without_all' => 'El campo :attribute ro obligatorio cuando ninguno de :values estén presentes.',
-    'same'                 => ':attribute y :other deben coincidir.',
+    'image'    => 'Câmpul :attribute trebuie să fie o imagine.',
+    'in'       => 'Câmpul :attribute selectat nu este valid.',
+    'in_array' => 'Câmpul :attribute nu există în :other.',
+    'integer'  => 'Câmpul :attribute trebuie să fie un număr întreg.',
+    'ip'       => 'Câmpul :attribute trebuie să fie o adresă IP validă.',
+    'ipv4'     => 'Câmpul :attribute trebuie să fie o adresă IPv4 validă.',
+    'ipv6'     => 'Câmpul :attribute trebuie să fie o adresă IPv6 validă.',
+    'json'     => 'Câmpul :attribute trebuie să fie un string JSON valid.',
+    'lt'       => [
+        'numeric' => 'Câmpul :attribute trebuie să fie mai mic de :value.',
+        'file'    => 'Câmpul :attribute trebuie să fie mai mic de :value kilobyți.',
+        'string'  => 'Câmpul :attribute trebuie să fie mai mic de :value caractere.',
+        'array'   => 'Câmpul :attribute trebuie să aibă mai puțin de :value elemente.',
+    ],
+    'lte' => [
+        'numeric' => 'Câmpul :attribute trebuie să fie mai mic sau egal cu :value.',
+        'file'    => 'Câmpul :attribute trebuie să fie mai mic sau egal cu :value kilobyți.',
+        'string'  => 'Câmpul :attribute trebuie să fie mai mic sau egal cu :value caractere.',
+        'array'   => 'Câmpul :attribute trebuie să aibă :value elemente sau mai puține.',
+    ],
+    'max' => [
+        'numeric' => 'Câmpul :attribute nu poate fi mai mare de :max.',
+        'file'    => 'Câmpul :attribute nu poate avea mai mult de :max kiloocteți.',
+        'string'  => 'Câmpul :attribute nu poate avea mai mult de :max caractere.',
+        'array'   => 'Câmpul :attribute nu poate avea mai mult de :max elemente.',
+    ],
+    'mimes'     => 'Câmpul :attribute trebuie să fie un fișier de tipul: :values.',
+    'mimetypes' => 'Câmpul :attribute trebuie să fie un fișier de tipul: :values.',
+    'min'       => [
+        'numeric' => 'Câmpul :attribute nu poate fi mai mic de :min.',
+        'file'    => 'Câmpul :attribute trebuie să aibă cel puțin :min kiloocteți.',
+        'string'  => 'Câmpul :attribute trebuie să aibă cel puțin :min caractere.',
+        'array'   => 'Câmpul :attribute trebuie să aibă cel puțin :min elemente.',
+    ],
+    'not_in'               => 'Câmpul :attribute selectat nu este valid.',
+    'not_regex'            => 'Câmpul :attribute nu are un format valid.',
+    'numeric'              => 'Câmpul :attribute trebuie să fie un număr.',
+    'password'             => 'Parola este greșită.',
+    'present'              => 'Câmpul :attribute trebuie să fie prezent.',
+    'regex'                => 'Câmpul :attribute nu are un format valid.',
+    'required'             => 'Câmpul :attribute este obligatoriu.',
+    'required_if'          => 'Câmpul :attribute este necesar când :other este :value.',
+    'required_unless'      => 'Câmpul :attribute este necesar, cu excepția cazului :other este in :values.',
+    'required_with'        => 'Câmpul :attribute este necesar când există :values.',
+    'required_with_all'    => 'Câmpul :attribute este necesar când există :values.',
+    'required_without'     => 'Câmpul :attribute este necesar când nu există :values.',
+    'required_without_all' => 'Câmpul :attribute este necesar când niciunul(una) dintre :values nu există.',
+    'same'                 => 'Câmpul :attribute și :other trebuie să fie identice.',
     'size'                 => [
-        'numeric' => 'El tamaño de :attribute debe ser :size.',
-        'file'    => 'El tamaño de :attribute debe ser :size kilobytes.',
-        'string'  => ':attribute debe contener :size caracteres.',
-        'array'   => ':attribute debe contener :size elementos.',
+        'numeric' => 'Câmpul :attribute trebuie să fie :size.',
+        'file'    => 'Câmpul :attribute trebuie să aibă :size kiloocteți.',
+        'string'  => 'Câmpul :attribute trebuie să aibă :size caractere.',
+        'array'   => 'Câmpul :attribute trebuie să aibă :size elemente.',
     ],
-    'string'               => 'El campo :attribute debe ser una cadena de caracteres.',
-    'timezone'             => 'El :attribute debe ser una zona válida.',
-    'unique'               => ':attribute ya ha sido registrado.',
-    'uploaded'             => 'Subir :attribute ha fallado.',
-    'url'                  => 'El formato :attribute ro inválido.',
+    'starts_with' => 'Acesta :attribute trebuie să înceapă cu una din următoarele: :values',
+    'string'      => 'Câmpul :attribute trebuie să fie string.',
+    'timezone'    => 'Câmpul :attribute trebuie să fie un fus orar valid.',
+    'unique'      => 'Câmpul :attribute a fost deja folosit.',
+    'uploaded'    => 'Câmpul :attribute nu a reușit încărcarea.',
+    'url'         => 'Câmpul :attribute nu este un URL valid.',
+    'uuid'        => 'Acesta :attribute trebuie să fie un cod UUID valid.',
 
     /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
-    */
-
-    'custom'               => [
-        'password' => [
-            'min' => 'La :attribute debe contener más de :min caracteres',
-        ],
-        'email' => [
-            'unique' => 'El :attribute ya ha sido registrado.',
-        ],
-    ],
-
+   |--------------------------------------------------------------------------
+   | Custom Validation Language Lines
+   |--------------------------------------------------------------------------
+   |
+   | Here you may specify custom validation messages for attributes using the
+   | convention "attribute.rule" to name the lines. This makes it quick to
+   | specify a specific custom language line for a given attribute rule.
+   |
+   */
+    'custom' => [],
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes
@@ -118,38 +139,6 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-
-    'attributes'           => [
-        'name'                  => 'nombre',
-        'username'              => 'usuario',
-        'email'                 => 'correo electrónico',
-        'first_name'            => 'nombre',
-        'last_name'             => 'apellido',
-        'password'              => 'contraseña',
-        'password_confirmation' => 'confirmación de la contraseña',
-        'city'                  => 'ciudad',
-        'country'               => 'país',
-        'address'               => 'dirección',
-        'phone'                 => 'teléfono',
-        'mobile'                => 'móvil',
-        'age'                   => 'edad',
-        'sex'                   => 'sexo',
-        'gender'                => 'género',
-        'year'                  => 'año',
-        'month'                 => 'mes',
-        'day'                   => 'día',
-        'hour'                  => 'hora',
-        'minute'                => 'minuto',
-        'second'                => 'segundo',
-        'title'                 => 'título',
-        'content'               => 'contenido',
-        'body'                  => 'contenido',
-        'description'           => 'descripción',
-        'excerpt'               => 'extracto',
-        'date'                  => 'fecha',
-        'time'                  => 'hora',
-        'subject'               => 'asunto',
-        'message'               => 'mensaje',
-    ],
+    'attributes' => [],
 
 ];
