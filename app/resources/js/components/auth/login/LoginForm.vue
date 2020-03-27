@@ -79,13 +79,13 @@ export default {
         emailErrors () {
             if (!this.$v.form.email.$dirty) return [];
             const errors = [];
-            !this.$v.form.email.required && errors.push('Email/ Username is required!');
+            !this.$v.form.email.required && errors.push(this.$t('username/email')+' '+this.$t('is_required'));
             return errors;
         },
         passwordErrors () {
             if (!this.$v.form.password.$dirty) return [];
             const errors = [];
-            !this.$v.form.password.required && errors.push('Password is required!');
+            !this.$v.form.password.required && errors.push(this.$t('password')+' '+this.$t('is_required'));
             return errors;
         }
     },
@@ -99,7 +99,7 @@ export default {
 
             return API.auth.login(this.form)
                 .then(response => {
-                    Snotify.success('Welcome back!');
+                    Snotify.success(this.$t('welcome_back'));
                     this.$emit('success', response.data);
                 })
                 .catch(Utils.standardErrorResponse)
