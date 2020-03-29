@@ -3,7 +3,7 @@
         <content-loader slot="default" :loading="isLoading"></content-loader>
         <v-card-title>
             <h3 class="mt-2 mb-2 primary--text text--darken-3 font-weight-regular">
-                Total Flights
+                {{$t('total_flights')}}
             </h3>
         </v-card-title>
         <v-card-title style="height: 400px" class="justify-center align-center">

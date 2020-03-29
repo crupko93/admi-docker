@@ -2,14 +2,14 @@
     <v-card>
         <v-toolbar dark color="primary" flat>
             <v-flex xs10>
-                <v-toolbar-title>Password reset</v-toolbar-title>
+                <v-toolbar-title>{{$t('reset_password')}}</v-toolbar-title>
             </v-flex>
             <v-flex xs2 class="text-right">
                 <locale-dropdown></locale-dropdown>
             </v-flex>
         </v-toolbar>
         <v-card-text>
-            <p>Choose a new password below</p>
+            <p>{{$t('choose_a_new_password_below')}}</p>
 
             <password-reset-form @success="success"></password-reset-form>
         </v-card-text>

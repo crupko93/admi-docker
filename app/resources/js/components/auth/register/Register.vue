@@ -3,7 +3,7 @@
         <v-card>
             <v-toolbar dark color="primary" flat>
                 <v-flex xs10>
-                    <v-toolbar-title>Register</v-toolbar-title>
+                    <v-toolbar-title>{{$t('register')}}</v-toolbar-title>
                 </v-flex>
                 <v-flex xs2 class="text-right">
                     <locale-dropdown></locale-dropdown>

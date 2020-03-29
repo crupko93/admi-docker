@@ -24,7 +24,7 @@ export default {
                 labels  : _.map(data, 'display'),
                 datasets: [
                     {
-                        label          : 'Total Flights',
+                        label          : this.$t('total_flights'),
                         data           : _.map(data, 'count'),
                         backgroundColor: '#38B2AC'
                     }

@@ -12,7 +12,7 @@
             <v-card-text>
                 <v-text-field flat solo-inverted single-line hide-details clearable
                     class="datatable-search"
-                    append-icon="search" label="Search"
+                    append-icon="search" :label="$t('search')"
                     v-model="searchTerm"
                 ></v-text-field>
             </v-card-text>
@@ -47,37 +47,37 @@
                                     <!-- [ALL] View Profile -->
                                     <!-- <v-list-tile @click="showUserProfile(props.item)"> -->
                                     <v-list-item @click="selectedUser = props.item; isShowProfile = !isShowProfile">
-                                        <v-list-item-title>View Profile</v-list-item-title>
+                                        <v-list-item-title>{{$t('view_profile')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [Moderator] Make Admin -->
                                     <v-list-item @click="updateRole(props.item, 'admin')"
                                         v-if="props.item.role === 'moderator'"
                                     >
-                                        <v-list-item-title>Make Admin</v-list-item-title>
+                                        <v-list-item-title>{{$t('make_admin')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [Admin] Make Moderator -->
                                     <v-list-item @click="updateRole(props.item, 'moderator')"
                                         v-if="props.item.role === 'admin'"
                                     >
-                                        <v-list-item-title>Make Moderator</v-list-item-title>
+                                        <v-list-item-title>{{$t('make_moderator')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [ALL] Change Password -->
                                     <v-list-item @click="$refs.changePassword.open(props.item)">
-                                        <v-list-item-title>Change Password</v-list-item-title>
+                                        <v-list-item-title>{{$t('change_password')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [ALL] Edit -->
                                     <!-- <v-list-item @click="$refs.userDialog.edit(props.item.id)" -->
                                     <v-list-item @click="$refs.userDialog.edit(props.item.id)">
-                                        <v-list-item-title>Edit</v-list-item-title>
+                                        <v-list-item-title>{{$t('edit')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [ALL] Delete -->
                                     <v-list-item @click="deleteUser(props.item)">
-                                        <v-list-item-title>Delete</v-list-item-title>
+                                        <v-list-item-title>{{$t('delete')}}</v-list-item-title>
                                     </v-list-item>
                                 </v-list>
                             </v-menu>
@@ -118,7 +118,7 @@ export default {
         role: {type: String}
     },
 
-    data: () => ({
+    data: vm => ({
         /////////////////
         // Remote data //
         /////////////////
@@ -136,24 +136,24 @@ export default {
         // Data table headers
         headers: [
             {
-                text    : 'Username',
+                text    : vm.$t('username'),
                 value   : 'username',
                 align   : 'left'
             }, {
-                text    : 'Name',
+                text    : vm.$t('name'),
                 value   : 'first_name',
                 align   : 'left'
             }, {
-                text    : 'Email',
+                text    : vm.$t('email'),
                 value   : 'email',
                 align   : 'left'
             }, {
-                text    : 'Role',
+                text    : vm.$t('role'),
                 value   : 'roles',
                 align   : 'left',
                 sortable: false
             }, {
-                text    : 'Actions',
+                text    : vm.$t('actions'),
                 value   : '',
                 align   : 'center',
                 sortable: false
@@ -172,7 +172,8 @@ export default {
 
     computed: {
         ...mapGetters({
-            user: 'auth/user'
+            user  : 'auth/user',
+            locale: 'lang/locale'
         })
     },
 
@@ -197,27 +198,26 @@ export default {
             return API.users.updateRole({id: user.id, role})
                 .then(() => {
                     this.retrieveUsers();
-                    Snotify.success('User role updated!');
+                    Snotify.success(this.$t('user_role_updated') + '!');
                 })
                 .catch(Utils.standardErrorResponse);
         },
 
         deleteUser (user) {
             swal({
-                text: `User (${user.first_name} ${user.last_name}) and all related data will be permanently \
-                    deleted!`,
+                text: this.$t('user_will_be_deleted').replace('*name*', user.first_name+' '+user.last_name),
 
-                title    : 'Are you sure?',
+                title    : this.$t('are_you_sure'),
                 icon     : 'info',
                 className: 'swal-info',
                 buttons  : {
                     cancel : {
-                        text      : 'Cancel',
+                        text      : this.$t('cancel'),
                         visible   : true,
                         closeModal: true
                     },
                     confirm: {
-                        text      : 'Ok',
+                        text      : this.$t('ok'),
                         closeModal: false
                     }
                 }
@@ -229,7 +229,7 @@ export default {
 
                     API.users.delete(user.id)
                         .then(() => {
-                            Snotify.success('User successfully deleted!');
+                            Snotify.success(this.$t('user_successfully_deleted') + '!');
                             this.retrieveUsers();
                         })
                         .catch(e => {
@@ -238,11 +238,6 @@ export default {
                         })
                         .finally(swal.close);
                 });
-        },
-
-        // TODO
-        impersonate (user) {
-
         }
     },
 
@@ -260,6 +255,37 @@ export default {
                     this.retrieveUsers();
                 }, 500)
 
+        },
+
+        locale: {
+            handler () {
+                this.headers = [
+                    {
+                        text    : this.$t('username'),
+                        value   : 'username',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('name'),
+                        value   : 'first_name',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('email'),
+                        value   : 'email',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('role'),
+                        value   : 'roles',
+                        align   : 'left',
+                        sortable: false
+                    }, {
+                        text    : this.$t('actions'),
+                        value   : '',
+                        align   : 'center',
+                        sortable: false
+                    }
+                ];
+            },
+            deep: true
         }
     }
 };

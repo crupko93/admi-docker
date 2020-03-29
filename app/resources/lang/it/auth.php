@@ -11,6 +11,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'failed' => '用户名或手机号与密码不匹配或用户被禁用',
-    'throttle' => '失败次数太多，请在:seconds秒后再尝试',
+    'failed'   => 'Credenziali di accesso non valide',
+    'throttle' => 'Troppi tentativi di accesso. Riprova tra :seconds secondi.',
+    'log_out'  => 'Disconnesso correttamente'
 ];

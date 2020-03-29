@@ -31,7 +31,7 @@ class RoleAPIController extends Controller
         $role = Role::with('permissions')->find($roleId);
 
         if (!$role) {
-            return error('Invalid role!');
+            return error(trans('role.invalid_role'));
         }
 
         return success(['role' => RoleResource::make($role)]);
@@ -43,7 +43,7 @@ class RoleAPIController extends Controller
             $role = new Role(['name' => strtolower(str_replace(' ', '_', $request->name))]);
 
             if (!$role->save()) {
-                return error('Could not save Role!');
+                return error(trans('role.could_not_save_role'));
             }
 
             $permissionsNames = [];
@@ -71,7 +71,7 @@ class RoleAPIController extends Controller
             $role->syncPermissions($permissionsNames);
 
             if (!$role->save()) {
-                return error('Could not update role!');
+                return error(trans('role.could_not_update_role'));
             }
 
             return success();
@@ -87,7 +87,7 @@ class RoleAPIController extends Controller
                 $role = Role::findOrFail($roleId);
 
                 if (!$role->delete()) {
-                    return error('Could not delete role!');
+                    return error(trans('role.could_not_delete_role'));
                 }
             }
 

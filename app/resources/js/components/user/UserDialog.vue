@@ -7,8 +7,8 @@
             <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title>
-            <span class="headline" v-if="userId">Edit User</span>
-            <span class="headline" v-else>Add User</span>
+            <span class="headline" v-if="userId">{{$t('edit_user')}}</span>
+            <span class="headline" v-else>{{$t('add_user')}}</span>
         </v-toolbar-title>
     </v-toolbar>
 
@@ -17,7 +17,7 @@
             <v-layout row wrap>
                 <v-flex xs12 sm6 md4>
                     <!-- First Name -->
-                    <v-text-field required name="username" label="Username*"
+                    <v-text-field required name="username" :label="$t('username')+'*'"
                         @input="$v.form.username.$touch()"
                         @blur="$v.form.username.$touch()"
                         :error-messages="usernameErrors"
@@ -26,7 +26,7 @@
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                     <!-- First Name -->
-                    <v-text-field required name="first_name" label="First Name*"
+                    <v-text-field required name="first_name" :label="$t('first_name')+'*'"
                         @input="$v.form.first_name.$touch()"
                         @blur="$v.form.first_name.$touch()"
                         :error-messages="firstNameErrors"
@@ -35,7 +35,7 @@
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                     <!-- Last Name -->
-                    <v-text-field required name="last_name" label="Last Name*"
+                    <v-text-field required name="last_name" :label="$t('last_name')+'*'"
                         @input="$v.form.first_name.$touch()"
                         @blur="$v.form.last_name.$touch()"
                         :error-messages="lastNameErrors"
@@ -47,7 +47,7 @@
             <v-layout row wrap>
                 <v-flex xs12 sm6 md4>
                     <!-- Email Address -->
-                    <v-text-field required name="email" label="E-mail*"
+                    <v-text-field required name="email" :label="$t('email')+'*'"
                         @input="$v.form.email.$touch()"
                         @blur="$v.form.email.$touch()"
                         :error-messages="emailErrors"
@@ -61,7 +61,7 @@
                         color="primary" ref="userPhone"
                         @input="$v.form.phone.$touch()"
                         @blur="$v.form.phone.$touch()"
-                        name="user_phone" label="Phone*"
+                        name="user_phone" :label="$t('phone')+'*'"
                         :rerender="userDialog"
                         v-model="form.phone">
                     </PhoneInput>
@@ -69,7 +69,7 @@
 
                 <v-flex xs12 sm12 md4>
                     <!-- Role -->
-                    <v-select required :items="roles" label="Role*"
+                    <v-select required :items="roles" :label="$t('role')+'*'"
                         @change="$v.form.role.$touch()"
                         @blur="$v.form.role.$touch()"
                         :error-messages="roleErrors"
@@ -81,7 +81,7 @@
             <v-layout row wrap v-if="!userId" align-center>
                 <v-flex xs12 sm6 md4>
                     <!-- Password -->
-                    <v-text-field required class="pass" name="password" label="Password*"
+                    <v-text-field required class="pass" name="password" :label="$t('password')+'*'"
                         @click:prepend="generatePassword"
                         @click:append="showPassword = !showPassword"
                         @input="$v.passwordForm.password.$touch()"
@@ -96,7 +96,7 @@
 
                 <v-flex xs12 sm6 md4>
                     <!-- Password Confirmation -->
-                    <v-text-field required name="password_confirmation" label="Confirm Password*"
+                    <v-text-field required name="password_confirmation" :label="$t('confirm_password')+'*'"
                         @click:append="showPasswordConfirmation = !showPasswordConfirmation"
                         @input="$v.passwordForm.password_confirmation.$touch()"
                         @blur="$v.passwordForm.password_confirmation.$touch()"
@@ -108,7 +108,7 @@
                 </v-flex>
 
                 <v-flex xs12 sm12 md4>
-                    <v-checkbox class="pt-3" label="Send credentials by email?"
+                    <v-checkbox class="pt-3" :label="$t('send_credentials_by_email?')"
                         :disabled="form.role !== 'user'"
                         v-model="credentials.send"
                     ></v-checkbox>
@@ -122,16 +122,17 @@
 
         <v-btn color="primary" outlined
             @click="closeDialog"
-            :disabled="formBusy">Cancel
+            :disabled="formBusy">
+            {{$t('cancel')}}
         </v-btn>
 
         <v-btn color="primary" :disabled="formBusy"
             @click="submit"
         >
             <span v-if="formBusy">
-                <v-icon>fa fa-spinner fa-spin</v-icon> Saving
+                <v-icon>fa fa-spinner fa-spin</v-icon> {{$t('saving')}}
             </span>
-            <span v-else>Save</span>
+            <span v-else>{{$t('save')}}</span>
         </v-btn>
     </v-card-actions>
 </v-card>
@@ -190,45 +191,45 @@ export default {
         usernameErrors () {
             if (!this.$v.form.username.$dirty) return [];
             const errors = [];
-            !this.$v.form.username.required && errors.push('Username is required!');
+            !this.$v.form.username.required && errors.push(this.$t('username')+' '+this.$t('is_required'));
             return errors;
         },
         firstNameErrors () {
             if (!this.$v.form.first_name.$dirty) return [];
             const errors = [];
-            !this.$v.form.first_name.required && errors.push('First name is required!');
+            !this.$v.form.first_name.required && errors.push(this.$t('first_name')+' '+this.$t('is_required'));
             return errors;
         },
         lastNameErrors () {
             if (!this.$v.form.last_name.$dirty) return [];
             const errors = [];
-            !this.$v.form.last_name.required && errors.push('Last name is required!');
+            !this.$v.form.last_name.required && errors.push(this.$t('last_name')+' '+this.$t('is_required'));
             return errors;
         },
         emailErrors () {
             if (!this.$v.form.email.$dirty) return [];
             const errors = [];
-            !this.$v.form.email.email && errors.push('Email is not valid!');
-            !this.$v.form.email.required && errors.push('Email is required!');
+            !this.$v.form.email.email && errors.push(this.$t('email')+' '+this.$t('is_not_valid'));
+            !this.$v.form.email.required && errors.push(this.$t('email')+' '+this.$t('is_required'));
             return errors;
         },
         roleErrors () {
             if (!this.$v.form.role.$dirty) return [];
             const errors = [];
-            !this.$v.form.role.required && errors.push('Role is required!');
+            !this.$v.form.role.required && errors.push(this.$t('role')+' '+this.$t('is_required'));
             return errors;
         },
         passwordErrors () {
             if (!this.$v.passwordForm.password.$dirty) return [];
             const errors = [];
-            !this.$v.passwordForm.password.required && errors.push('Password is required!');
+            !this.$v.passwordForm.password.required && errors.push(this.$t('password')+' '+this.$t('is_required'));
             return errors;
         },
         passwordConfirmationErrors () {
             if (!this.$v.passwordForm.password_confirmation.$dirty) return [];
             const errors = [];
-            !this.$v.passwordForm.password_confirmation.required && errors.push('Password confirmation is required!');
-            !this.$v.passwordForm.password_confirmation.sameAsPassword && errors.push('Passwords must be identical!');
+            !this.$v.passwordForm.password_confirmation.required && errors.push(this.$t('confirm_password')+' '+this.$t('is_required'));
+            !this.$v.passwordForm.password_confirmation.sameAsPassword && errors.push(this.$t('confirm_password')+' '+this.$t('must_be_identical'));
             return errors;
         }
     },
@@ -298,7 +299,7 @@ export default {
         },
 
         successCallback () {
-            Snotify.success('User saved!', 'Success!');
+            Snotify.success(this.$t('user_saved') + '!', this.$t('success') + '!');
             this.$emit('user-save');
             this.closeDialog();
         },

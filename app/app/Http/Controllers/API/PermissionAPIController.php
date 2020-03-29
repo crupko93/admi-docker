@@ -31,7 +31,7 @@ class PermissionAPIController extends Controller
         $permission = Permission::find($permissionId);
 
         if (empty($permission)) {
-            return error('Invalid permission!');
+            return error(trans('permission.invalid_permission'));
         }
 
         return success(['permission' => PermissionResource::make($permission)]);

@@ -103,7 +103,8 @@ export default {
 
     computed: {
         ...mapGetters({
-            auth: 'auth/user'
+            auth  : 'auth/user',
+            locale: 'lang/locale'
         }),
         // Evaluate style attribute for photo preview
         previewStyle () {
@@ -123,7 +124,7 @@ export default {
                 image     : null
             };
         },
-        
+
         navToggle () {
             this.$emit('nav-toggle');
         },
@@ -131,7 +132,7 @@ export default {
         async logout () {
             await this.$store.dispatch('auth/logout');
 
-            Snotify.info('You are logged out.');
+            Snotify.info(this.$t('you_are_logged_out'));
             this.$router.push({name: 'login'});
         },
 
@@ -139,22 +140,21 @@ export default {
             this.items = [];
             let temporaryItems = [
                 [
-                    {title: 'Dashboard', icon: 'far fa-chart-line', to: {name: 'dashboard'}, exact: false}
+                    {title: this.$t('dashboard'), icon: 'far fa-chart-line', to: {name: 'dashboard'}, exact: false}
                 ],
                 [
-                    {title: 'Profile', icon: 'person', to: {name: 'profile'}, exact: false}
+                    {title: this.$t('profile'), icon: 'person', to: {name: 'profile'}, exact: false}
                 ],
                 [
-                    {title: 'Users', icon: 'fas fa-users', to: {name: 'users'}, exact: false, permission: 'read_administration_section'}
+                    {title: this.$t('users'), icon: 'fas fa-users', to: {name: 'users'}, exact: false, permission: 'read_administration_section'}
                 ],
                 [
-                    {title: 'Roles and Permissions', icon: 'fas fa-user-tag', to: {name: 'roles'}, exact: false, permission: 'read_administration_section'}
+                    {title: this.$t('roles_and_permissions'), icon: 'fas fa-user-tag', to: {name: 'roles'}, exact: false, permission: 'read_administration_section'}
                 ],
                 [
-                    {title: 'Logout', icon: 'power_settings_new', action: this.logout}
+                    {title: this.$t('logout'), icon: 'power_settings_new', action: this.logout}
                 ]
             ];
-
 
             // Filter navbar items based on authenticated user's permissions
             temporaryItems.forEach((navItem) => {
@@ -181,7 +181,14 @@ export default {
                 }
             },
             deep: true
+        },
+
+        locale: {
+            handler () {
+                this.navigation();
+            },
+            deep: true
         }
-    }
+    },
 };
 </script>

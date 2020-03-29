@@ -1,10 +1,9 @@
 <template>
     <div class="text-center">
-        <content-loader :loading="isLoading"></content-loader>
         <v-form v-if="!isLoading">
             <v-text-field
                 v-model="form.email"
-                label="Username/Email"
+                :label="$t('username/email')"
                 prepend-icon="person"
                 type="email"
                 @input="$v.form.email.$touch()"
@@ -15,7 +14,7 @@
 
             <v-text-field
                 v-model="form.password"
-                label="Password"
+                :label="$t('password')"
                 prepend-icon="lock"
                 @input="$v.form.password.$touch()"
                 @blur="$v.form.password.$touch()"
@@ -35,7 +34,7 @@
                     :to="{ name: 'forgot', query: {email: form.email} }"
                     text
                 >
-                    Forgot password?
+                    {{$t('forgot_password')}}
                 </v-btn>
 
                 <v-btn
@@ -46,7 +45,7 @@
                     :disabled="isLoading || $v.$invalid"
                     @click.prevent="submit"
                 >
-                    Login
+                    {{$t('login')}}
                 </v-btn>
             </v-layout>
         </v-form>
@@ -79,13 +78,13 @@ export default {
         emailErrors () {
             if (!this.$v.form.email.$dirty) return [];
             const errors = [];
-            !this.$v.form.email.required && errors.push('Email/ Username is required!');
+            !this.$v.form.email.required && errors.push(this.$t('username/email')+' '+this.$t('is_required'));
             return errors;
         },
         passwordErrors () {
             if (!this.$v.form.password.$dirty) return [];
             const errors = [];
-            !this.$v.form.password.required && errors.push('Password is required!');
+            !this.$v.form.password.required && errors.push(this.$t('password')+' '+this.$t('is_required'));
             return errors;
         }
     },
@@ -95,15 +94,17 @@ export default {
             this.$v.$touch();
             if (this.$v.$invalid) return;
 
-            this.isLoading = true;
+            this.$emit('isLoading', true);
 
             return API.auth.login(this.form)
                 .then(response => {
-                    Snotify.success('Welcome back!');
+                    Snotify.success(this.$t('welcome_back'));
                     this.$emit('success', response.data);
                 })
-                .catch(Utils.standardErrorResponse)
-                .finally(() => this.isLoading = false);
+                .catch(error => {
+                    Utils.standardErrorResponse(error);
+                    this.$emit('isLoading', false);
+                });
         }
     },
 

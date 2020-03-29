@@ -12,7 +12,7 @@
             <v-card-text>
                 <v-text-field flat solo-inverted single-line hide-details clearable
                     class="datatable-search"
-                    append-icon="search" label="Search"
+                    append-icon="search" :label="$t('search')"
                     v-model="searchTerm"
                 ></v-text-field>
             </v-card-text>
@@ -44,12 +44,12 @@
                                 <v-list>
                                     <!-- [ALL] Edit -->
                                     <v-list-item @click="$refs.roleDialog.edit(props.item.id)">
-                                        <v-list-item-title>Edit</v-list-item-title>
+                                        <v-list-item-title>{{$t('edit')}}</v-list-item-title>
                                     </v-list-item>
 
                                     <!-- [ALL] Delete -->
                                     <v-list-item @click="deleteRole(props.item)">
-                                        <v-list-item-title>Delete</v-list-item-title>
+                                        <v-list-item-title>{{$t('delete')}}</v-list-item-title>
                                     </v-list-item>
                                 </v-list>
                             </v-menu>
@@ -69,6 +69,7 @@
 
 import RoleDialog     from './RoleDialog';
 import lodash         from 'lodash';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'RoleList',
@@ -82,7 +83,7 @@ export default {
         role: {type: String}
     },
 
-    data: () => ({
+    data: vm => ({
         lodash,
         /////////////////
         // Remote data //
@@ -101,15 +102,15 @@ export default {
         // Data table headers
         headers: [
             {
-                text    : 'Name',
+                text    : vm.$t('name'),
+                value   : 'name',
+                align   : 'left'
+            }, {
+                text    : vm.$t('permissions'),
                 align   : 'left',
                 sortable: true
             }, {
-                text    : 'Permissions',
-                align   : 'left',
-                sortable: true
-            }, {
-                text    : 'Actions',
+                text    : vm.$t('actions'),
                 value   : '',
                 align   : 'center',
                 sortable: false
@@ -124,6 +125,10 @@ export default {
 
         // Role data table pagination object
         pagination: {}
+    }),
+
+    computed: mapGetters({
+        locale: 'lang/locale'
     }),
 
     methods: {
@@ -146,26 +151,26 @@ export default {
             return API.roles.updateRole({id: role.id, role})
                 .then(() => {
                     this.retrieveRoles();
-                    Snotify.success('Role updated!');
+                    Snotify.success(this.$t('role_updated') + '!');
                 })
                 .catch(Utils.standardErrorResponse);
         },
 
         deleteRole (role) {
             swal({
-                text: `Role (${role.name}) and all related data will be permanently deleted!`,
+                text: this.$t('role_will_be_deleted').replace('*name*', role.name),
 
-                title    : 'Are you sure?',
+                title    : this.$t('are_you_sure'),
                 icon     : 'info',
                 className: 'swal-info',
                 buttons  : {
                     cancel : {
-                        text      : 'Cancel',
+                        text      : this.$t('cancel'),
                         visible   : true,
                         closeModal: true
                     },
                     confirm: {
-                        text      : 'Ok',
+                        text      : this.$t('ok'),
                         closeModal: false
                     }
                 }
@@ -177,7 +182,7 @@ export default {
 
                     API.roles.delete(role.id)
                         .then(() => {
-                            Snotify.success('Role successfully deleted!');
+                            Snotify.success(this.$t('role_successfully_deleted') + '!');
                             this.retrieveRoles();
                         })
                         .catch(e => {
@@ -203,6 +208,28 @@ export default {
                     this.retrieveRoles();
                 }, 500)
 
+        },
+
+        locale: {
+            handler () {
+                this.headers = [
+                    {
+                        text    : this.$t('name'),
+                        value   : 'name',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('permissions'),
+                        align   : 'left',
+                        sortable: true
+                    }, {
+                        text    : this.$t('actions'),
+                        value   : '',
+                        align   : 'center',
+                        sortable: false
+                    }
+                ];
+            },
+            deep: true
         }
     }
 };
