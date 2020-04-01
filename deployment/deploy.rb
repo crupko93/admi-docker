@@ -54,7 +54,7 @@ set :whenever_command, -> {
 set :slackistrano, {
     klass: Slackistrano::SlackMessaging,
     channel: '#deployment',
-    webhook: 'https://hooks.slack.com/services/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',
+    webhook: 'https://hooks.slack.com/services/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',
     username: 'Capistrano',
     icon_url: 'https://pbs.twimg.com/profile_images/378800000067686459/5da4e1d78e930197cb7dc002ceafdfda.png'
 }

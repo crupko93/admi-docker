@@ -1,640 +1,78 @@
-{
-    "openapi": "3.0.2",
-    "info": {
-        "title": "Admin",
-        "description": "This is the FlyGo new internal administration API",
-        "version": "1.0.0"
-    },
-    "servers": [
-        {
-            "url": "http:\/\/admin.local"
-        }
-    ],
-    "paths": {
-        "\/api\/login": {
-            "post": {
-                "summary": "Authenticate user",
-                "description": "Get a JWT via given credentials.",
-                "requestBody": {
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "email": {
-                                        "description": "username\/email",
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/User"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Validation errors",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": false,
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "additionalProperties": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "example": {
-                                                "field": [
-                                                    "Something is wrong with this field!"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "\/api\/register": {
-            "post": {
-                "summary": "Register new user",
-                "description": "Handle a registration request for the application.",
-                "requestBody": {
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "$ref": "#\/components\/schemas\/User"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/User"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Validation errors",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": false,
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "additionalProperties": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "example": {
-                                                "field": [
-                                                    "Something is wrong with this field!"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "\/api\/profile": {
-            "get": {
-                "summary": "Get user",
-                "description": "Get the authenticated user's profile",
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/User"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Validation errors",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": false,
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "additionalProperties": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "example": {
-                                                "field": [
-                                                    "Something is wrong with this field!"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "summary": "Update authenticated user",
-                "description": "Update authenticated user's profile and return the full user object",
-                "requestBody": {
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "$ref": "#\/components\/schemas\/User"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/User"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Validation errors",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": false,
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "additionalProperties": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "example": {
-                                                "field": [
-                                                    "Something is wrong with this field!"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "\/api\/users": {
-            "get": {
-                "summary": "Get user",
-                "description": "Return a single user or a collection of all users",
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/User"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Validation errors",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": false,
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "additionalProperties": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "example": {
-                                                "field": [
-                                                    "Something is wrong with this field!"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "summary": "Create user",
-                "description": "Create a new user",
-                "requestBody": {
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "$ref": "#\/components\/schemas\/User"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/User"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Validation errors",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": false,
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "additionalProperties": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "example": {
-                                                "field": [
-                                                    "Something is wrong with this field!"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "summary": "Update user",
-                "description": "Update a user based on ID",
-                "requestBody": {
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "$ref": "#\/components\/schemas\/User"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "$ref": "#\/components\/schemas\/User"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Validation errors",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": false,
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "additionalProperties": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "example": {
-                                                "field": [
-                                                    "Something is wrong with this field!"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "summary": "Delete user",
-                "description": "Delete a user based on ID",
-                "responses": {
-                    "200": {
-                        "description": "General success response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": true,
-                                            "type": "boolean"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Validation errors",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": false,
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "additionalProperties": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "example": {
-                                                "field": [
-                                                    "Something is wrong with this field!"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "\/api\/users\/password": {
-            "put": {
-                "summary": "Update user's password",
-                "description": "Update given user's password (if ID present, admin only) or current user's password (if ID missing)",
-                "requestBody": {
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "description": "user id",
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "General success response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": true,
-                                            "type": "boolean"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "\/api\/users\/role": {
-            "put": {
-                "summary": "Update user role",
-                "description": "Update user role based on user ID",
-                "requestBody": {
-                    "content": {
-                        "application\/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "description": "user id",
-                                        "type": "integer"
-                                    },
-                                    "role": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "General success response",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": true,
-                                            "type": "boolean"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Validation errors",
-                        "content": {
-                            "application\/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "success": {
-                                            "default": false,
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "type": "object",
-                                            "additionalProperties": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "example": {
-                                                "field": [
-                                                    "Something is wrong with this field!"
-                                                ]
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "components": {
-        "schemas": {
-            "User": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "default": 0,
-                        "type": "integer"
-                    },
-                    "username": {
-                        "type": "string"
-                    },
-                    "first_name": {
-                        "type": "string"
-                    },
-                    "last_name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "phone": {
-                        "type": "string"
-                    },
-                    "password": {
-                        "type": "string"
-                    },
-                    "role": {
-                        "type": "string"
-                    }
-                }
-            }
-        }
-    },
-    "security": [
-        {
-            "JWT": []
-        }
-    ]
-}
+
+   Symfony\Component\Debug\Exception\FatalThrowableError  : Argument 3 passed to GoldSpecDigital\ObjectOrientedOAS\Objects\Operation::parameters() must be an instance of GoldSpecDigital\ObjectOrientedOAS\Objects\Parameter, array given, called in /code/admin-app/vendor/vyuldashev/laravel-openapi/src/Builders/Paths/OperationsBuilder.php on line 71
+
+  at /code/admin-app/vendor/goldspecdigital/oooas/src/Objects/Operation.php:272
+    268|     /**
+    269|      * @param \GoldSpecDigital\ObjectOrientedOAS\Objects\Parameter[] $parameters
+    270|      * @return \GoldSpecDigital\ObjectOrientedOAS\Objects\Operation
+    271|      */
+  > 272|     public function parameters(Parameter ...$parameters): self
+    273|     {
+    274|         $instance = clone $this;
+    275| 
+    276|         $instance->parameters = $parameters ?: null;
+
+  Exception trace:
+
+  1   GoldSpecDigital\ObjectOrientedOAS\Objects\Operation::parameters(Object(GoldSpecDigital\ObjectOrientedOAS\Objects\Parameter), Object(GoldSpecDigital\ObjectOrientedOAS\Objects\Parameter))
+      /code/admin-app/vendor/vyuldashev/laravel-openapi/src/Builders/Paths/OperationsBuilder.php:71
+
+  2   Vyuldashev\LaravelOpenApi\Builders\Paths\OperationsBuilder::build(Object(Illuminate\Support\Collection))
+      /code/admin-app/vendor/vyuldashev/laravel-openapi/src/Builders/PathsBuilder.php:62
+
+  3   Vyuldashev\LaravelOpenApi\Builders\PathsBuilder::Vyuldashev\LaravelOpenApi\Builders\{closure}(Object(Illuminate\Support\Collection), "/api/users")
+      [internal]:0
+
+  4   array_map(Object(Closure))
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Support/Collection.php:638
+
+  5   Illuminate\Support\Collection::map(Object(Closure))
+      /code/admin-app/vendor/vyuldashev/laravel-openapi/src/Builders/PathsBuilder.php:65
+
+  6   Vyuldashev\LaravelOpenApi\Builders\PathsBuilder::build("default", [])
+      /code/admin-app/vendor/vyuldashev/laravel-openapi/src/Generator.php:49
+
+  7   Vyuldashev\LaravelOpenApi\Generator::generate("default")
+      /code/admin-app/vendor/vyuldashev/laravel-openapi/src/Console/GenerateCommand.php:27
+
+  8   Vyuldashev\LaravelOpenApi\Console\GenerateCommand::handle(Object(Vyuldashev\LaravelOpenApi\Generator))
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:32
+
+  9   call_user_func_array()
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:32
+
+  10  Illuminate\Container\BoundMethod::Illuminate\Container\{closure}()
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:90
+
+  11  Illuminate\Container\BoundMethod::callBoundMethod(Object(Illuminate\Foundation\Application), Object(Closure))
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:34
+
+  12  Illuminate\Container\BoundMethod::call(Object(Illuminate\Foundation\Application), [])
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Container/Container.php:591
+
+  13  Illuminate\Container\Container::call()
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Console/Command.php:192
+
+  14  Illuminate\Console\Command::execute(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+      /code/admin-app/vendor/symfony/console/Command/Command.php:255
+
+  15  Symfony\Component\Console\Command\Command::run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Illuminate\Console\OutputStyle))
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Console/Command.php:179
+
+  16  Illuminate\Console\Command::run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      /code/admin-app/vendor/symfony/console/Application.php:915
+
+  17  Symfony\Component\Console\Application::doRunCommand(Object(Vyuldashev\LaravelOpenApi\Console\GenerateCommand), Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      /code/admin-app/vendor/symfony/console/Application.php:272
+
+  18  Symfony\Component\Console\Application::doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      /code/admin-app/vendor/symfony/console/Application.php:148
+
+  19  Symfony\Component\Console\Application::run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Console/Application.php:90
+
+  20  Illuminate\Console\Application::run(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      /code/admin-app/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php:131
+
+  21  Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+      /code/admin-app/artisan:37

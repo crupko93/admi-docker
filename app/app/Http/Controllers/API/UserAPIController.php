@@ -42,12 +42,6 @@ class UserAPIController extends Controller
      *
      * Return a single user or a collection of all users
      *
-     * @Operation()
-     * @param UserGetRequest $request
-     * @param int $user_id User ID
-     * @Response(factory="PutUserResponse")
-     * @Collection(factory="ListUsersResponse")
-     * @Response(factory="ErrorResponse")
      *
      */
     public function getIndex(UserGetRequest $request, $user_id = null)
@@ -174,17 +168,11 @@ class UserAPIController extends Controller
      *
      * Delete a user based on ID
      *
-     * @Operation()
-     * @param int $user_id User ID
-     * @Response(factory="SuccessResponse")
-     * @Response(factory="ErrorResponse")
      *
      */
-    public function deleteIndex($user_id)
+    public function deleteIndex($user_id = null)
     {
         return DB::try(function () use ($user_id) {
-            $user_id = (int)$user_id;
-
             if (empty($user_id)) {
                 return error(trans('user.invalid_data_recheck'));
             }

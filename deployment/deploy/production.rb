@@ -6,7 +6,7 @@ set :branch, 'master'
 set :laravel_dotenv_file, './app/.env.production'
 
 set :ssh_options, {
-    :user => 'ubuntu',
+    :user => 'centos',
     :forward_agent => true,
     :auth_methods => ['publickey'],
     :keys => ['../keys/production.pem']
