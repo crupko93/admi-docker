@@ -7,6 +7,7 @@ use Auth, DB, Hash, Mail;
 use App\{Http\Requests\UserGetRequest, Http\Requests\UserRequest, Notifications\UserPasswordChanged, Role, User};
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use phpDocumentor\Reflection\Types\Integer;
 use App\Http\Resources\{
     User as UserResource,
     UserCollection
@@ -41,7 +42,6 @@ class UserAPIController extends Controller
      * Get user
      *
      * Return a single user or a collection of all users
-     *
      *
      */
     public function getIndex(UserGetRequest $request, $user_id = null)
@@ -168,10 +168,15 @@ class UserAPIController extends Controller
      *
      * Delete a user based on ID
      *
+     * @Operation()
+     * @Parameters(factory="DeleteUserParameters")
+     * @Response(factory="SuccessResponse")
+     * @Response(factory="ErrorResponse")
      *
      */
-    public function deleteIndex($user_id = null)
+    public function deleteIndex(string $user_id)
     {
+        dd(gettype($user_id));
         return DB::try(function () use ($user_id) {
             if (empty($user_id)) {
                 return error(trans('user.invalid_data_recheck'));
