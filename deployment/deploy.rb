@@ -6,7 +6,7 @@ set :repo_url,      'git@github.com:FLYGOPROJECT/admin-app.git'
 set :repo_tree,     'app'
 set :keep_releases, 3
 
-set :user, 'centos'
+set :user, 'www-data'
 set :use_sudo, true
 
 set :npm_target_path, -> { fetch(:release_path) }
@@ -25,6 +25,8 @@ set :laravel_5_linked_dirs, [
     'storage/logs',
     'storage/passport'
 ]
+# Ensure the paths in :file_permissions_paths exist?
+set :laravel_ensure_acl_paths_exist, true
 set :laravel_5_acl_paths, [
     'bootstrap/cache',
     'public/storage',
