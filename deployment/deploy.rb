@@ -6,8 +6,6 @@ set :repo_url,      'git@github.com:FLYGOPROJECT/admin-app.git'
 set :repo_tree,     'app'
 set :keep_releases, 3
 
-set :user, 'deploy'
-
 set :npm_target_path, -> { fetch(:release_path) }
 
 set :laravel_roles, :all
