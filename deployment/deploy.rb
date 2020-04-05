@@ -7,6 +7,7 @@ set :repo_tree,     'app'
 set :keep_releases, 3
 
 set :user, 'centos'
+set :use_sudo, true
 
 set :npm_target_path, -> { fetch(:release_path) }
 
