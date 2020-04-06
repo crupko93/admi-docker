@@ -1,11 +1,12 @@
 import * as types from '../mutation-types';
+import Cookies    from 'js-cookie';
 
 /**
  * Initial state
  */
 export const state = {
     user : null,
-    token: window.localStorage.getItem('token')
+    token: Cookies.get('token')
 };
 
 /**
@@ -20,16 +21,23 @@ export const mutations = {
         state.user  = null;
         state.token = null;
         window.localStorage.removeItem('token');
+        Cookies.remove('token');
+
     },
 
     [types.FETCH_USER_FAILURE] (state) {
         state.user = null;
         window.localStorage.removeItem('token');
+        Cookies.remove('token');
+
     },
 
     [types.SET_TOKEN] (state, {token}) {
         state.token = token;
-        window.localStorage.setItem('token', token);
+        // window.localStorage.setItem('token', token);
+        Cookies.set('token', token, {expires: 365});
+        console.log('setToken');
+        console.log(token);
 
     }
 };
@@ -46,6 +54,8 @@ export const actions = {
         try {
             const { data } =  await API.users.me();
             commit(types.SET_USER, data);
+            console.log('setUser');
+            console.log(state.token);
         } catch (e) {
             commit(types.FETCH_USER_FAILURE);
         }

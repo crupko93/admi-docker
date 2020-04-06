@@ -168,11 +168,6 @@ class UserAPIController extends Controller
      *
      * Delete a user based on ID
      *
-     * @Operation()
-     * @Parameters(factory="DeleteUserParameters")
-     * @Response(factory="SuccessResponse")
-     * @Response(factory="ErrorResponse")
-     *
      */
     public function deleteIndex(string $user_id)
     {
