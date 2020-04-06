@@ -36,7 +36,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['daily'],
+            'channels' => [env('APP_ENV') === 'local' ? 'single' : 'daily'],
             'ignore_exceptions' => false,
             'permission' => 0664,
         ],
