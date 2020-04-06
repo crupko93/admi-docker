@@ -7,7 +7,7 @@
             <content-loader :loading="isLoading"></content-loader>
             <v-toolbar dark color="primary" flat>
                    <v-flex xs10>
-                       <v-toolbar-title>{{ $t('login') }}</v-toolbar-title>
+                       <v-toolbar-title>test</v-toolbar-title>
                    </v-flex>
                    <v-flex xs2 class="text-right">
                        <locale-dropdown></locale-dropdown>
