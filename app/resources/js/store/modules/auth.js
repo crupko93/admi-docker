@@ -20,14 +20,12 @@ export const mutations = {
     [types.LOGOUT] (state) {
         state.user  = null;
         state.token = null;
-        window.localStorage.removeItem('token');
         Cookies.remove('token');
 
     },
 
     [types.FETCH_USER_FAILURE] (state) {
         state.user = null;
-        window.localStorage.removeItem('token');
         Cookies.remove('token');
 
     },
@@ -36,9 +34,6 @@ export const mutations = {
         state.token = token;
         // window.localStorage.setItem('token', token);
         Cookies.set('token', token, {expires: 365});
-        console.log('setToken');
-        console.log(token);
-
     }
 };
 
