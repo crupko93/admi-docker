@@ -15,7 +15,6 @@ set :laravel_migration_artisan_flags, "--force --env=#{fetch(:stage)}"
 set :laravel_version, 6.0
 set :laravel_upload_dotenv_file_on_deploy, true
 set :laravel_server_user, 'apache'
-set :user,                  'centos'
 set :laravel_ensure_linked_dirs_exist, true
 set :laravel_set_linked_dirs, true
 set :laravel_5_linked_dirs, [
