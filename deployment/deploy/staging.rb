@@ -6,7 +6,7 @@ set :branch, git_current_branch
 set :laravel_dotenv_file, './app/.env.staging'
 
 set :ssh_options, {
-    :user => 'centos',
+    :user => 'apache',
     :forward_agent => true,
     :auth_methods => ['publickey'],
     :keys => ['../keys/staging.pem']
