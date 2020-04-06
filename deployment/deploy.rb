@@ -6,7 +6,7 @@ set :repo_url,      'git@github.com:FLYGOPROJECT/admin-app.git'
 set :repo_tree,     'app'
 set :keep_releases, 3
 
-set :user, 'www-data'
+set :user, 'centos'
 set :use_sudo, true
 
 set :npm_target_path, -> { fetch(:release_path) }
@@ -17,7 +17,7 @@ set :laravel_migration_roles, :db
 set :laravel_migration_artisan_flags, "--force --env=#{fetch(:stage)}"
 set :laravel_version, 6.0
 set :laravel_upload_dotenv_file_on_deploy, true
-set :laravel_server_user, 'www-data'
+set :laravel_server_user, 'centos'
 set :laravel_ensure_linked_dirs_exist, true
 set :laravel_set_linked_dirs, true
 set :laravel_5_linked_dirs, [
