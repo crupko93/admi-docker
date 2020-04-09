@@ -37,19 +37,11 @@ class UserAPIController extends Controller
     ////////////////
     // ADMIN ONLY //
     ////////////////
-    /**
-     * Get user
-     *
-     * Return a single user or a collection of all users
-     *
-     * @Operation()
-     * @param UserGetRequest $request
-     * @param int $user_id User ID
-     * @Response(factory="PutUserResponse")
-     * @Collection(factory="ListUsersResponse")
-     * @Response(factory="ErrorResponse")
-     *
-     */
+
+    ////////////////
+    // ADMIN ONLY //
+    ////////////////
+
     public function getIndex(UserGetRequest $request, $user_id = null)
     {
         $user_id = (int)$user_id;
@@ -169,17 +161,7 @@ class UserAPIController extends Controller
         });
     }
 
-    /**
-     * Delete user
-     *
-     * Delete a user based on ID
-     *
-     * @Operation()
-     * @param int $user_id User ID
-     * @Response(factory="SuccessResponse")
-     * @Response(factory="ErrorResponse")
-     *
-     */
+
     public function deleteIndex($user_id)
     {
         return DB::try(function () use ($user_id) {
