@@ -50,6 +50,20 @@ export default [
                         component: require('$comp/roles-permissions/RolesPermissionsIndex').default,
                         meta     : {permissions: ['read_administration_section']}
                     }
+                    ,
+                    {
+                        path     : 'booking', name: 'booking',
+                        component: require('$comp/booking/BookingWrapper').default, children:
+                            [
+                                {path: '', name: 'booking', component: require('$comp/booking/BookingIndex').default},
+                                {
+                                    path     : 'edit',
+                                    name     : 'booking-edit',
+                                    component: require('$comp/booking/BookingEdit').default,
+                                    props    : true
+                                }
+                            ]
+                    }
                 ]
         }
     ]),

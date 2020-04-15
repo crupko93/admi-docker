@@ -25,10 +25,6 @@ export default {
         items: []
     }),
 
-    mounted () {
-        this.navigation();
-    },
-
     methods: {
         navigation () {
             this.items = [
@@ -36,6 +32,10 @@ export default {
                 {title: this.$t('edit'), icon: 'edit', to: {name: 'profile-edit'}}
             ];
         }
+    },
+
+    mounted () {
+        this.navigation();
     }
 };
 </script>

@@ -78,9 +78,9 @@
                     <v-btn color="primary" :disabled="isLoading"
                         @click="submit"
                     >
-            <span v-if="isLoading">
-                <v-icon>fa fa-spinner fa-spin</v-icon> Saving
-            </span>
+                    <span v-if="isLoading">
+                        <v-icon>fa fa-spinner fa-spin</v-icon> Saving
+                    </span>
                         <span v-else>{{$t('save')}}</span>
                     </v-btn>
                 </v-card-actions>
