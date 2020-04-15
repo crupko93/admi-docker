@@ -140,7 +140,7 @@ export default {
             this.items = [];
             let temporaryItems = [
                 [
-                    {title: this.$t('dashboard'), icon: 'far fa-chart-line', to: {name: 'dashboard'}, exact: false}
+                    {title: this.$t('dashboard'), icon: 'far fa-chart-line', to: {name: 'dashboard'}, exact: false, permission: 'read_administration_section'}
                 ],
                 [
                     {title: this.$t('profile'), icon: 'person', to: {name: 'profile'}, exact: false}
@@ -150,6 +150,9 @@ export default {
                 ],
                 [
                     {title: this.$t('roles_and_permissions'), icon: 'fas fa-user-tag', to: {name: 'roles'}, exact: false, permission: 'read_administration_section'}
+                ],
+                [
+                    {title: this.$t('booking'), icon: 'fas fa-ticket-alt', to: {name: 'booking'}, exact: false}
                 ],
                 [
                     {title: this.$t('logout'), icon: 'power_settings_new', action: this.logout}

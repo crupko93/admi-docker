@@ -19,7 +19,7 @@ class DeleteUserParameters extends ParametersFactory
                 ->name('user_id')
                 ->description('Delete user based on id')
                 ->required(true)
-                ->schema(Schema::integer()),
+                ->schema(Schema::string())
 
         ];
     }

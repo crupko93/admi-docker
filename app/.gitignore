@@ -4,6 +4,13 @@
 /.vagrant
 /node_modules
 /public/hot
+/public/css
+/public/images
+/public/js
+/public/storage
+/webStorm.config.js
+.DS_Store
+.idea
 /storage/*.key
 /vendor
 

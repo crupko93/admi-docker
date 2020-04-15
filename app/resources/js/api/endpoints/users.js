@@ -7,7 +7,7 @@ export default remote => ({
     // Admins //
     ////////////
     all       : (pagination = {}) => remote.get('users', {params: pagination}),
-    get       : id => remote.get(`users/${id}`),
+    get       : id => remote.get(`users/${parseInt(id)}`),
     create    : data => remote.post('users', data),
     update    : data => remote.put('users', data),
     delete    : id => remote.delete(`users/${id}`),
