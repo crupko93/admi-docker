@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Announcement;
+use App\Events\AnnouncementCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnouncementRequest;
 use App\Http\Resources\{Announcement as AnnouncementResource, AnnouncementCollection};
-use App\Services\AnnouncementService;
 use DB;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
@@ -14,13 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AnnouncementAPIController extends Controller
 {
-    protected AnnouncementService $announcement;
 
-    public function __construct(AnnouncementService $announcement)
+    public function __construct()
     {
-        $this->announcement = $announcement;
-
-        $this->middleware('role:executive_one');
     }
 
     /**
@@ -61,7 +57,20 @@ class AnnouncementAPIController extends Controller
     public function postIndex(AnnouncementRequest $request)
     {
         return DB::try(function () use ($request) {
-            return $this->announcement->create($request->user(), $request->all());
+            $announcement = new Announcement([
+                'user_id'     => $request->user()->id,
+                'body'        => $request['body'],
+                'action_text' => $request['action_text'],
+                'action_url'  => $request['action_url'],
+            ]);
+
+            if (!$announcement->save()) {
+                return error('Could not create announcement...');
+            }
+
+            event(new AnnouncementCreated($announcement));
+
+            return success(['announcement' => AnnouncementResource::make($announcement)]);
         });
     }
 
@@ -75,7 +84,22 @@ class AnnouncementAPIController extends Controller
     public function putIndex(AnnouncementRequest $request)
     {
         return DB::try(function () use ($request) {
-            return $this->announcement->update($request->id, $request->all());
+            if (empty($request->id)) {
+                return error('Invalid data! Please recheck and try again...');
+            }
+
+            $announcement = Announcement::findOrFail($request->id);
+            $announcement->fill([
+                'body'        => $request['body'],
+                'action_text' => $request['action_text'],
+                'action_url'  => $request['action_url'],
+            ]);
+
+            if (!$announcement->save()) {
+                return error('Could not update announcement...');
+            }
+
+            return success(['announcement' => AnnouncementResource::make($announcement)]);
         });
     }
 
@@ -89,7 +113,17 @@ class AnnouncementAPIController extends Controller
     public function deleteIndex($ids)
     {
         return DB::try(function () use ($ids) {
-            return $this->announcement->delete($ids);
+            $announcement_ids = explode(',', $ids);
+
+            foreach ($ids as $id) {
+                $announcement = Announcement::findOrFail($id);
+
+                if (!$announcement->delete()) {
+                    return error('Could not delete announcement!');
+                }
+            }
+
+            return success();
         });
     }
 }
