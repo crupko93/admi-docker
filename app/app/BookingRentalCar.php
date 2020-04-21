@@ -2,15 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Traits\TablePaginate;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class BookingCommunicationReport extends Model
+class BookingRentalCar extends Model
 {
     use TablePaginate;
 
-    protected $fillable = ['booking_communication_id'];
+    protected $fillable = ['booking_rental_id'];
 
     protected $searchable = [];
 
@@ -19,9 +19,9 @@ class BookingCommunicationReport extends Model
      | Relationships
      |--------------------------------------------------------------------------
      |
-     */
-    public function bookingCommunication(): BelongsTo
+    */
+    public function bookingRental(): BelongsTo
     {
-        return $this->belongsTo(BookingCommunication::class);
+        return $this->belongsTo(BookingRental::class);
     }
 }

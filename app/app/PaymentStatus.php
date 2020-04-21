@@ -2,17 +2,18 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Traits\TablePaginate;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Traits\TablePaginate;
 
-class BookingCommunicationReport extends Model
+class PaymentStatus extends Model
 {
     use TablePaginate;
 
-    protected $fillable = ['booking_communication_id'];
+    protected $fillable = ['status'];
 
-    protected $searchable = [];
+    protected $searchable = ['status'];
 
     /*
      |--------------------------------------------------------------------------
@@ -20,8 +21,8 @@ class BookingCommunicationReport extends Model
      |--------------------------------------------------------------------------
      |
      */
-    public function bookingCommunication(): BelongsTo
+    public function payment(): HasMany
     {
-        return $this->belongsTo(BookingCommunication::class);
+        return $this->hasMany(Payment::class);
     }
 }
