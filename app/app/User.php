@@ -6,6 +6,8 @@ use App\Jobs\SendNotification;
 use App\Notifications\UserAccountCreated;
 use App\Notifications\UserPasswordChanged;
 use App\Traits\TablePaginate;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -111,5 +113,40 @@ class User extends Authenticatable implements JWTSubject
             $this->setRelation('role', $this->roles->pluck('name'));
             $this->unsetRelation('roles');
         }
+    }
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    public function profileImage(): BelongsTo
+    {
+        return $this->belongsTo(Image::class, 'profile_image_id');
+    }
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(Image::class);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Methods
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    /**
+     * @return bool|null
+     */
+    public function delete(): ?bool
+    {
+        // Delete profile image
+        if ($this->profileImage) {
+            $this->profileImage->delete();
+        }
+
+        return parent::delete();
     }
 }

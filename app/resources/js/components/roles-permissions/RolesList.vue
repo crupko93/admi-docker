@@ -27,34 +27,34 @@
             >
                 <v-progress-linear slot="progress" color="blue" height="3" indeterminate></v-progress-linear>
 
-                <template slot="item" slot-scope="props">
-                    <tr>
-                        <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.permissions.length > 0 ? lodash.map(props.item.permissions, 'label') : '-' }}</td>
-                        <td class="text-center px-0">
-                            <v-menu offset-y>
-                                <template v-slot:activator="{ on }">
-                                    <v-btn
-                                        v-on="on"
-                                        color="primary" text icon
-                                    >
-                                        <v-icon>more_vert</v-icon>
-                                    </v-btn>
-                                </template>
-                                <v-list>
-                                    <!-- [ALL] Edit -->
-                                    <v-list-item @click="$refs.roleDialog.edit(props.item.id)">
-                                        <v-list-item-title>{{$t('edit')}}</v-list-item-title>
-                                    </v-list-item>
+                <template v-slot:item.permissions="{ item }">
+                    {{item.permissions.length > 0 ? lodash.map(item.permissions, 'label') : '-' }}
+                </template>
 
-                                    <!-- [ALL] Delete -->
-                                    <v-list-item @click="deleteRole(props.item)">
-                                        <v-list-item-title>{{$t('delete')}}</v-list-item-title>
-                                    </v-list-item>
-                                </v-list>
-                            </v-menu>
-                        </td>
-                    </tr>
+                <template v-slot:item.actions="{ item }">
+                    <div class="text-center px-0">
+                        <v-menu offset-y>
+                            <template v-slot:activator="{ on }">
+                                <v-btn
+                                    v-on="on"
+                                    color="primary" text icon
+                                >
+                                    <v-icon>more_vert</v-icon>
+                                </v-btn>
+                            </template>
+                            <v-list>
+                                <!-- [ALL] Edit -->
+                                <v-list-item @click="$refs.roleDialog.edit(item.id)">
+                                    <v-list-item-title>{{$t('edit')}}</v-list-item-title>
+                                </v-list-item>
+
+                                <!-- [ALL] Delete -->
+                                <v-list-item @click="deleteRole(item)">
+                                    <v-list-item-title>{{$t('delete')}}</v-list-item-title>
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
+                    </div>
                 </template>
             </v-data-table>
 
@@ -107,11 +107,12 @@ export default {
                 align   : 'left'
             }, {
                 text    : vm.$t('permissions'),
+                value   : 'permissions',
                 align   : 'left',
                 sortable: true
             }, {
                 text    : vm.$t('actions'),
-                value   : '',
+                value   : 'actions',
                 align   : 'center',
                 sortable: false
             }
