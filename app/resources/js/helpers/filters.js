@@ -15,6 +15,13 @@ Vue.filter('datetime', value => {
     return moment.utc(value).local().format('MMMM Do, YYYY h:mm A');
 });
 
+/**
+ * Format the given date as a timestamp.
+ */
+Vue.filter('time', value => {
+    return moment.utc(value).local().format('h:mm');
+});
+
 
 /**
  * Format the given date into a relative time.
@@ -65,7 +72,7 @@ Vue.filter('currency', value => {
 
     var sign = value < 0 ? '-' : '';
 
-    return sign + window.Spark.currencySymbol + head +
+    return sign + window.currencySymbol + head +
         _int.slice(i).replace(/(\d{3})(?=\d)/g, '$1,') +
         _float;
 });

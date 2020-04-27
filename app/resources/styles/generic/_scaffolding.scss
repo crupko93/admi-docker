@@ -49,6 +49,15 @@ a{
     }
 }
 
+.v-chip {
+    .v-chip__content {
+        .v-avatar {
+            margin-right: 5px !important;
+            margin-left: -12px !important;
+        }
+    }
+}
+
 table.v-table {
     border-radius: 5px !important;
 

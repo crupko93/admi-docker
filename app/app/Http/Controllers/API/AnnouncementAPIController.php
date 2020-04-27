@@ -116,7 +116,7 @@ class AnnouncementAPIController extends Controller
         return DB::try(function () use ($ids) {
             $announcement_ids = explode(',', $ids);
 
-            foreach ($ids as $id) {
+            foreach ($announcement_ids as $id) {
                 $announcement = Announcement::findOrFail($id);
 
                 if (!$announcement->delete()) {

@@ -129,7 +129,7 @@
                                         <v-list-item-title>
                                             {{ announcement.creator.first_name }} {{ announcement.creator.last_name }}
                                         </v-list-item-title>
-                                        <v-list-item-subtitle v-html="announcement.parsed_body"></v-list-item-subtitle>
+                                        <v-list-item-subtitle v-html="announcement.body" class="mt-2 mb-5"></v-list-item-subtitle>
                                         <span><small>{{ announcement.created_at | relative }}</small></span>
                                     </v-list-item-content>
 
@@ -289,6 +289,10 @@ export default {
         this.$nextTick(() => {
             Bus.$on('notifications-toggle', () => {
                 this.notificationsDialog = !this.notificationsDialog;
+
+                if (this.notificationsDialog) {
+                    this.getNotifications();
+                }
             });
         });
     }

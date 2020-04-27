@@ -16,6 +16,7 @@ import App                          from '$comp/App';
 import 'babel-polyfill';
 import i18n                         from '~/plugins/i18n';
 import '~/plugins/index';
+import moment                       from 'moment';
 import router                       from '~/router/index';
 import store                        from '~/store/index';
 import swal                         from 'sweetalert';
@@ -26,9 +27,10 @@ import Vuelidate                    from 'vuelidate';
 import vuetify                      from '~/plugins/vuetify';
 
 // Global declarations
-window.API   = API;
-window.Utils = Utils;
-window.swal  = require('sweetalert');
+window.API            = API;
+window.Utils          = Utils;
+window.swal           = require('sweetalert');
+window.currencySymbol = '€';
 
 if (Laravel.env === 'production') {
     Vue.config.devtools = false;
@@ -50,6 +52,7 @@ Vue.use(Snotify, {
 // Vue prototype declarations
 Vue.prototype.$utils = window.Utils;
 Vue.prototype._      = require('lodash');
+Vue.prototype.moment = moment;
 
 export default Bus = new Vue({
     i18n,
