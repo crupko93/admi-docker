@@ -1,7 +1,8 @@
 export default remote => ({
-    updatePassword: data => remote.put('users/password', data),
-    me            : () => remote.get('profile'),
-    updateProfile : data => remote.put('profile', data),
+    updatePassword    : data => remote.put('users/password', data),
+    me                : () => remote.get('profile'),
+    updateProfile     : data => remote.put('profile', data),
+    deleteNotification: id => remote.delete(`users/notification/${id}`),
 
     ////////////
     // Admins //

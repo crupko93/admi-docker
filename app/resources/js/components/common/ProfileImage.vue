@@ -10,7 +10,7 @@ export default {
     props: {
         src: {
             type    : String,
-            required: true
+            required: false
         },
         size: {
             type   : Number,
@@ -42,8 +42,8 @@ export default {
         }
     }),
 
-    mounted() {
-        this.styles.image['background-image']    = 'url(' + this.src + ')';
+    mounted () {
+        this.styles.image['background-image']    = this.src ? 'url(' + this.src + ')' : 'url(/img/placeholders/user.png)';
         this.styles.image['display']             = 'inline-block';
         this.styles.image['background-position'] = 'center';
         this.styles.image['background-size']     = 'cover';

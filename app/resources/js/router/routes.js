@@ -41,6 +41,11 @@ export default [
                             ]
                     },
                     {
+                        path     : 'announcements', name: 'announcements',
+                        component: require('$comp/announcements/AnnouncementsIndex').default,
+                        meta     : {permissions: ['read_administration_section']}
+                    },
+                    {
                         path     : 'users', name: 'users',
                         component: require('$comp/user/UsersIndex').default,
                         meta     : {permissions: ['read_administration_section']}
@@ -52,8 +57,7 @@ export default [
                     }
                     ,
                     {
-                        path     : 'booking', name: 'booking',
-                        component: require('$comp/booking/BookingWrapper').default, children:
+                        path     : 'booking', component: require('$comp/booking/BookingWrapper').default, children:
                             [
                                 {path: '', name: 'booking', component: require('$comp/booking/BookingIndex').default},
                                 {
