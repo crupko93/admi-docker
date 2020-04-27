@@ -8,8 +8,13 @@ use Illuminate\Http\Request;
 use App\Http\Resources\{Role as RoleResource, RoleCollection};
 use DB;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Symfony\Component\HttpFoundation\Response;
+//use Symfony\Component\HttpFoundation\Response;
+use Vyuldashev\LaravelOpenApi\Annotations\{Operation, Parameters, PathItem, RequestBody, Response};
 
+
+/**
+ * @PathItem()
+ */
 class RoleAPIController extends Controller
 {
     public function __construct()
@@ -18,9 +23,15 @@ class RoleAPIController extends Controller
     }
 
     /**
-     * @param mixed $roleId
+     * Get role
      *
-     * @return RoleCollection|ResponseFactory|Response
+     * Get specific role or return list of roles
+     *
+     * @Operation()
+     *
+     * @Response(factory="SuccessResponse")
+     * @Response(factory="ErrorResponse")
+     *
      */
     public function getIndex(Request $request, $roleId = null)
     {
@@ -37,6 +48,16 @@ class RoleAPIController extends Controller
         return success(['role' => RoleResource::make($role)]);
     }
 
+    /**
+     * Update role
+     *
+     *
+     * @Operation()
+     * @Response(factory="SuccessResponse")
+     * @Response(factory="ErrorResponse")
+     * @param RoleRequest $request
+     * @return mixed
+     */
     public function postIndex(RoleRequest $request)
     {
         return DB::try(function () use ($request) {
@@ -57,6 +78,16 @@ class RoleAPIController extends Controller
         });
     }
 
+    /**
+     * Creat new role
+     *
+     *
+     *@Operation()
+     *@Response(factory="SuccessResponse")
+     *@Response(factory="ErrorResponse")
+     * @param RoleRequest $request
+     * @return mixed
+     */
     public function putIndex(RoleRequest $request)
     {
         return DB::try(function () use ($request) {
@@ -78,6 +109,15 @@ class RoleAPIController extends Controller
         });
     }
 
+    /**
+     * Remove role
+     *
+     * @Operation()
+     * @Response(factory="SuccessResponse")
+     * @Response(factory="ErrorResponse")
+     * @param $roleIds
+     * @return mixed
+     */
     public function deleteIndex($roleIds)
     {
         return DB::try(function () use ($roleIds) {
