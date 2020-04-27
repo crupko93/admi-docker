@@ -6,8 +6,9 @@ use App\Announcement;
 use App\Events\AnnouncementCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnouncementRequest;
-use App\Http\Resources\{Announcement as AnnouncementResource, AnnouncementCollection};
-use DB;
+use App\Http\Resources\{Announcement as AnnouncementResource, AnnouncementCollection, User as UserResource};
+use Carbon\Carbon;
+use Auth, DB;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -125,5 +126,27 @@ class AnnouncementAPIController extends Controller
 
             return success();
         });
+    }
+
+    /**
+     * Update the last read announcements timestamp.
+     *
+     * @return ResponseFactory|Response
+     */
+    public function patchReadAnnouncement(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user === null) {
+            return error('Could not find the logged user...');
+        }
+
+        $user->last_read_announcements_at = Carbon::now();
+
+        if (!$user->save()) {
+            return error('Could not mark announcements as read...');
+        }
+
+        return success(['user' => UserResource::make($user->load('roles'))]);
     }
 }
