@@ -19,12 +19,6 @@
             >
                 <v-progress-linear slot="progress" color="blue" height="3" indeterminate></v-progress-linear>
 
-                <template slot="item" slot-scope="props">
-                    <tr>
-                        <td>{{ props.item.label }}</td>
-                        <td>{{ props.item.name }}</td>
-                    </tr>
-                </template>
             </v-data-table>
 
         </div>

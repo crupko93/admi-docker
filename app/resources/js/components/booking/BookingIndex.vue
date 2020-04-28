@@ -30,33 +30,28 @@
             >
                 <v-progress-linear slot="progress" color="blue" height="3" indeterminate></v-progress-linear>
 
-                <template slot="item" slot-scope="props">
-                    <tr>
-                        <td>{{ props.item.code }}</td>
-                        <td class="text-center px-0">
-                            <v-menu offset-y>
-                                <template v-slot:activator="{ on }">
-                                    <v-btn
-                                        v-on="on"
-                                        color="primary" text icon
-                                    >
-                                        <v-icon>more_vert</v-icon>
-                                    </v-btn>
-                                </template>
-                                <v-list>
-                                    <!-- [ALL] Edit -->
-                                    <v-list-item @click="$router.push({ name: 'booking-edit', params: { bookingId: '1' }})">
-                                        <v-list-item-title>{{$t('edit')}}</v-list-item-title>
-                                    </v-list-item>
+                <template v-slot:item.actions="{item}">
+                    <v-menu offset-y>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                v-on="on"
+                                color="primary" text icon
+                            >
+                                <v-icon>more_vert</v-icon>
+                            </v-btn>
+                        </template>
+                        <v-list>
+                            <!-- [ALL] Edit -->
+                            <v-list-item @click="$router.push({ name: 'booking-edit', params: { bookingId: '1' }})">
+                                <v-list-item-title>{{$t('edit')}}</v-list-item-title>
+                            </v-list-item>
 
-                                    <!-- [ALL] Delete -->
-                                    <v-list-item @click="deleteBooking(props.item)">
-                                        <v-list-item-title>{{$t('delete')}}</v-list-item-title>
-                                    </v-list-item>
-                                </v-list>
-                            </v-menu>
-                        </td>
-                    </tr>
+                            <!-- [ALL] Delete -->
+                            <v-list-item @click="deleteBooking(item)">
+                                <v-list-item-title>{{$t('delete')}}</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </template>
             </v-data-table>
         </div>
@@ -94,7 +89,7 @@ export default {
                 align   : 'left'
             }, {
                 text    : vm.$t('actions'),
-                value   : '',
+                value   : 'actions',
                 align   : 'center',
                 sortable: false
             }
