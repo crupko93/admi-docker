@@ -7,6 +7,7 @@ use App\Notifications\UserAccountCreated;
 use App\Notifications\UserPasswordChanged;
 use App\Traits\TablePaginate;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -128,6 +129,16 @@ class User extends Authenticatable implements JWTSubject
     public function images(): HasMany
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function announcements(): BelongsToMany
+    {
+        return $this->belongsToMany(UserAnnouncement::class, 'user_announcements');
+    }
+
+    public function announcementsOwned(): HasMany
+    {
+        return $this->hasMany(Announcement::class, 'created_by');
     }
 
     /*

@@ -11,3 +11,8 @@ export const SET_TOKEN          = 'SET_TOKEN';
  * lang.js
  */
 export const SET_LOCALE = 'SET_LOCALE';
+
+/**
+ * notifications.js
+ */
+export const SET_NOTIFICATIONS = 'SET_NOTIFICATIONS';
