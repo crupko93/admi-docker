@@ -26,10 +26,12 @@ Route::group(['middleware' => ['jwt']], function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
     AdvancedRoute::controllers([
-        'roles'       => 'API\RoleAPIController',
-        'profile'     => 'API\ProfileAPIController',
-        'permissions' => 'API\PermissionAPIController',
-        'users'       => 'API\UserAPIController'
+        'announcements' => 'API\AnnouncementAPIController',
+        'notifications' => 'API\NotificationAPIController',
+        'roles'         => 'API\RoleAPIController',
+        'profile'       => 'API\ProfileAPIController',
+        'permissions'   => 'API\PermissionAPIController',
+        'users'         => 'API\UserAPIController'
     ]);
 });
 
