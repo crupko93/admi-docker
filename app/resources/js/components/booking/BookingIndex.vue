@@ -27,6 +27,8 @@
                 :server-items-length="bookingsCount"
                 :options.sync="pagination"
                 :footer-props="{itemsPerPageOptions: [20, 50, 100]}"
+                @click:row="$router.push({ name: 'booking-edit', params: { bookingId: '1' }})"
+                class="booking-table"
             >
                 <v-progress-linear slot="progress" color="blue" height="3" indeterminate></v-progress-linear>
 
@@ -43,8 +45,8 @@
                     <div class="text-md-center">
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on }">
-                                <v-btn v-on="on" text icon :color="dateColor(item.date)">
-                                    <v-icon>
+                                <v-btn small v-on="on" text icon :color="dateColor(item.date)">
+                                    <v-icon small>
                                         fas fa-circle
                                     </v-icon>
                                 </v-btn>
@@ -67,46 +69,19 @@
                 <!-- Services -->
                 <template v-slot:item.services="{ item }">
                     <span v-for="service in item.services" :key="service">
-                        <v-icon v-if="service === 'flight'" color="green">
+                        <v-icon small v-if="service === 'flight'" color="green">
                             fas fa-plane
                         </v-icon>
-                        <v-icon v-if="service === 'insurance'" color="green">
+                        <v-icon small v-if="service === 'insurance'" color="green">
                             fas fa-shield
                         </v-icon>
-                        <v-icon v-if="service === 'hotel'" color="green">
+                        <v-icon small v-if="service === 'hotel'" color="green">
                             fas fa-bed
                         </v-icon>
-                        <v-icon v-if="service === 'car'" color="green">
+                        <v-icon small v-if="service === 'car'" color="green">
                             fas fa-car
                         </v-icon>
                     </span>
-                </template>
-
-                <!-- Actions -->
-                <template v-slot:item.actions="{ item }">
-                    <div class="text-xs-center mx-0">
-                        <v-menu offset-y>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                    v-on="on"
-                                    color="primary" text icon
-                                >
-                                    <v-icon>more_vert</v-icon>
-                                </v-btn>
-                            </template>
-                            <v-list>
-                                <!-- [ALL] Edit -->
-                                <v-list-item @click="$router.push({ name: 'booking-edit', params: { bookingId: '1' }})">
-                                    <v-list-item-title>{{$t('edit')}}</v-list-item-title>
-                                </v-list-item>
-
-                                <!-- [ALL] Delete -->
-                                <v-list-item @click="deleteBooking(props.item)">
-                                    <v-list-item-title>{{$t('delete')}}</v-list-item-title>
-                                </v-list-item>
-                            </v-list>
-                        </v-menu>
-                    </div>
                 </template>
             </v-data-table>
         </div>
@@ -224,10 +199,6 @@ export default {
             }, {
                 text    : 'Source',
                 value   : 'source',
-                align   : 'left'
-            }, {
-                text    : 'Actions',
-                value   : 'actions',
                 align   : 'left'
             }
         ],

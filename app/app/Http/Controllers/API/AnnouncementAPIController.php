@@ -59,6 +59,7 @@ class AnnouncementAPIController extends Controller
     {
         return DB::try(function () use ($request) {
             $announcement = new Announcement([
+                'created_by'  => $request->user()->id,
                 'user_id'     => $request->user()->id,
                 'body'        => $request['body'],
                 'action_text' => $request['action_text'],
