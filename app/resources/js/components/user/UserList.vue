@@ -27,8 +27,12 @@
             >
                 <v-progress-linear slot="progress" color="blue" height="3" indeterminate></v-progress-linear>
 
+                    <template v-slot:item.first_name="{ item }">
+                        {{ item.first_name }} {{ item.last_name }}
+                    </template>
+
                     <template v-slot:item.roles="{ item }">
-                                {{item.role[0]}}
+                                {{ item.role[0] }}
                     </template>
 
                     <template v-slot:item.actions="{ item }">

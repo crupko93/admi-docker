@@ -30,7 +30,7 @@
             >
                 <v-progress-linear slot="progress" color="blue" height="3" indeterminate></v-progress-linear>
 
-                <template v-slot:item.actions="{item}">
+                <template v-slot:item.actions="{ item }">
                     <v-menu offset-y>
                         <template v-slot:activator="{ on }">
                             <v-btn

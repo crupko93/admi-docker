@@ -63,9 +63,22 @@
                             :items="graphs.top_customers"
                             class="elevation-0"
                         >
-                                <template v-slot:item.name="{item}">
-                                    {{item.first_name+' '+item.last_name}}
+                                <template v-slot:item.name="{ item }">
+                                    {{ item.first_name + ' ' + item.last_name }}
                                 </template>
+
+                                <template v-slot:item.email="{ item }">
+                                    {{ item.email || '-' }}
+                                </template>
+
+                                <template v-slot:item.total_cancelled="{ item }">
+                                    {{ item.total_cancelled || 0 }}
+                                </template>
+
+                                <template v-slot:item.total_purchased="{ item }">
+                                    {{ item.total_purchased || 0 }}
+                                </template>
+
                         </v-data-table>
                     </v-card-text>
                 </v-card>
