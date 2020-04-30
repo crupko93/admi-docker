@@ -63,14 +63,22 @@
                             :items="graphs.top_customers"
                             class="elevation-0"
                         >
-                            <template slot="item" slot-scope="props">
-                                <tr>
-                                    <td>{{ props.item.first_name + ' ' + props.item.last_name}}</td>
-                                    <td>{{ props.item.email || '-' }}</td>
-                                    <td class="text-center">{{ props.item.total_cancelled || 0 }}</td>
-                                    <td class="text-center">{{ props.item.total_purchased || 0 }}</td>
-                                </tr>
-                            </template>
+                                <template v-slot:item.name="{ item }">
+                                    {{ item.first_name + ' ' + item.last_name }}
+                                </template>
+
+                                <template v-slot:item.email="{ item }">
+                                    {{ item.email || '-' }}
+                                </template>
+
+                                <template v-slot:item.total_cancelled="{ item }">
+                                    {{ item.total_cancelled || 0 }}
+                                </template>
+
+                                <template v-slot:item.total_purchased="{ item }">
+                                    {{ item.total_purchased || 0 }}
+                                </template>
+
                         </v-data-table>
                     </v-card-text>
                 </v-card>
