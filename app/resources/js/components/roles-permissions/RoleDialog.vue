@@ -68,7 +68,7 @@
                             <v-flex xs12>
                                 <!-- Permissions -->
                                 <v-autocomplete multiple chips required color="primary lighten-2"
-                                    @input="$v.form.permissions.$touch()" @blur="$v.form.users.$touch()"
+                                    @input="$v.form.users.$touch()" @blur="$v.form.users.$touch()"
                                     :items="users"
                                     :error-messages="usersErrors"
                                     item-text="name"
