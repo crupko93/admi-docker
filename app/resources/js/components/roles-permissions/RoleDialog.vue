@@ -64,45 +64,8 @@
                             </v-flex>
                         </v-layout>
 
-                        <v-layout row wrap>
-                            <v-flex xs12>
-                                <!-- Permissions -->
-                                <v-autocomplete multiple chips required color="primary lighten-2"
-                                    @input="$v.form.users.$touch()" @blur="$v.form.users.$touch()"
-                                    :items="users"
-                                    :error-messages="usersErrors"
-                                    item-text="name"
-                                    item-value="name"
-                                    :label="$t('users')+'*'"
-                                    v-model="form.users"
-                                    return-object
-                                >
-                                    <template slot="selection" slot-scope="data">
-                                        <v-chip close class="chip--select-multi"
-                                            @click:close="removeSelectedUsers(data.item)"
-                                            :input-value="data.selected"
-                                        >
-                                            {{ data.item.email }}
-                                        </v-chip>
-                                    </template>
-                                    <template
-                                        slot="item"
-                                        slot-scope="data"
-                                    >
-                                        <template v-if="typeof data.item !== 'object'">
-                                            <v-list-item-content v-text="data.item"></v-list-item-content>
-                                        </template>
-                                        <template v-else>
-                                            <v-list-item-content>
-                                                <v-list-item-title v-html="data.item.email"></v-list-item-title>
-                                            </v-list-item-content>
-                                        </template>
-                                    </template>
-                                </v-autocomplete>
-                            </v-flex>
-                        </v-layout>
 
-                        </v-container>
+                    </v-container>
                 </v-card-text>
 
                 <v-card-actions>
@@ -140,7 +103,6 @@ export default {
         // Remote data //
         /////////////////
         permissions: [],
-        users: [],
         roleId     : null,
 
         ////////////////
@@ -159,8 +121,7 @@ export default {
         return {
             form: {
                 name       : {required},
-                permissions: {required},
-                users: {required}
+                permissions: {required}
             }
         };
     },
@@ -177,12 +138,6 @@ export default {
             const errors = [];
             !this.$v.form.permissions.required && errors.push(this.$t('one_permission_required'));
             return errors;
-        },
-        usersErrors (){
-            if (!this.$v.form.users.$dirty) return [];
-            const errors = [];
-            !this.$v.form.users.required && errors.push(this.$t('user')+' '+this.$t('is_required'));
-            return errors;
         }
     },
 
@@ -191,12 +146,10 @@ export default {
             this.form = {
                 id         : '',
                 name       : '',
-                permissions: [],
-                users: []
+                permissions: []
             };
 
             this.permissions = [];
-            this.users = [];
 
             this.$v.$reset();
         },
@@ -207,14 +160,6 @@ export default {
         removeSelectedPermissions (item) {
             const index = this.form.permissions.findIndex(permission => permission.name === item.name);
             if (index >= 0) this.form.permissions.splice(index, 1);
-        },
-
-        /**
-         * Remove user on chip 'close' click
-         * */
-        removeSelectedUsers (item) {
-            const index = this.form.users.findIndex(user => user.email === item.email);
-            if (index >= 0) this.form.users.splice(index, 1);
         },
 
         /**
@@ -229,20 +174,6 @@ export default {
                 })
                 .catch(Utils.standardErrorResponse)
                 .finally(() => this.isLoading = false);
-        },
-
-        /**
-         * Fetch all users available in the app
-         * */
-        getUsers () {
-            this.isLoading = true;
-
-            return API.users.all()
-                      .then(response => {
-                          this.users = response.data.users;
-                      })
-                      .catch(Utils.standardErrorResponse)
-                      .finally(() => this.isLoading = false);
         },
 
         /**
@@ -339,7 +270,6 @@ export default {
                 if (value) {
                     this.initialize();
                     this.getPermissions();
-                    this.getUsers();
                 }
             },
             deep: true
