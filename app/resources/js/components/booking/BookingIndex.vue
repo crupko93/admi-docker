@@ -165,39 +165,39 @@ export default {
         // Data table headers
         headers: [
             {
-                text    : 'Status',
+                text    : vm.$t('status'),
                 value   : 'status',
                 align   : 'left'
             }, {
-                text    : 'Operator',
+                text    : vm.$t('operator'),
                 value   : 'operator',
                 align   : 'left'
             }, {
-                text    : 'Date',
+                text    : vm.$t('date'),
                 value   : 'date',
                 align   : 'center'
             }, {
-                text    : 'Company',
+                text    : vm.$t('company'),
                 value   : 'company',
                 align   : 'left'
             }, {
-                text    : 'PNR',
+                text    : vm.$t('PNR'),
                 value   : 'pnr',
                 align   : 'left'
             }, {
-                text    : 'Payment Status',
+                text    :vm.$t('payment_status'),
                 value   : 'payment_status',
                 align   : 'left'
             }, {
-                text    : 'Total',
+                text    : vm.$t('Total'),
                 value   : 'total',
                 align   : 'left'
             }, {
-                text    : 'Services',
+                text    : vm.$t('services'),
                 value   : 'services',
                 align   : 'left'
             }, {
-                text    : 'Source',
+                text    : vm.$t('source'),
                 value   : 'source',
                 align   : 'left'
             }
@@ -302,16 +302,43 @@ export default {
         locale: {
             handler () {
                 this.headers = [
-                    {
-                        text    : this.$t('code'),
-                        value   : 'code',
-                        align   : 'left'
-                    }, {
-                        text    : this.$t('actions'),
-                        value   : '',
-                        align   : 'center',
-                        sortable: false
-                    }
+                     {
+                text    : this.$t('status'),
+                value   : 'status',
+                align   : 'left'
+            }, {
+                text    : this.$t('operator'),
+                value   : 'operator',
+                align   : 'left'
+            }, {
+                text    : this.$t('date'),
+                value   : 'date',
+                align   : 'center'
+            }, {
+                text    : this.$t('company'),
+                value   : 'company',
+                align   : 'left'
+            }, {
+                text    : this.$t('PNR'),
+                value   : 'pnr',
+                align   : 'left'
+            }, {
+                text    :this.$t('payment_status'),
+                value   : 'payment_status',
+                align   : 'left'
+            }, {
+                text    : this.$t('Total'),
+                value   : 'total',
+                align   : 'left'
+            }, {
+                text    : this.$t('services'),
+                value   : 'services',
+                align   : 'left'
+            }, {
+                text    : this.$t('source'),
+                value   : 'source',
+                align   : 'left'
+            }
                 ];
             },
             deep: true
