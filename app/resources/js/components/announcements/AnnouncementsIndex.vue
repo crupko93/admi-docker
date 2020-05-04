@@ -5,9 +5,7 @@
                 <h3 class="title">{{this.$t('announcements')}}</h3>
 
                 <v-alert :value="true" type="info">
-                    Announcements you create here will be sent to the "Announcements" section of the
-                    notifications modal window, informing your users about new features and improvements to your
-                    application.
+                   {{this.$t('announcementmessage')}}
                 </v-alert>
             </v-card-title>
 
@@ -54,7 +52,7 @@
                                     <v-icon color="primary">far fa-pen</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Edit Announcement</span>
+                            <span>  {{this.$t('edit_announcement')}}</span>
                         </v-tooltip>
 
                         <v-tooltip bottom>
@@ -63,7 +61,7 @@
                                     <v-icon color="error">far fa-times</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Delete Announcement</span>
+                            <span>{{this.$t('delete_announcement')}}</span>
                         </v-tooltip>
                     </div>
                 </template>
@@ -77,46 +75,72 @@
 
 <script>
 import AnnouncementDialog from './AnnouncementDialog';
+import lodash         from 'lodash';
+import { mapGetters } from 'vuex';
+
+
 export default {
     name: 'AnnouncementsIndex',
     components: {AnnouncementDialog},
-    data: () => ({
-        isLoading         : false,
 
-        // Data table pagination object
-        pagination: {},
+     props: {
+        // Role to use for role retrieval
+        announcement: {type: String},
+    },
 
-        // List of announcements and total count (to be retrieved on pagination change)
+    data:  vm  => ({
+         lodash,
+        /////////////////
+        // Remote data //
+
+         // List of announcements and total count (to be retrieved on pagination change)
         announcements     : [],
         announcementsCount: 0,
 
+
+        isLoading: false,
+
+       
+        pagination: {},
+
+
+       
+    
+
+       
         headers: [
             {
-                text    : 'Creator',
+                text    : vm.$t('creator'),
                 value   : 'user_id',
                 align   : 'left',
                 sortable: false
             },
             {
-                text    : 'Date',
+                text    : vm.$t('date'),
                 value   : 'created_at',
                 align   : 'left',
                 sortable: false
             },
             {
-                text    : 'Announcement',
+                text    : vm.$t('announcement'),
                 value   : 'body',
                 align   : 'left',
                 sortable: false
             },
             {
-                text    : 'Actions',
+                text    : vm.$t('actions'),
                 value   : 'actions',
                 align   : 'center',
                 sortable: false
             }
-        ]
+        ],
     }),
+
+
+       computed: {
+        ...mapGetters({
+            locale: 'lang/locale'
+       })},
 
     methods: {
         getAnnouncements () {
@@ -140,19 +164,18 @@ export default {
 
         deleteAnnouncement (announcement) {
             return swal({
-                title    : 'Warning',
-                text     : 'Are you sure you want to delete this announcement?',
+                title    : this.$t("warning"),
+                text     : this.$t("are_you_sure"),
                 icon     : 'warning',
                 className: 'swal-warning',
                 buttons  : {
-                    cancel: {
-                        text     : 'Cancel',
-                        className: 'outlined',
-                        visible  : true
+                    cancel : {
+                        text      : this.$t('cancel'),
+                        visible   : true,
+                        closeModal: true
                     },
                     confirm: {
-                        text      : 'Yes',
-                        className : 'outlined',
+                        text      : this.$t('ok'),
                         closeModal: false
                     }
                 }
@@ -174,6 +197,41 @@ export default {
 
     mounted () {
         this.getAnnouncements();
+    },
+    watch : {
+        
+        locale: {
+            handler (){
+                this.headers = [
+                  {
+                text    : this.$t('creator'),
+                value   : 'user_id',
+                align   : 'left',
+                sortable: false
+            },
+            {
+                text    : this.$t('date'),
+                value   : 'created_at',
+                align   : 'left',
+                sortable: false
+            },
+            {
+                text    : this.$t('announcement'),
+                value   : 'body',
+                align   : 'left',
+                sortable: false
+            },
+            {
+                text    : this.$t('actions'),
+                value   : 'actions',
+                align   : 'center',
+                sortable: false
+            },
+            
+                ];
+            },
+            deep: true
+        }
     },
 };
 </script>
