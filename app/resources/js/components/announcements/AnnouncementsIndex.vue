@@ -174,6 +174,6 @@ export default {
 
     mounted () {
         this.getAnnouncements();
-    }
+    },
 };
 </script>
