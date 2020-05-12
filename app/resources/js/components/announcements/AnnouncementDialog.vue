@@ -5,14 +5,14 @@
             <v-card>
                 <v-card-title class="headline">
                     <h3 class="title">
-                        <span v-if="form.id">Update Announcement</span>
-                        <span v-else>Create Announcement</span>
+                        <span v-if="form.id">{{$t('update_announcement')}}</span>
+                        <span v-else>{{$t('create_announcement')}}</span>
                     </h3>
                 </v-card-title>
                 <v-form>
                     <v-card-text>
                         <!-- Announcement -->
-                        <v-textarea required label="Announcement*"
+                        <v-textarea required :label="$t('announcement')+'*'"
                             @input="$v.form.body.$touch()" @blur="$v.form.body.$touch()"
                             :error-messages="bodyErrors" counter="300"
                             v-model="form.body"
@@ -68,12 +68,12 @@
                         <v-btn color="primary" outlined :disabled="isLoading"
                             @click.native="closeDialog"
                         >
-                            Cancel
+                            {{$t('cancel')}}
                         </v-btn>
 
                         <v-btn color="primary" @click="save" :disabled="isLoading">
                             <span v-if="form.id">Update</span>
-                            <span v-else>Save</span>
+                            <span v-else>{{$t('save')}}</span>
                         </v-btn>
                     </v-card-actions>
                 </v-form>
@@ -118,8 +118,8 @@ export default {
         bodyErrors () {
             if (!this.$v.form.body.$dirty) return [];
             const errors = [];
-            !this.$v.form.body.required && errors.push('Announcement text is required!');
-            !this.$v.form.body.maxLength && errors.push('The announcement cannot have more than 300 characters!');
+            !this.$v.form.body.required && errors.push(this.$t('announcement') + ' ' + this.$t('is_required'));
+            !this.$v.form.body.maxLength && errors.push(this.$t('announcement') + ' ' + this.$t('is_not_valid'));
             return errors;
         }
     },

@@ -4,6 +4,8 @@
   "add_user": "Add User",
   "announcements": " Announcements",
   "announcement": " Announcement",
+  "create_announcement": "Create Announcement",
+  "update_announcement": "Update Announcement",
   "announcement_deleted": "Announcement deleted!",
   "announcementmessage" : "Announcements you create here will be sent to the 'Announcements' section of the  notifications modal window, informing your users about new features and improvements to your application.",
   "are_you_sure": "Are you sure?",
