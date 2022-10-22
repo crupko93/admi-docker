@@ -2,9 +2,9 @@
     <v-app-bar dark :clipped-left="$vuetify.breakpoint.mdAndUp" fixed app color="primary">
         <v-app-bar-nav-icon @click.stop="navToggle"></v-app-bar-nav-icon>
 
-        <v-toolbar-title class="white--text d-flex">
-            <img src="/img/logo-sign.png" alt="" style="max-height: 56px">
-            <div class="flex-row align-center">{{ siteName }}</div>
+        <v-toolbar-title class="white--text d-flex align-center">
+            <img src="/img/logo-sign.png" alt="Admin logo" class="mr-5" style="max-height: 56px">
+            <div class="flex-row">{{ siteName }}</div>
         </v-toolbar-title>
     </v-app-bar>
 </template>

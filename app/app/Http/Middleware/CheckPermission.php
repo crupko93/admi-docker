@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Closure, Role;
+use Closure;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
-class VerifyRole
+class CheckPermission
 {
     /**
      * Handle an incoming request
@@ -13,12 +14,12 @@ class VerifyRole
      * @param  Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next, ...$roles)
+    public function handle($request, Closure $next, ...$permissions)
     {
         $forbidden = true;
 
-        foreach ($roles as $role) {
-            if ($request->user()->hasRole($role)) {
+        foreach ($permissions as $permission) {
+            if ($request->user()->hasPermissionTo($permission)) {
                 $forbidden = false;
                 break;
             }

@@ -1,9 +1,9 @@
 <template>
     <div>
         <v-card>
-            <v-card-title><h3>Your Profile</h3></v-card-title>
+            <v-card-title><h3>Profile</h3></v-card-title>
             <v-card-text class="profile">
-                <v-toolbar class="shadow-0 py-0" color="white">
+                <v-toolbar class="shadow-0 py-0" color="white" v-if="!displayEditProfile">
                     <v-btn icon @click="goBack">
                         <v-icon>chevron_left</v-icon>
                     </v-btn>
@@ -129,8 +129,6 @@ export default {
     watch: {
         user: {
             handler (values) {
-                console.log(values);
-                console.log(this.user);
                 this.userData = values;
             },
             deep: true

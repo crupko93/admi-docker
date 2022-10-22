@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Request;
 use App\User;
 use Vyuldashev\LaravelOpenApi\Annotations\{Operation, Parameters, PathItem, RequestBody, Response};
@@ -29,7 +30,7 @@ class ProfileAPIController extends Controller
     {
         $user = auth()->user();
 
-        return success(['user' => $user]);
+        return success(['user' => UserResource::make($user->load('roles'))]);
     }
 
     /**
@@ -63,7 +64,7 @@ class ProfileAPIController extends Controller
 
         $user->save();
 
-        return success(['user' => $user]);
+        return success(['user' => UserResource::make($user->load('roles'))]);
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Jobs\SendNotification;
 use App\Notifications\UserAccountCreated;
 use App\Notifications\UserPasswordChanged;
 use App\Traits\TablePaginate;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +14,7 @@ use App\Notifications\ResetPassword as ResetPasswordNotification;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, TablePaginate;
+    use HasRoles, Notifiable, TablePaginate;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +27,6 @@ class User extends Authenticatable implements JWTSubject
         'last_name',
         'email',
         'phone',
-        'role',
         'password'
     ];
 
@@ -46,6 +46,22 @@ class User extends Authenticatable implements JWTSubject
         'email'
     ];
 
+    /*
+     |--------------------------------------------------------------------------
+     | Accessors
+     |--------------------------------------------------------------------------
+     |
+     */
+    public function getAllPermissionsAttribute()
+    {
+        return $this->getAllPermissions()->pluck('name');
+    }
+
+    public function getAllRolesAttribute()
+    {
+        return $this->getRoleNames();
+    }
+
     /**
      * Generate random password
      */
@@ -57,7 +73,7 @@ class User extends Authenticatable implements JWTSubject
     /**
      * Send the password reset notification.
      *
-     * @param  string  $token
+     * @param string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -79,5 +95,21 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /*
+     |--------------------------------------------------------------------------
+     | Relationships
+     |--------------------------------------------------------------------------
+     |
+     */
+    public function roleWithPermissions()
+    {
+        if ($this->relationLoaded('roles')) {
+            $this->setRelation('permissions', $this->roles[0]->permissions->pluck('name')->values());
+
+            $this->setRelation('role', $this->roles->pluck('name'));
+            $this->unsetRelation('roles');
+        }
     }
 }
