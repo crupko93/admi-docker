@@ -47,7 +47,7 @@ Other uses:
 ### 3. Cloning this repository and attached projects
 ```bash
 # Recursive clone to init git submodules as well
-$ git clone --recursive git@github.com:FLYGOPROJECT/admin-docker.git
+$ git clone --recursive git@github.com:crupko93/admin-docker.git
 
 # Since initialized submodules are linked to a specific commit
 # we need to bring them up-to-date on the master branch
