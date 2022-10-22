@@ -2,6 +2,8 @@ const mix                 = require('laravel-mix');
 const fs                  = require('fs');
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
+const production = mix.config.production;
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,6 +14,16 @@ const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
  | file for the application as well as bundling up all the JS files.
  |
  */
+
+if (!production && process.env.APP_ENV === 'local') {
+    console.log('options set');
+    mix.options({
+        hmrOptions: {
+            host: process.env.HMR_HOST || 'localhost',
+            port: process.env.HMR_PORT || '9090'
+        }
+    });
+}
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/styles/app.sass', 'public/css');
@@ -76,3 +88,20 @@ if (Mix.isWatching()) {
         fires++;
     });
 }
+
+Mix.listen('configReady', (webpackConfig) => {
+    if (Mix.isUsing('hmr')) {
+        // Remove leading '/' from entry keys
+        webpackConfig.entry = Object.keys(webpackConfig.entry).reduce((entries, entry) => {
+            entries[entry.replace(/^\//, '')] = webpackConfig.entry[entry];
+            return entries;
+        }, {});
+
+        // Remove leading '/' from ExtractTextPlugin instances
+        webpackConfig.plugins.forEach((plugin) => {
+            if (plugin.constructor.name === 'ExtractTextPlugin') {
+                plugin.filename = plugin.filename.replace(/^\//, '');
+            }
+        });
+    }
+});

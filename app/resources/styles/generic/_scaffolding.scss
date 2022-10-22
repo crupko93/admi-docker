@@ -41,6 +41,27 @@ a{
     color: $gray-700!important;
 }
 
+.v-alert {
+    font-size: 14px;
+
+    .v-alert__wrapper .v-alert__icon {
+        align-self: center;
+    }
+}
+
+.v-card__text, .v-card__title {
+    word-break: normal !important;
+}
+
+.v-chip {
+    .v-chip__content {
+        .v-avatar {
+            margin-right: 5px !important;
+            margin-left: -12px !important;
+        }
+    }
+}
+
 table.v-table {
     border-radius: 5px !important;
 

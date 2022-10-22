@@ -25,17 +25,17 @@ export default {
         items: []
     }),
 
-    mounted () {
-        this.navigation();
-    },
-
     methods: {
         navigation () {
             this.items = [
-                {title: 'Profile', icon: 'visibility', to: {name: 'profile'}},
-                {title: 'Edit', icon: 'edit', to: {name: 'profile-edit'}}
+                {title: this.$t('profile'), icon: 'visibility', to: {name: 'profile'}},
+                {title: this.$t('edit'), icon: 'edit', to: {name: 'profile-edit'}}
             ];
         }
+    },
+
+    mounted () {
+        this.navigation();
     }
 };
 </script>

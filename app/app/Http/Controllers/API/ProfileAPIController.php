@@ -78,11 +78,11 @@ class ProfileAPIController extends Controller
             $user = Auth::user();
 
             if (empty($user)) {
-                return error('Invalid user!');
+                return error(trans('profile.invalid_user'));
             }
 
             if (!$user->delete()) {
-                return error('Could not delete user...');
+                return error(trans('profile.could_not_delete_user'));
             }
 
             return success();

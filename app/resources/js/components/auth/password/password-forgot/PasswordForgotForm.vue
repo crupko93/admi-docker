@@ -5,7 +5,7 @@
             type="email"
             @input="$v.form.email.$touch()"
             @blur="$v.form.email.$touch()"
-            :label="labels.email"
+            :label="$t('email')"
             :disabled="isLoading"
             :error-messages="emailErrors" required
         ></v-text-field>
@@ -19,7 +19,7 @@
                 :to="{ name: 'login', query: {email: form.email} }"
                 text exact
             >
-                Back to login
+                {{$t('back_to_login')}}
             </v-btn>
 
             <v-btn
@@ -29,7 +29,7 @@
                 :loading="isLoading"
                 :disabled="isLoading || $v.$invalid"
             >
-                Get password
+                {{$t('get_password')}}
             </v-btn>
         </v-layout>
     </div>
@@ -63,8 +63,8 @@ export default {
         emailErrors () {
             if (!this.$v.form.email.$dirty) return [];
             const errors = [];
-            !this.$v.form.email.email && errors.push('Email is not valid!');
-            !this.$v.form.email.required && errors.push('Email is required!');
+            !this.$v.form.email.email && errors.push(this.$t('email_is_not_valid'));
+            !this.$v.form.email.required && errors.push(this.$t('email_is_required'));
             return errors;
         }
     },
@@ -76,8 +76,8 @@ export default {
             this.isLoading = true;
             return API.auth.resetPassword(this.form)
                 .then(() => {
-                    Snotify.success(
-                        'An email with password reset instructions has been sent to your email address.');
+
+                    Snotify.success(this.$t('reset_password_email_sent'));
                     this.$emit('success');
                 })
                 .catch(Utils.standardErrorResponse)

@@ -9,7 +9,12 @@ use App\Http\Resources\PermissionCollection;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Vyuldashev\LaravelOpenApi\Annotations\{Operation, Parameters, PathItem, RequestBody};
 
+
+/**
+ * @PathItem()
+ */
 class PermissionAPIController extends Controller
 {
     public function __construct()
@@ -18,6 +23,11 @@ class PermissionAPIController extends Controller
     }
 
     /**
+     * Get Permission
+     *
+     * Get authenticated user's permission
+     * @Operation()
+     *
      * @param mixed $permissionId
      *
      * @return PermissionCollection|ResponseFactory|Response
@@ -31,7 +41,7 @@ class PermissionAPIController extends Controller
         $permission = Permission::find($permissionId);
 
         if (empty($permission)) {
-            return error('Invalid permission!');
+            return error(trans('permission.invalid_permission'));
         }
 
         return success(['permission' => PermissionResource::make($permission)]);

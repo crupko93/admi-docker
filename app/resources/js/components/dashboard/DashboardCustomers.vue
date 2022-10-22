@@ -13,11 +13,11 @@
                         </div>
 
                         <h3 v-else class="white--text font-weight-regular">
-                            No data available
+                            {{$t('no_data_available')}}
                         </h3>
 
                         <h4 class="mt-2 mb-2 teal--text text--lighten-4 font-weight-regular text-uppercase">
-                            Total Customers
+                            {{$t('total_customers')}}
                         </h4>
                     </div>
                 </v-card>
@@ -28,7 +28,7 @@
                     <content-loader slot="default" :loading="loading"></content-loader>
                     <v-card-title>
                         <h3 class="mt-2 mb-2 primary--text text--darken-3 font-weight-regular">
-                            Total Customers by Spending
+                            {{$t('total_customers_by_spending')}}
                         </h3>
                     </v-card-title>
 
@@ -40,7 +40,7 @@
                         ></GraphCustomersBySpending>
 
                         <h3 v-else class="grey--text font-weight-regular text-xs-center pt-5 pb-5">
-                            No data available
+                            {{$t('no_data_available')}}
                         </h3>
                     </v-card-text>
                 </v-card>
@@ -52,7 +52,7 @@
                 <v-card>
                     <v-card-title>
                         <h3 class="mt-2 mb-2 primary--text text--darken-3 font-weight-regular">
-                            Top 10 Customers By Spending
+                            {{$t('top_ten_customers_by_spending')}}
                         </h3>
                     </v-card-title>
 
@@ -63,14 +63,22 @@
                             :items="graphs.top_customers"
                             class="elevation-0"
                         >
-                            <template slot="item" slot-scope="props">
-                                <tr>
-                                    <td>{{ props.item.first_name + ' ' + props.item.last_name}}</td>
-                                    <td>{{ props.item.email || '-' }}</td>
-                                    <td class="text-center">{{ props.item.total_cancelled || 0 }}</td>
-                                    <td class="text-center">{{ props.item.total_purchased || 0 }}</td>
-                                </tr>
-                            </template>
+                                <template v-slot:item.name="{ item }">
+                                    {{ item.first_name + ' ' + item.last_name }}
+                                </template>
+
+                                <template v-slot:item.email="{ item }">
+                                    {{ item.email || '-' }}
+                                </template>
+
+                                <template v-slot:item.total_cancelled="{ item }">
+                                    {{ item.total_cancelled || 0 }}
+                                </template>
+
+                                <template v-slot:item.total_purchased="{ item }">
+                                    {{ item.total_purchased || 0 }}
+                                </template>
+
                         </v-data-table>
                     </v-card-text>
                 </v-card>

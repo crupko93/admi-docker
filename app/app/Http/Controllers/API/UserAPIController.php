@@ -7,6 +7,7 @@ use Auth, DB, Hash, Mail;
 use App\{Http\Requests\UserGetRequest, Http\Requests\UserRequest, Notifications\UserPasswordChanged, Role, User};
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Routing\ResponseFactory;
+use phpDocumentor\Reflection\Types\Integer;
 use App\Http\Resources\{
     User as UserResource,
     UserCollection
@@ -42,13 +43,6 @@ class UserAPIController extends Controller
      *
      * Return a single user or a collection of all users
      *
-     * @Operation()
-     * @param UserGetRequest $request
-     * @param int $user_id User ID
-     * @Response(factory="PutUserResponse")
-     * @Collection(factory="ListUsersResponse")
-     * @Response(factory="ErrorResponse")
-     *
      */
     public function getIndex(UserGetRequest $request, $user_id = null)
     {
@@ -80,7 +74,7 @@ class UserAPIController extends Controller
         $user = User::find($user_id);
 
         if (empty($user)) {
-            return error('Invalid user!');
+            return error(trans('user.invalid_user'));
         }
 
         $user->load('roles');
@@ -112,7 +106,7 @@ class UserAPIController extends Controller
             ]);
 
             if (!$user->save()) {
-                return error('Could not create user...');
+                return error(trans('user.could_not_create_user'));
             }
 
             $user->assignRole($request['role']);
@@ -120,7 +114,7 @@ class UserAPIController extends Controller
             return success([
                 'user' => UserResource::make($user)
             ]);
-        }, 'Could not create user...');
+        }, trans('user.could_not_create_user'));
     }
 
     /**
@@ -138,13 +132,13 @@ class UserAPIController extends Controller
     {
         return DB::try(function () use ($request) {
             if (!$request->id) {
-                return error('Invalid data! Please recheck and try again...');
+                return error(trans('user.invalid_data_recheck'));
             }
 
             $user = User::find($request->id);
 
             if (empty($user)) {
-                return error('Invalid user!');
+                return error(trans('user.invalid_user'));
             }
 
             $user->syncRoles($request->role);
@@ -162,7 +156,7 @@ class UserAPIController extends Controller
             $user->fill($data);
 
             if (!$user->save()) {
-                return error('Could not update user...');
+                return error(trans('user.could_not_update_user'));
             }
 
             return success(['user' => UserResource::make($user)]);
@@ -174,29 +168,23 @@ class UserAPIController extends Controller
      *
      * Delete a user based on ID
      *
-     * @Operation()
-     * @param int $user_id User ID
-     * @Response(factory="SuccessResponse")
-     * @Response(factory="ErrorResponse")
-     *
      */
-    public function deleteIndex($user_id)
+    public function deleteIndex(string $user_id)
     {
+        dd(gettype($user_id));
         return DB::try(function () use ($user_id) {
-            $user_id = (int)$user_id;
-
             if (empty($user_id)) {
-                return error('Invalid data! Please recheck and try again...');
+                return error(trans('user.invalid_data_recheck'));
             }
 
             $user = User::find($user_id);
 
             if (empty($user)) {
-                return error('Invalid user!');
+                return error(trans('user.invalid_user'));
             }
 
             if (!$user->delete()) {
-                return error('Could not delete user...');
+                return error(trans('user.could_not_delete_user'));
             }
 
             return success();
@@ -218,20 +206,20 @@ class UserAPIController extends Controller
     {
         return DB::try(function () use ($request) {
             if (!$request->filled('id')) {
-                return error('Invalid data! Please recheck and try again...');
+                return error(trans('user.invalid_data_recheck'));
             }
 
             $user = User::find($request->id);
 
             if (empty($user)) {
-                return error('Invalid user!');
+                return error(trans('user.invalid_user'));
             }
             if (!$request->filled('role')) {
-                return error('No role provided...');
+                return error(trans('user.no_role_provided'));
             }
 
             if (!$user->syncRoles($request->role)) {
-                return error('Could not update role...');
+                return error(trans('user.could_not_update_role'));
             }
 
             return success();
@@ -262,14 +250,14 @@ class UserAPIController extends Controller
                 $user = User::find($request->id);
 
                 if (empty($user)) {
-                    return error('Invalid user!');
+                    return error(trans('user.invalid_user'));
                 }
 
                 // Encrypt password before saving
                 $user->password = Hash::make($request->password);
 
                 if (!$user->save()) {
-                    return error('Could not update password...');
+                    return error(trans('user.could_not_update_password'));
                 }
 
                 // Send user password via email if desired
@@ -290,14 +278,14 @@ class UserAPIController extends Controller
                 ]);
 
                 if (!Hash::check($request->current_password, $user->password)) {
-                    return error('The current password is invalid!');
+                    return error(trans('user.invalid_password'));
                 }
 
                 // Encrypt password before saving
                 $user->password = Hash::make($request->password);
 
                 if (!$user->save()) {
-                    return error('Could not update password...');
+                    return error(trans('user.could_not_update_password'));
                 }
 
                 // Send user password via email

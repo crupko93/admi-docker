@@ -2,15 +2,15 @@
     <v-dialog v-model="passwordDialog" persistent max-width="400">
         <v-card>
             <v-card-title>
-                <h3 class="title">Change Password</h3> <br>
+                <h3 class="title">{{$t('change_password')}}</h3> <br>
             </v-card-title>
 
             <v-card-text>
                 <small class="body-1 alternative--text pl-1">
-                    Changing password for <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+                    {{$t('changing_password_for')}} <strong>{{ user.first_name }} {{ user.last_name }}</strong>
                 </small>
 
-                <v-text-field required class="pass mt-4" name="password" label="New Password*"
+                <v-text-field required class="pass mt-4" name="password" :label="$t('password')+'*'"
                     @click:prepend="generatePassword"
                     @click:append="showPassword = !showPassword"
                     @input="$v.form.password.$touch()"
@@ -22,7 +22,7 @@
                     v-model="form.password"
                 ></v-text-field>
 
-                <v-text-field required name="password_confirmation" label="Confirm Password*"
+                <v-text-field required name="password_confirmation" :label="$t('confirm_password')+'*'"
                     @click:append="showPasswordConfirmation = !showPasswordConfirmation"
                     @input="$v.form.password_confirmation.$touch()"
                     @blur="$v.form.password_confirmation.$touch()"
@@ -33,16 +33,16 @@
                     v-model="form.password_confirmation"
                 ></v-text-field>
 
-                <v-checkbox hide-details class="pl-2" label=" Send credentials by email?" v-model="form.send_password">
+                <v-checkbox hide-details class="pl-2" :label="$t('send_credentials_by_email?')" v-model="form.send_password">
                 </v-checkbox>
             </v-card-text>
 
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" outlined @click="closePasswordDialog" :disabled="isUpdating">Cancel</v-btn>
+                <v-btn color="primary" outlined @click="closePasswordDialog" :disabled="isUpdating">{{$t('cancel')}}</v-btn>
                 <v-btn color="primary" @click.prevent="updatePassword" :disabled="isUpdating">
-                    <span v-if="!isUpdating">Update</span>
-                    <span v-if="isUpdating"><v-icon>fa fa-spinner fa-spin</v-icon> Updating</span>
+                    <span v-if="!isUpdating">{{$t('update')}}</span>
+                    <span v-if="isUpdating"><v-icon>fa fa-spinner fa-spin</v-icon> {{$t('updating')}}</span>
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -82,14 +82,14 @@ export default {
         passwordErrors () {
             if (!this.$v.form.password.$dirty) return [];
             const errors = [];
-            !this.$v.form.password.required && errors.push('Password is required!');
+            !this.$v.form.password.required && errors.push(this.$t('password')+' '+this.$t('is_required'));
             return errors;
         },
         passwordConfirmationErrors () {
             if (!this.$v.form.password_confirmation.$dirty) return [];
             const errors = [];
-            !this.$v.form.password_confirmation.required && errors.push('Password confirmation is required!');
-            !this.$v.form.password_confirmation.sameAsPassword && errors.push('Passwords must be identical!');
+            !this.$v.form.password_confirmation.required && errors.push(this.$t('confirm_password')+' '+this.$t('is_required'));
+            !this.$v.form.password_confirmation.sameAsPassword && errors.push(this.$t('password')+' '+this.$t('must_be_identical'));
             return errors;
         }
     },
@@ -141,7 +141,7 @@ export default {
                 password_confirmation: this.form.password_confirmation,
                 send_password        : this.form.send_password
             }).then(() => {
-                Snotify.success('Password updated!');
+                Snotify.success(this.$t('password_updated') + '!');
 
                 this.isUpdating     = false;
                 this.passwordDialog = false;

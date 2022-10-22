@@ -16,7 +16,7 @@ This README describes the steps needed to run the **Admin** app
 
 ### 2. Cloning
 
-The standard way to install this project is to [clone and setup the Docker environment](https://github.com/FLYGOPROJECT/admin-docker#3-cloning-this-repository-and-attached-projects).
+The standard way to install this project is to [clone and setup the Docker environment](https://github.com/crupko93/admin-docker#3-cloning-this-repository-and-attached-projects).
 
 ### 3. Setup
 
@@ -38,7 +38,7 @@ Password: root
 ```
 Create DB `admin` (default .env name)
 
-**3**. __[Open a shell to the App Docker instance](https://github.com/FLYGOPROJECT/admin-docker#2-open-a-shell-on-a-container)__ and run:
+**3**. __[Open a shell to the App Docker instance](https://github.com/crupko93/admin-docker#2-open-a-shell-on-a-container)__ and run:
 
 ```bash
 

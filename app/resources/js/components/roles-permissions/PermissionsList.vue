@@ -4,7 +4,7 @@
             <v-card-text>
                 <v-text-field flat solo-inverted single-line hide-details clearable
                     class="datatable-search"
-                    append-icon="search" label="Search"
+                    append-icon="search" :label="$t('search')"
                     v-model="searchTerm"
                 ></v-text-field>
             </v-card-text>
@@ -19,12 +19,6 @@
             >
                 <v-progress-linear slot="progress" color="blue" height="3" indeterminate></v-progress-linear>
 
-                <template slot="item" slot-scope="props">
-                    <tr>
-                        <td>{{ props.item.label }}</td>
-                        <td>{{ props.item.name }}</td>
-                    </tr>
-                </template>
             </v-data-table>
 
         </div>
@@ -34,11 +28,12 @@
 <script>
 
 import lodash         from 'lodash';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'PermissionsList',
 
-    data: () => ({
+    data: vm => ({
         /////////////////
         // Remote data //
         /////////////////
@@ -56,11 +51,11 @@ export default {
         // Data table headers
         headers: [
             {
-                text    : 'Label',
+                text    : vm.$t('label'),
                 value   : 'label',
                 align   : 'left'
             }, {
-                text    : 'Name',
+                text    : vm.$t('name'),
                 value   : 'name',
                 align   : 'left'
             }
@@ -74,6 +69,10 @@ export default {
 
         // Permission data table pagination object
         pagination: {}
+    }),
+
+    computed: mapGetters({
+        locale: 'lang/locale'
     }),
 
     methods: {
@@ -93,20 +92,19 @@ export default {
 
         deletePermission (permission) {
             swal({
-                text: `Permission (${permission.name}) and all related data will be permanently \
-                    deleted!`,
+                text: this.$t('permission_will_be_deleted').replace('*name*', permission.name),
 
-                title    : 'Are you sure?',
+                title    : this.$t('are_you_sure'),
                 icon     : 'info',
                 className: 'swal-info',
                 buttons  : {
                     cancel : {
-                        text      : 'Cancel',
+                        text      : this.$t('cancel'),
                         visible   : true,
                         closeModal: true
                     },
                     confirm: {
-                        text      : 'Ok',
+                        text      : this.$t('ok'),
                         closeModal: false
                     }
                 }
@@ -118,7 +116,7 @@ export default {
 
                     API.permissions.delete(permission.id)
                         .then(() => {
-                            Snotify.success('Permission successfully deleted!');
+                            Snotify.success(this.$t('permission_successfully_deleted'));
                             this.retrievePermissions();
                         })
                         .catch(e => {
@@ -146,6 +144,23 @@ export default {
                     this.retrievePermissions();
                 }, 500)
 
+        },
+
+        locale: {
+            handler () {
+                this.headers = [
+                    {
+                        text    : this.$t('label'),
+                        value   : 'label',
+                        align   : 'left'
+                    }, {
+                        text    : this.$t('name'),
+                        value   : 'name',
+                        align   : 'left'
+                    }
+                ];
+            },
+            deep: true
         }
     }
 };

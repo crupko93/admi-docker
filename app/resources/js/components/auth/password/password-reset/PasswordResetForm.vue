@@ -6,7 +6,7 @@
             @input="$v.form.password.$touch()"
             @blur="$v.form.password.$touch()"
             @click:append="() => (passwordHidden = !passwordHidden)"
-            :label="labels.password"
+            :label="$t('password')"
             :append-icon="passwordHidden ? 'visibility_off' : 'visibility'"
             :type="passwordHidden ? 'password' : 'text'"
             :disabled="isLoading"
@@ -17,7 +17,7 @@
             v-model="form.password_confirmation"
             @input="$v.form.password_confirmation.$touch()"
             @blur="$v.form.password_confirmation.$touch()"
-            :label="labels.password_confirmation"
+            :label="$t('confirm_password')"
             :type="passwordHidden ? 'password' : 'text'"
             :disabled="isLoading"
             :error-messages="passwordConfirmationErrors" required
@@ -32,7 +32,7 @@
                 :disabled="isLoading || $v.$invalid"
                 color="primary"
             >
-                Set new password
+                {{$t('set_new_password')}}
             </v-btn>
         </v-layout>
     </div>
@@ -46,10 +46,10 @@ export default {
         passwordHidden: true,
         isLoading     : false,
 
-        labels: {
-            password             : 'New Password',
-            password_confirmation: 'Confirm New Password'
-        },
+        // labels: {
+        //     password             : 'New Password',
+        //     password_confirmation: 'Confirm New Password'
+        // },
 
         form: {
             token                : null,
@@ -75,14 +75,14 @@ export default {
         passwordErrors () {
             if (!this.$v.form.password.$dirty) return [];
             const errors = [];
-            !this.$v.form.password.required && errors.push('Password is required!');
+            !this.$v.form.password.required && errors.push(this.$t('password')+' '+this.$t('is_required'));
             return errors;
         },
         passwordConfirmationErrors () {
             if (!this.$v.form.password_confirmation.$dirty) return [];
             const errors = [];
-            !this.$v.form.password_confirmation.required && errors.push('Password confirmation is required!');
-            !this.$v.form.password_confirmation.sameAsPassword && errors.push('Passwords must be identical!');
+            !this.$v.form.password_confirmation.required && errors.push(this.$t('confirm_password')+' '+this.$t('is_required'));
+            !this.$v.form.password_confirmation.sameAsPassword && errors.push(this.$t('password')+' '+this.$t('must_be_identical'));
             return errors;
         }
     },
@@ -94,7 +94,7 @@ export default {
             this.isLoading = true;
             API.auth.resetPassword(this.form)
                 .then(() => {
-                    Snotify.success('Your password has been reset.');
+                    Snotify.success(this.$t('success_reset_password'));
                     this.$emit('success', this.form);
                 })
                 .catch(Utils.standardErrorResponse)

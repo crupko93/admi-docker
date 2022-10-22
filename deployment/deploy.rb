@@ -14,14 +14,15 @@ set :laravel_migration_roles, :db
 set :laravel_migration_artisan_flags, "--force --env=#{fetch(:stage)}"
 set :laravel_version, 6.0
 set :laravel_upload_dotenv_file_on_deploy, true
-set :laravel_server_user, 'www-data'
+set :laravel_server_user, 'apache'
 set :laravel_ensure_linked_dirs_exist, true
 set :laravel_set_linked_dirs, true
 set :laravel_5_linked_dirs, [
     'public/storage',
-    'storage/logs',
-    'storage/passport'
+    'storage/logs'
 ]
+# Ensure the paths in :file_permissions_paths exist?
+set :laravel_ensure_acl_paths_exist, true
 set :laravel_5_acl_paths, [
     'bootstrap/cache',
     'public/storage',
@@ -54,7 +55,7 @@ set :whenever_command, -> {
 set :slackistrano, {
     klass: Slackistrano::SlackMessaging,
     channel: '#deployment',
-    webhook: 'https://hooks.slack.com/services/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',
+    webhook: 'https://hooks.slack.com/services/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',
     username: 'Capistrano',
     icon_url: 'https://pbs.twimg.com/profile_images/378800000067686459/5da4e1d78e930197cb7dc002ceafdfda.png'
 }

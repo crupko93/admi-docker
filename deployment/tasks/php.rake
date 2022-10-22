@@ -3,7 +3,7 @@ namespace :php do
     desc "Restart PHP FPM daemon"
     task :restart do
         on roles(:app) do
-            execute 'sudo service php7.4-fpm restart'
+            execute 'sudo service php-fpm restart'
         end
     end
 

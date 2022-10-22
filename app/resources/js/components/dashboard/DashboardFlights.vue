@@ -12,7 +12,7 @@
             >
                 <v-icon small left v-if="!isLoading">fal fa-sync</v-icon>
                 <v-icon small left v-else>fal fa-sync fa-spin</v-icon>
-                Refresh
+                {{$t('refresh')}}
             </v-btn>
 
             <v-menu offset-y>
@@ -44,7 +44,7 @@
                     <content-loader slot="default" :loading="isLoading"></content-loader>
                     <v-card-title>
                         <h3 :class="[color + '--text']" class="mt-2 mb-2 text--darken-3 font-weight-regular">
-                            Total Flights By Period
+                            {{$t('total_flights_by_period')}}
                         </h3>
                     </v-card-title>
                     <v-card-text>
@@ -53,7 +53,7 @@
                         ></GraphFlightsTotal>
 
                         <h2 v-else class="grey--text font-weight-regular text-xs-center pt-5 pb-5">
-                            Oops... we have no data for that period
+                            {{$t('no_data_available_for_period')}}
                         </h2>
                     </v-card-text>
                 </v-card>
@@ -68,7 +68,7 @@
                     <content-loader slot="default" :loading="isLoading"></content-loader>
                     <v-card-title>
                         <h3 :class="[color + '--text']" class="mt-2 mb-2 text--darken-3 font-weight-regular">
-                            Flights by Status
+                            {{$t('flights_by_status')}}
                         </h3>
                     </v-card-title>
                     <v-card-text>
@@ -77,7 +77,7 @@
                         ></GraphFlightsStatus>
 
                         <h2 v-else class="grey--text font-weight-regular text-xs-center pt-5 pb-5">
-                            Oops... we have no data for that period
+                            {{$t('no_data_available_for_period')}}
                         </h2>
                     </v-card-text>
                 </v-card>

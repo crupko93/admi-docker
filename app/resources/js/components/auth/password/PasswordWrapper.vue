@@ -1,5 +1,5 @@
 <template>
-    <v-flex sm7 md5 lg3>
+    <v-flex sm8 md6 lg4>
         <transition name="fade" mode="out-in">
             <router-view></router-view>
         </transition>

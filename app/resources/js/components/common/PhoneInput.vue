@@ -99,7 +99,7 @@ export default {
             if (!this.lock) this.emit('input');
         });
 
-        Bus.$on('sparkHashChanged', this.rerenderInput);
+        this.$on('sparkHashChanged', this.rerenderInput);
     },
 
     beforeDestroy () {
