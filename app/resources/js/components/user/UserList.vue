@@ -27,63 +27,63 @@
             >
                 <v-progress-linear slot="progress" color="blue" height="3" indeterminate></v-progress-linear>
 
-                <template slot="item" slot-scope="props">
-                    <tr>
-                        <td>{{ props.item.username }}</td>
-                        <td>{{ props.item.first_name }} {{ props.item.last_name }}</td>
-                        <td>{{ props.item.email }}</td>
-                        <td>{{ props.item.role[0] }}</td>
-                        <td class="text-center px-0">
-                            <v-menu offset-y>
-                                <template v-slot:activator="{ on }">
-                                    <v-btn
-                                        v-on="on"
-                                        color="primary" text icon
-                                    >
-                                        <v-icon>more_vert</v-icon>
-                                    </v-btn>
-                                </template>
-                                <v-list>
-                                    <!-- [ALL] View Profile -->
-                                    <!-- <v-list-tile @click="showUserProfile(props.item)"> -->
-                                    <v-list-item @click="selectedUser = props.item; isShowProfile = !isShowProfile">
-                                        <v-list-item-title>{{$t('view_profile')}}</v-list-item-title>
-                                    </v-list-item>
+                    <template v-slot:item.first_name="{ item }">
+                        {{ item.first_name }} {{ item.last_name }}
+                    </template>
 
-                                    <!-- [Moderator] Make Admin -->
-                                    <v-list-item @click="updateRole(props.item, 'admin')"
-                                        v-if="props.item.role === 'moderator'"
-                                    >
-                                        <v-list-item-title>{{$t('make_admin')}}</v-list-item-title>
-                                    </v-list-item>
+                    <template v-slot:item.roles="{ item }">
+                                {{ item.role[0] }}
+                    </template>
 
-                                    <!-- [Admin] Make Moderator -->
-                                    <v-list-item @click="updateRole(props.item, 'moderator')"
-                                        v-if="props.item.role === 'admin'"
-                                    >
-                                        <v-list-item-title>{{$t('make_moderator')}}</v-list-item-title>
-                                    </v-list-item>
+                    <template v-slot:item.actions="{ item }">
+                                                    <v-menu offset-y>
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-btn
+                                                                v-on="on"
+                                                                color="primary" text icon
+                                                            >
+                                                                <v-icon>more_vert</v-icon>
+                                                            </v-btn>
+                                                        </template>
+                                                        <v-list>
+                                                            <!-- [ALL] View Profile -->
+                                                            <!-- <v-list-tile @click="showUserProfile(props.item)"> -->
+                                                            <v-list-item @click="selectedUser = item; isShowProfile = !isShowProfile">
+                                                                <v-list-item-title>{{$t('view_profile')}}</v-list-item-title>
+                                                            </v-list-item>
 
-                                    <!-- [ALL] Change Password -->
-                                    <v-list-item @click="$refs.changePassword.open(props.item)">
-                                        <v-list-item-title>{{$t('change_password')}}</v-list-item-title>
-                                    </v-list-item>
+                                                            <!-- [Moderator] Make Admin -->
+                                                            <v-list-item @click="updateRole(item, 'admin')"
+                                                                v-if="item.role === 'moderator'"
+                                                            >
+                                                                <v-list-item-title>{{$t('make_admin')}}</v-list-item-title>
+                                                            </v-list-item>
 
-                                    <!-- [ALL] Edit -->
-                                    <!-- <v-list-item @click="$refs.userDialog.edit(props.item.id)" -->
-                                    <v-list-item @click="$refs.userDialog.edit(props.item.id)">
-                                        <v-list-item-title>{{$t('edit')}}</v-list-item-title>
-                                    </v-list-item>
+                                                            <!-- [Admin] Make Moderator -->
+                                                            <v-list-item @click="updateRole(item, 'moderator')"
+                                                                v-if="item.role === 'admin'"
+                                                            >
+                                                                <v-list-item-title>{{$t('make_moderator')}}</v-list-item-title>
+                                                            </v-list-item>
 
-                                    <!-- [ALL] Delete -->
-                                    <v-list-item @click="deleteUser(props.item)">
-                                        <v-list-item-title>{{$t('delete')}}</v-list-item-title>
-                                    </v-list-item>
-                                </v-list>
-                            </v-menu>
-                        </td>
-                    </tr>
-                </template>
+                                                            <!-- [ALL] Change Password -->
+                                                            <v-list-item @click="$refs.changePassword.open(item)">
+                                                                <v-list-item-title>{{$t('change_password')}}</v-list-item-title>
+                                                            </v-list-item>
+
+                                                            <!-- [ALL] Edit -->
+                                                            <!-- <v-list-item @click="$refs.userDialog.edit(props.item.id)" -->
+                                                            <v-list-item @click="$refs.userDialog.edit(item.id)">
+                                                                <v-list-item-title>{{$t('edit')}}</v-list-item-title>
+                                                            </v-list-item>
+
+                                                            <!-- [ALL] Delete -->
+                                                            <v-list-item @click="deleteUser(item)">
+                                                                <v-list-item-title>{{$t('delete')}}</v-list-item-title>
+                                                            </v-list-item>
+                                                        </v-list>
+                                                    </v-menu>
+                    </template>
             </v-data-table>
 
         </div>
@@ -154,7 +154,7 @@ export default {
                 sortable: false
             }, {
                 text    : vm.$t('actions'),
-                value   : '',
+                value   : 'actions',
                 align   : 'center',
                 sortable: false
             }

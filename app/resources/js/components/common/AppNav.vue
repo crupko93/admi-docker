@@ -146,6 +146,9 @@ export default {
                     {title: this.$t('profile'), icon: 'person', to: {name: 'profile'}, exact: false}
                 ],
                 [
+                    {title: this.$t('announcements'), icon: 'fas fa-bullhorn', to: {name: 'announcements'}, exact: false, permission: 'read_administration_section'}
+                ],
+                [
                     {title: this.$t('users'), icon: 'fas fa-users', to: {name: 'users'}, exact: false, permission: 'read_administration_section'}
                 ],
                 [
