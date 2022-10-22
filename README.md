@@ -16,7 +16,7 @@ This README describes the steps needed to run the **Admin** app
 
 ### 2. Cloning
 
-The standard way to install this project is to [clone and setup the Docker environment](https://github.com/FLYGOPROJECT/admin-docker#3-cloning-this-repository-and-attached-projects).
+The standard way to install this project is to [clone and setup the Docker environment](https://github.com/crupko93/admin-docker#3-cloning-this-repository-and-attached-projects).
 
 ### 3. Setup
 
