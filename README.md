@@ -38,7 +38,7 @@ Password: root
 ```
 Create DB `admin` (default .env name)
 
-**3**. __[Open a shell to the App Docker instance](https://github.com/FLYGOPROJECT/admin-docker#2-open-a-shell-on-a-container)__ and run:
+**3**. __[Open a shell to the App Docker instance](https://github.com/crupko93/admin-docker#2-open-a-shell-on-a-container)__ and run:
 
 ```bash
 
