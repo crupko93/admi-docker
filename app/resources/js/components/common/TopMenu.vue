@@ -3,7 +3,9 @@
         <v-app-bar-nav-icon @click.stop="navToggle"></v-app-bar-nav-icon>
 
         <v-toolbar-title class="white--text d-flex align-center">
+
             <img src="/img/logo-sign.png" alt="Admin logo" style="max-height: 56px" class="mr-2">
+
             <div class="flex-row">{{ siteName }}</div>
         </v-toolbar-title>
 
