@@ -5,14 +5,14 @@
             <v-card>
                 <v-card-title class="headline">
                     <h3 class="title">
-                        <span v-if="form.id">Update Announcement</span>
-                        <span v-else>Create Announcement</span>
+                        <span v-if="form.id">{{$t('update_announcement')}}</span>
+                        <span v-else>{{$t('create_announcement')}}</span>
                     </h3>
                 </v-card-title>
                 <v-form>
                     <v-card-text>
                         <!-- Announcement -->
-                        <v-textarea required label="Announcement*"
+                        <v-textarea required :label="$t('announcement')+'*'"
                             @input="$v.form.body.$touch()" @blur="$v.form.body.$touch()"
                             :error-messages="bodyErrors" counter="300"
                             v-model="form.body"
@@ -25,6 +25,42 @@
                         <!-- Action URL -->
                         <v-text-field label="Action Button URL" v-model="form.action_url">
                         </v-text-field>
+
+
+                        <!-- Users -->
+                        <v-autocomplete multiple chips required color="primary lighten-2"
+                                        @input="$v.form.users.$touch()" @blur="$v.form.users.$touch()"
+                                        :items="users"
+                                        :error-messages="usersErrors"
+                                        item-text="name"
+                                        item-value="name"
+                                        :label="$t('users')+'*'"
+                                        v-model="form.users"
+                                        return-object
+                                    >
+                                        <template slot="selection" slot-scope="data">
+                                            <v-chip close class="chip--select-multi"
+                                                @click:close="removeSelectedUsers(data.item)"
+                                                :input-value="data.selected"
+                                            >
+                                                {{ data.item.email }}
+                                            </v-chip>
+                                        </template>
+                                        <template
+                                            slot="item"
+                                            slot-scope="data"
+                                        >
+                                            <template v-if="typeof data.item !== 'object'">
+                                                <v-list-item-content v-text="data.item"></v-list-item-content>
+                                            </template>
+                                            <template v-else>
+                                                <v-list-item-content>
+                                                    <v-list-item-title v-html="data.item.email"></v-list-item-title>
+                                                </v-list-item-content>
+                                            </template>
+                                        </template>
+                        </v-autocomplete>
+
                     </v-card-text>
 
                     <v-card-actions>
@@ -32,12 +68,12 @@
                         <v-btn color="primary" outlined :disabled="isLoading"
                             @click.native="closeDialog"
                         >
-                            Cancel
+                            {{$t('cancel')}}
                         </v-btn>
 
                         <v-btn color="primary" @click="save" :disabled="isLoading">
                             <span v-if="form.id">Update</span>
-                            <span v-else>Save</span>
+                            <span v-else>{{$t('save')}}</span>
                         </v-btn>
                     </v-card-actions>
                 </v-form>
@@ -60,9 +96,11 @@ export default {
             id         : null,
             body       : '',
             action_text: '',
-            action_url : ''
+            action_url : '',
+            users: [],
         },
 
+        users: [],
         announcementDialog: false,
         isLoading         : false
 
@@ -80,8 +118,8 @@ export default {
         bodyErrors () {
             if (!this.$v.form.body.$dirty) return [];
             const errors = [];
-            !this.$v.form.body.required && errors.push('Announcement text is required!');
-            !this.$v.form.body.maxLength && errors.push('The announcement cannot have more than 300 characters!');
+            !this.$v.form.body.required && errors.push(this.$t('announcement') + ' ' + this.$t('is_required'));
+            !this.$v.form.body.maxLength && errors.push(this.$t('announcement') + ' ' + this.$t('is_not_valid'));
             return errors;
         }
     },
@@ -92,9 +130,10 @@ export default {
                 id         : null,
                 body       : '',
                 action_text: '',
-                action_url : ''
+                action_url : '',
+                users: [],
             };
-
+            this.getUsers();
             this.$v.$reset();
         },
 
@@ -117,6 +156,28 @@ export default {
             this.form.body        = announcement.body;
             this.form.action_text = announcement.action_text;
             this.form.action_url  = announcement.action_url;
+        },
+
+        /**
+         * Remove user on chip 'close' click
+         * */
+        removeSelectedUsers (item) {
+            const index = this.form.users.findIndex(user => user.email === item.email);
+            if (index >= 0) this.form.users.splice(index, 1);
+        },
+
+        /**
+         * Fetch all users available in the app
+         * */
+        getUsers () {
+            this.isLoading = true;
+
+            return API.users.all()
+                      .then(response => {
+                          this.users = response.data.users;
+                      })
+                      // .catch(Utils.standardErrorResponse)
+                      .finally(() => this.isLoading = false);
         },
 
         save () {

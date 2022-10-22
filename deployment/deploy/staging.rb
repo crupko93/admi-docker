@@ -1,5 +1,5 @@
 set :stage,     :staging
-set :deploy_to, '/var/www/admin.r1b33.com'
+set :deploy_to, '/var/www/admin-demo.runbee.com'
 
 set :branch, git_current_branch
 
@@ -14,7 +14,7 @@ set :ssh_options, {
 
 set :composer_install_flags, '--dev --no-interaction --quiet --optimize-autoloader'
 
-server 'admin.r1b33.com', roles: %w{app db web}
+server 'admin-demo.runbee.com', roles: %w{app db web}
 
 SSHKit.config.command_map[:composer] = "#{shared_path.join('composer.phar')}"
 
